@@ -6,16 +6,18 @@ export async function onRequest(context) {
         "Cache-Control": "no-store, no-cache, must-revalidate"
     };
 
-    // Supports your KV binding seamlessly
+    // Auto-connect to your Cloudflare KV binding
     const kv = env.HAWWA_KV || env.hawwa_kv || env.HAWWA_DB || env.hawwa_db;
     const adminSecret = env.ADMIN_PASSWORD;
 
     if (!kv) {
-        return new Response(JSON.stringify({ error: "KV binding is not connected." }), { status: 500, headers });
+        return new Response(JSON.stringify({ error: "KV database is not connected." }), { status: 500, headers });
     }
 
+    const url = new URL(request.url);
+
     // =========================================================================
-    // 1. GET — LOAD PUBLIC CONTENT OR AUTHENTICATE ADMIN
+    // 1. GET — PUBLIC DATA, ADMIN VERIFICATION & PROOF VIEWING
     // =========================================================================
     if (request.method === "GET") {
         try {
@@ -41,7 +43,7 @@ export async function onRequest(context) {
                 }), { status: 200, headers });
             }
 
-            // PUBLIC VISITOR: Return public site data only
+            // PUBLIC VISITOR
             const publicStr = await kv.get("public_state");
             return new Response(JSON.stringify({
                 authenticated: false,
@@ -54,20 +56,20 @@ export async function onRequest(context) {
     }
 
     // =========================================================================
-    // 2. POST — STUDENT REGISTRATIONS & ADMIN SAVES
+    // 2. POST — REGISTRATIONS, STATUS UPDATES & DELETION WITH SECURITY
     // =========================================================================
     if (request.method === "POST") {
         try {
             const body = await request.json();
 
-            // A. STUDENT SUBMITTING MULTI-STEP REGISTRATION
+            // A. STUDENT SUBMITTING MULTI-COURSE REGISTRATION
             if (body.action === "register") {
                 const regData = body.data;
-                if (!regData || !regData.fname || !regData.email || !regData.course) {
+                if (!regData || !regData.fname || !regData.email || !regData.courses || regData.courses.length === 0) {
                     return new Response(JSON.stringify({ error: "Missing required registration details." }), { status: 400, headers });
                 }
 
-                // Generate server-side student ID: HAW-260001
+                // Generate server-side sequential ID: HAW-260001
                 const currentCounterStr = await kv.get("student_counter");
                 let counter = currentCounterStr ? parseInt(currentCounterStr, 10) : 1;
                 const currentYear = new Date().getFullYear().toString().slice(-2);
@@ -94,8 +96,8 @@ export async function onRequest(context) {
                     whatsapp: (regData.whatsapp || regData.phone).trim(),
                     email: regData.email.trim(),
                     address: (regData.address || "").trim(),
-                    course: regData.course,
-                    courseFee: regData.courseFee || "Configured Fee",
+                    courses: regData.courses, // Array of selected course names
+                    totalFee: regData.totalFee || "R 0",
                     paymentMethod: regData.paymentMethod || "EFT",
                     paymentStatus,
                     status: regStatus,
@@ -115,7 +117,8 @@ export async function onRequest(context) {
                     success: true,
                     studentNumber,
                     studentName: `${newRecord.fname} ${newRecord.sname}`,
-                    course: newRecord.course
+                    courses: newRecord.courses,
+                    totalFee: newRecord.totalFee
                 }), { status: 200, headers });
             }
 
@@ -135,6 +138,23 @@ export async function onRequest(context) {
                 return new Response(JSON.stringify({ success: true }), { status: 200, headers });
             }
 
+            // C. ADMIN DELETING/DEREGISTERING A STUDENT (PASSWORD PROTECTED)
+            if (body.action === "deleteRegistration") {
+                const suppliedPassword = request.headers.get("Authorization") || "";
+                if (!adminSecret || suppliedPassword.trim() !== adminSecret.trim()) {
+                    return new Response(JSON.stringify({ error: "Unauthorized: Invalid Admin Password." }), { status: 401, headers });
+                }
+
+                const { studentNumber } = body.data;
+                const existingRegsStr = await kv.get("registrations");
+                let registrations = existingRegsStr ? JSON.parse(existingRegsStr) : [];
+
+                registrations = registrations.filter(r => r.studentNumber !== studentNumber);
+                await kv.put("registrations", JSON.stringify(registrations));
+
+                return new Response(JSON.stringify({ success: true, message: `Deregistered ${studentNumber}` }), { status: 200, headers });
+            }
+
             return new Response(JSON.stringify({ error: "Unknown action." }), { status: 400, headers });
 
         } catch (error) {
@@ -143,4 +163,4 @@ export async function onRequest(context) {
     }
 
     return new Response(JSON.stringify({ error: "Method not allowed." }), { status: 405, headers });
-                        }
+}
