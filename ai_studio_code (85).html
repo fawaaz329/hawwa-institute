@@ -1,0 +1,1498 @@
+<!doctype html>
+<html lang="en" class="scroll-smooth">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Hawwā Institute | Islamic Knowledge • Divine Guidance</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,400;1,600&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+<style>
+:root {
+  --brand-green: #008f5d;
+  --dark-green: #006642;
+  --light-green: #eaf6f0;
+  --brand-purple: #5b0a63;
+  --dark-purple: #420448;
+  --light-purple: #fbf0fd;
+  --gold-trim: #d4a745;
+  --paper: #fdfdfc;
+  --ink: #1e1e1e;
+  --muted: #6b7280;
+  --line: rgba(0, 143, 93, 0.14);
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--paper); color: var(--ink); font-family: "DM Sans", sans-serif; }
+.serif { font-family: "Cormorant Garamond", serif; }
+.container { width: min(1200px, calc(100% - 40px)); margin: auto; }
+
+/* HEADER & NAVBAR */
+.nav { position: fixed; inset: 0 0 auto; z-index: 50; background: #ffffff; border-bottom: 2px solid var(--brand-purple); box-shadow: 0 2px 12px rgba(91,10,99,0.08); transition: .3s; }
+.navin { min-height: 80px; display: flex; align-items: center; justify-content: space-between; gap: 20px; }
+.brand { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+.brand-logo-small { height: 50px; width: auto; object-fit: contain; background: #fff; border: 2px solid #1a1a1a; border-radius: 8px; padding: 2px; }
+.brand span { font-size: 13px; letter-spacing: .2em; text-transform: uppercase; font-weight: 800; color: var(--brand-purple); }
+
+.links { display: flex; gap: 22px; align-items: center; font-size: 11px; letter-spacing: .12em; text-transform: uppercase; font-weight: 700; }
+.links a { color: #2d3748; text-decoration: none; transition: .2s; }
+.links a:hover { color: var(--brand-green); }
+.pill-cta { border: 2px solid var(--brand-green); color: #fff !important; background: var(--brand-green); padding: 10px 22px; border-radius: 999px; font-weight: 700; transition: .2s; }
+.pill-cta:hover { background: var(--dark-green); border-color: var(--dark-green); }
+
+/* HERO SECTION WITH LARGE CENTERPIECE LOGO */
+.hero { min-height: 720px; display: flex; align-items: center; justify-content: center; position: relative; background: linear-gradient(180deg, #ffffff 0%, #f4faf7 60%, #ebf6f1 100%); border-bottom: 3px solid var(--brand-purple); padding-top: 100px; padding-bottom: 60px; text-align: center; }
+.hero-logo-main { max-height: 240px; width: auto; object-fit: contain; margin: 0 auto 30px; filter: drop-shadow(0 10px 25px rgba(91,10,99,0.15)); }
+
+/* SECTIONS */
+.notice-bar { background: var(--brand-purple); color: #fff; padding: 12px 0; font-size: 13px; font-weight: 500; }
+.section { padding: 90px 0; }
+.section-green { background: var(--light-green); }
+.section-purple { background: var(--dark-purple); color: #fff; }
+
+.cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 28px; }
+.card { background: #fff; border: 1.5px solid var(--line); border-radius: 12px; padding: 32px; transition: .3s; display: flex; flex-direction: column; justify-content: space-between; position: relative; overflow: hidden; }
+.card:hover { transform: translateY(-5px); border-color: var(--brand-green); box-shadow: 0 16px 35px rgba(0, 143, 93, 0.12); }
+.card-badge { position: absolute; top: 0; right: 0; background: var(--brand-purple); color: #fff; font-size: 9px; font-weight: 800; letter-spacing: .15em; text-transform: uppercase; padding: 6px 14px; border-bottom-left-radius: 8px; }
+
+/* MODALS */
+.modal { position: fixed; inset: 0; background: rgba(20, 10, 25, 0.85); backdrop-filter: blur(8px); z-index: 100; display: flex; align-items: center; justify-content: center; padding: 15px; }
+.hidden { display: none !important; }
+
+/* 5-STEP WIZARD */
+.step-node { width: 34px; height: 34px; border-radius: 50%; background: #e2e8f0; color: #64748b; font-weight: bold; display: flex; align-items: center; justify-content: center; font-size: 12px; }
+.step-node.active { background: var(--brand-purple); color: #fff; transform: scale(1.1); box-shadow: 0 0 0 4px rgba(91,10,99,0.2); }
+.step-node.done { background: var(--brand-green); color: #fff; }
+
+@media(max-width:900px){
+  .links { display: none; }
+  .menu { display: block; }
+  .hero-logo-main { max-height: 180px; }
+}
+.mobile { display: none; background: #ffffff; border-bottom: 2px solid var(--brand-purple); padding: 16px 24px; }
+.mobile.open { display: block; }
+.mobile a { display: block; padding: 12px 0; font-size: 13px; font-weight: 700; color: var(--brand-purple); text-decoration: none; border-bottom: 1px solid #f1f5f9; }
+</style>
+</head>
+<body>
+
+<!-- TOAST -->
+<div id="toastNotification" style="position:fixed;right:20px;bottom:20px;z-index:250;background:#1e1e1e;color:#fff;padding:14px 22px;border-left:4px solid var(--brand-green);border-radius:6px;transform:translateY(120px);opacity:0;transition:.3s;box-shadow:0 10px 30px rgba(0,0,0,0.3)">
+  <span id="toastMessage">Update confirmed.</span>
+</div>
+
+<!-- NAVBAR -->
+<nav id="siteNav" class="nav">
+  <div class="container navin">
+    <a href="#home" class="brand">
+      <img src="logo.png" alt="Hawwā Logo" class="brand-logo-small">
+      <span>Hawwā Institute</span>
+    </a>
+    <div class="links">
+      <a href="#home">Home</a>
+      <a href="#about">About</a>
+      <a href="#courses">Programmes</a>
+      <a href="#how-to-register">How to Register</a>
+      <a href="#timetable">Timetable</a>
+      <a href="#resources">Kutub & Resources</a>
+      <a href="#contact">Contact</a>
+      <button onclick="openRegistrationModal()" class="pill-cta"><i class="fa-solid fa-pen-to-square mr-1.5"></i> Register Now</button>
+    </div>
+    <button class="menu text-slate-800 text-2xl" onclick="toggleMobileMenu()" aria-label="Toggle Menu">☰</button>
+  </div>
+  <div id="mobileMenu" class="mobile">
+    <a href="#home" onclick="toggleMobileMenu()">Home</a>
+    <a href="#about" onclick="toggleMobileMenu()">About Hawwā</a>
+    <a href="#courses" onclick="toggleMobileMenu()">Programmes</a>
+    <a href="#how-to-register" onclick="toggleMobileMenu()">How to Register</a>
+    <a href="#timetable" onclick="toggleMobileMenu()">Timetable</a>
+    <a href="#resources" onclick="toggleMobileMenu()">Kutub & Resources</a>
+    <a href="#contact" onclick="toggleMobileMenu()">Contact</a>
+    <a href="javascript:void(0)" onclick="toggleMobileMenu(); openRegistrationModal();" style="color:var(--brand-green)">Register Online →</a>
+  </div>
+</nav>
+
+<!-- HERO WITH PROMINENT CENTERPIECE LOGO -->
+<header id="home" class="hero">
+  <div class="container max-w-4xl">
+    <img src="logo.png" alt="Hawwā Institute Main Emblem" class="hero-logo-main">
+    
+    <div class="inline-block px-4 py-1.5 bg-[#eaf6f0] border border-[#008f5d40] text-[#008f5d] font-bold text-xs tracking-widest uppercase rounded-full mb-3">
+      Islamic Knowledge • Divine Guidance
+    </div>
+    <h1 class="serif text-5xl sm:text-6xl md:text-7xl font-bold text-[#1e1e1e] leading-tight mb-4">
+      Knowledge. Understanding. Practice.
+    </h1>
+    <p id="publicTagline" class="text-base sm:text-lg text-slate-600 max-w-2xl mx-auto mb-8 font-normal">
+      A refined digital hub for authentic sacred Islamic education, student admissions, announcements, and academic resources in South Africa.
+    </p>
+    <div class="flex justify-center gap-4 flex-wrap">
+      <button onclick="openRegistrationModal()" class="px-8 py-3.5 bg-[#008f5d] hover:bg-[#006642] text-white font-bold text-xs uppercase tracking-wider rounded-full shadow-lg transition">
+        <i class="fa-solid fa-id-card mr-2"></i> Register Online
+      </button>
+      <a href="#courses" class="px-8 py-3.5 border-2 border-[#5b0a63] text-[#5b0a63] hover:bg-[#fbf0fd] font-bold text-xs uppercase tracking-wider rounded-full transition">
+        Explore Courses →
+      </a>
+    </div>
+  </div>
+</header>
+
+<!-- NOTICE BANNER -->
+<section class="notice-bar">
+  <div class="container flex justify-between items-center px-4">
+    <div class="flex items-center gap-3">
+      <span class="bg-[#d4a745] text-[#1e1e1e] text-[10px] uppercase font-extrabold px-2.5 py-0.5 rounded">Notice</span>
+      <span id="live-announcement">Official semester admissions are currently open.</span>
+    </div>
+    <a href="#courses" class="text-white underline text-xs uppercase tracking-wider font-bold">Details</a>
+  </div>
+</section>
+
+<!-- ABOUT HAWWĀ -->
+<section id="about" class="section">
+  <div class="container text-center max-w-4xl">
+    <span class="text-xs font-extrabold text-[#5b0a63] tracking-widest uppercase block mb-2">About The Institute</span>
+    <h2 class="serif text-4xl sm:text-5xl font-bold text-[#1e1e1e] mb-6" id="aboutMottoHeading">A place to learn. A place to understand.</h2>
+    <p id="publicAbout" class="text-base text-slate-600 leading-relaxed mb-12">
+      Hawwā Institute provides a structured, premium environment for seekers of sacred knowledge, synthesizing deep traditional learning with practical spiritual development.
+    </p>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-left">
+      <div class="p-8 bg-[#fdfdfc] border border-[#008f5d25] rounded-xl shadow-sm">
+        <span class="text-xs font-bold tracking-widest text-[#008f5d] uppercase block mb-2">Our Vision</span>
+        <h3 class="font-serif text-2xl font-bold text-[#5b0a63] mb-2">Sacred Understanding</h3>
+        <p class="text-xs text-slate-600 leading-relaxed" id="aboutVisionText">Fostering a generation grounded in authentic classical knowledge and exemplary practical character.</p>
+      </div>
+
+      <div class="p-8 bg-[#fdfdfc] border border-[#008f5d25] rounded-xl shadow-sm">
+        <span class="text-xs font-bold tracking-widest text-[#008f5d] uppercase block mb-2">Our Mission</span>
+        <h3 class="font-serif text-2xl font-bold text-[#5b0a63] mb-2">Scholarly Excellence</h3>
+        <p class="text-xs text-slate-600 leading-relaxed" id="aboutMissionText">Delivering structured curricula taught by verified scholars with an emphasis on comprehension and practice.</p>
+      </div>
+
+      <div class="p-8 bg-[#fdfdfc] border border-[#008f5d25] rounded-xl shadow-sm">
+        <span class="text-xs font-bold tracking-widest text-[#008f5d] uppercase block mb-2">Educational Philosophy</span>
+        <h3 class="font-serif text-2xl font-bold text-[#5b0a63] mb-2">Gradual Mastery</h3>
+        <p class="text-xs text-slate-600 leading-relaxed" id="aboutPhilosophyText">Empowering students through progressive stages of knowledge, bridging theory with personal implementation.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COURSES -->
+<section id="courses" class="section section-green">
+  <div class="container">
+    <div class="text-center max-w-2xl mx-auto mb-12">
+      <span class="text-xs font-extrabold text-[#008f5d] tracking-widest uppercase block mb-2">Programmes</span>
+      <h2 class="serif text-4xl sm:text-5xl font-bold text-[#1e1e1e]">Academic Offerings</h2>
+      <p class="text-sm text-slate-600 mt-2">Select courses below to enroll. Multiple courses can be selected during registration.</p>
+    </div>
+    <div id="publicCourses" class="cards"></div>
+  </div>
+</section>
+
+<!-- HOW REGISTRATION WORKS -->
+<section id="how-to-register" class="section">
+  <div class="container max-w-4xl text-center">
+    <span class="text-xs font-extrabold text-[#5b0a63] tracking-widest uppercase block mb-2">Student Workflow</span>
+    <h2 class="serif text-4xl font-bold text-[#1e1e1e] mb-10">How Registration Works</h2>
+    
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
+      <div class="p-6 bg-white border border-slate-200 rounded-xl shadow-sm">
+        <div class="w-10 h-10 rounded-full bg-[#fbf0fd] text-[#5b0a63] font-bold text-base flex items-center justify-center mx-auto mb-3">1</div>
+        <h4 class="font-bold text-sm text-slate-900 mb-1">Pick Courses</h4>
+        <p class="text-xs text-slate-500">Tick 1 or more programmes.</p>
+      </div>
+      <div class="p-6 bg-white border border-slate-200 rounded-xl shadow-sm">
+        <div class="w-10 h-10 rounded-full bg-[#fbf0fd] text-[#5b0a63] font-bold text-base flex items-center justify-center mx-auto mb-3">2</div>
+        <h4 class="font-bold text-sm text-slate-900 mb-1">Personal Info</h4>
+        <p class="text-xs text-slate-500">Provide contact & SA WhatsApp.</p>
+      </div>
+      <div class="p-6 bg-white border border-slate-200 rounded-xl shadow-sm">
+        <div class="w-10 h-10 rounded-full bg-[#fbf0fd] text-[#5b0a63] font-bold text-base flex items-center justify-center mx-auto mb-3">3</div>
+        <h4 class="font-bold text-sm text-slate-900 mb-1">Payment / Hadiya</h4>
+        <p class="text-xs text-slate-500">Fixed monthly or voluntary gift.</p>
+      </div>
+      <div class="p-6 bg-white border border-slate-200 rounded-xl shadow-sm">
+        <div class="w-10 h-10 rounded-full bg-[#eaf6f0] text-[#008f5d] font-bold text-base flex items-center justify-center mx-auto mb-3">4</div>
+        <h4 class="font-bold text-sm text-slate-900 mb-1">POPIA & ID</h4>
+        <p class="text-xs text-slate-500">Consent & get <code>HAW-26XXXX</code>.</p>
+      </div>
+    </div>
+
+    <div class="mt-10">
+      <button onclick="openRegistrationModal()" class="px-8 py-3.5 bg-[#5b0a63] hover:bg-[#420448] text-white font-bold text-xs uppercase tracking-wider rounded-full shadow-lg transition">
+        <i class="fa-solid fa-pen-nib mr-2"></i> Start Online Registration
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- TIMETABLE & KUTUB / RESOURCES -->
+<section id="timetable" class="section section-green">
+  <div class="container grid grid-cols-1 lg:grid-cols-2 gap-10">
+    <div class="p-8 bg-white border border-[#008f5d25] rounded-xl shadow-sm">
+      <h3 class="font-serif text-3xl font-bold text-[#5b0a63] mb-6"><i class="fa-regular fa-calendar-days text-[#008f5d] mr-2"></i> Class Timetable</h3>
+      <div id="publicTimetable" class="space-y-3"></div>
+    </div>
+    
+    <div id="resources" class="p-8 bg-white border border-[#008f5d25] rounded-xl shadow-sm">
+      <h3 class="font-serif text-3xl font-bold text-[#5b0a63] mb-6"><i class="fa-solid fa-book-quran text-[#008f5d] mr-2"></i> Kutub, Mutūn & Resources</h3>
+      <div id="publicResources" class="space-y-3"></div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER WITH DYNAMIC NAMED WHATSAPP & CONTACT CARDS -->
+<footer id="contact" class="bg-[#18111a] text-[#b8aab9] pt-16 pb-10 border-t-4 border-[#5b0a63]">
+  <div class="container grid grid-cols-1 md:grid-cols-3 gap-10 pb-12 border-b border-[#2d2230]">
+    <div>
+      <div class="brand mb-4">
+        <img src="logo.png" alt="Logo" class="brand-logo-small bg-white">
+        <span class="text-white">Hawwā Institute</span>
+      </div>
+      <p class="text-xs leading-relaxed text-slate-400">Islamic Knowledge • Divine Guidance. Providing authentic classical education with an emphasis on understanding and practice.</p>
+      <p id="footerLocation" class="text-xs text-[#008f5d] font-bold mt-4"><i class="fa-solid fa-location-dot mr-1"></i> Cape Town, South Africa</p>
+    </div>
+
+    <div>
+      <h4 class="text-xs font-bold text-white uppercase tracking-widest mb-4">Quick Navigation</h4>
+      <ul class="space-y-2 text-xs">
+        <li><a href="#about" class="hover:text-white">About Hawwā</a></li>
+        <li><a href="#courses" class="hover:text-white">Approved Programmes</a></li>
+        <li><a href="#timetable" class="hover:text-white">Timetable Schedule</a></li>
+        <li><a href="#resources" class="hover:text-white">Kutub & Mutūn Resources</a></li>
+        <li><a href="javascript:void(0)" onclick="openRegistrationModal()" class="text-[#008f5d] font-bold">Online Student Registration</a></li>
+      </ul>
+    </div>
+
+    <div>
+      <h4 class="text-xs font-bold text-white uppercase tracking-widest mb-4">Official Contact Desks</h4>
+      <div id="footerContactsContainer" class="space-y-2 mb-4"></div>
+      
+      <div class="pt-2">
+        <button onclick="openAdmin()" class="px-4 py-2 border border-[#5b0a63] bg-[#290d2e] text-[#e39fed] rounded-lg text-xs font-bold uppercase tracking-wider hover:bg-[#5b0a63] hover:text-white transition">
+          <i class="fa-solid fa-lock mr-1.5"></i> Admin Portal
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="container pt-6 text-center text-xs text-slate-500">
+    © 2026 Hawwā Institute. All rights reserved. • Cape Town, South Africa
+  </div>
+</footer>
+
+<!-- ========================================================================= -->
+<!-- 5-STEP STUDENT REGISTRATION WIZARD (HADIYA / MONTHLY SUPPORT)              -->
+<!-- ========================================================================= -->
+<div id="registrationModal" class="modal hidden">
+  <div class="bg-white w-full max-w-2xl rounded-2xl shadow-2xl overflow-hidden relative max-h-[94vh] flex flex-col border border-slate-200">
+    
+    <div class="bg-[#5b0a63] text-white p-5 flex justify-between items-center">
+      <div>
+        <span class="text-[10px] text-[#e39fed] tracking-widest uppercase font-bold">Online Admission</span>
+        <h3 class="font-serif text-2xl font-bold">Student Registration</h3>
+      </div>
+      <button onclick="closeRegistrationModal()" class="text-white hover:text-slate-200 text-2xl font-bold">×</button>
+    </div>
+
+    <div class="p-6 md:p-8 overflow-y-auto flex-grow">
+      
+      <!-- Stepper Indicator -->
+      <div class="flex justify-between items-center mb-8 relative">
+        <div class="step-node active" id="node-1">1</div>
+        <div class="step-node" id="node-2">2</div>
+        <div class="step-node" id="node-3">3</div>
+        <div class="step-node" id="node-4">4</div>
+        <div class="step-node" id="node-5">5</div>
+      </div>
+
+      <!-- SUCCESS CONFIRMATION SCREEN -->
+      <div id="step-success" class="hidden text-center py-6 space-y-4">
+        <div class="w-16 h-16 rounded-full bg-[#eaf6f0] text-[#008f5d] flex items-center justify-center mx-auto text-3xl">
+          <i class="fa-solid fa-circle-check"></i>
+        </div>
+        <h3 class="font-serif text-3xl font-bold text-[#5b0a63]">REGISTRATION RECEIVED</h3>
+        <p class="text-sm text-slate-600 max-w-md mx-auto">Jazākallāhu Khayran for registering with Hawwā Institute. Your application has been recorded.</p>
+        
+        <div class="p-6 bg-[#fbf0fd] border-2 border-[#5b0a63] rounded-xl max-w-sm mx-auto shadow-inner" id="registrationSlipPrintArea">
+          <span class="text-xs uppercase font-bold tracking-widest text-[#5b0a63] block mb-1">Official Student Number</span>
+          <span class="font-mono text-3xl font-black text-[#1e1e1e]" id="assignedStudentNumber">HAW-260001</span>
+          <div class="mt-3 pt-3 border-t border-[#5b0a6330] text-xs text-slate-600 text-left space-y-1">
+            <div><strong>Student:</strong> <span id="slipStudentName"></span></div>
+            <div><strong>Programme(s):</strong> <span id="slipCourses"></span></div>
+            <div><strong>Contribution:</strong> <span id="slipTotalFee" class="font-bold text-[#008f5d]"></span></div>
+          </div>
+        </div>
+
+        <div class="flex justify-center gap-3 pt-2">
+          <button onclick="shareStudentConfirmationWhatsApp()" class="px-5 py-2.5 bg-[#25d366] hover:bg-[#1ebd5b] text-white font-bold text-xs rounded-full shadow">
+            <i class="fa-brands fa-whatsapp mr-1"></i> Send Confirmation to My WhatsApp
+          </button>
+          <button onclick="printRegistrationSlip()" class="px-5 py-2.5 bg-slate-800 hover:bg-slate-900 text-white font-bold text-xs rounded-full shadow">
+            <i class="fa-solid fa-download mr-1"></i> Download Slip
+          </button>
+        </div>
+
+        <div class="pt-4">
+          <button onclick="closeRegistrationModal()" class="text-xs text-slate-400 hover:underline">Close Window</button>
+        </div>
+      </div>
+
+      <!-- MULTI-STEP FORM -->
+      <form id="multiStepForm" onsubmit="handleRegistrationSubmit(event)">
+        
+        <!-- STEP 1: PERSONAL INFORMATION -->
+        <div id="wizard-step-1" class="wizard-pane space-y-4">
+          <h4 class="text-sm font-bold text-[#5b0a63] border-b pb-2">Step 1 — Personal Information</h4>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div><label class="text-[10px] font-bold text-slate-600 uppercase">First Name *</label><input type="text" id="regFname" required class="w-full p-2.5 border rounded text-xs bg-slate-50"></div>
+            <div><label class="text-[10px] font-bold text-slate-600 uppercase">Surname *</label><input type="text" id="regSname" required class="w-full p-2.5 border rounded text-xs bg-slate-50"></div>
+            <div><label class="text-[10px] font-bold text-slate-600 uppercase">SA Mobile Number (e.g. 0749115610) *</label><input type="tel" id="regMobile" required class="w-full p-2.5 border rounded text-xs bg-slate-50"></div>
+            <div><label class="text-[10px] font-bold text-slate-600 uppercase">WhatsApp Number (e.g. 0820000000) *</label><input type="tel" id="regWhatsApp" required class="w-full p-2.5 border rounded text-xs bg-slate-50"></div>
+            <div class="sm:col-span-2"><label class="text-[10px] font-bold text-slate-600 uppercase">Email Address *</label><input type="email" id="regEmail" required class="w-full p-2.5 border rounded text-xs bg-slate-50"></div>
+            <div class="sm:col-span-2"><label class="text-[10px] font-bold text-slate-600 uppercase">Residential Address</label><input type="text" id="regAddress" class="w-full p-2.5 border rounded text-xs bg-slate-50"></div>
+          </div>
+        </div>
+
+        <!-- STEP 2: MULTI-COURSE SELECTION & HADIYA NOTE -->
+        <div id="wizard-step-2" class="wizard-pane hidden space-y-4">
+          <h4 class="text-sm font-bold text-[#5b0a63] border-b pb-2">Step 2 — Select Programme(s)</h4>
+          
+          <div class="p-3 bg-[#fbf0fd] border border-[#5b0a6330] rounded-xl text-[11px] text-slate-700 leading-relaxed">
+            <i class="fa-solid fa-circle-info text-[#5b0a63] mr-1"></i>
+            <strong>Tuition & Contribution Philosophy:</strong> Hawwā Institute structures tuition around minimal monthly utility contributions or a voluntary <em>Hadiya</em> donation model to ensure authentic sacred knowledge remains accessible to all community members.
+          </div>
+
+          <div id="multiCourseCheckboxList" class="space-y-3 pt-1"></div>
+
+          <div class="p-3.5 bg-[#f4faf7] border border-[#008f5d40] rounded-xl flex justify-between items-center">
+            <span class="text-xs font-bold text-slate-700">Calculated Contribution Total:</span>
+            <span id="wizardCalculatedTotal" class="font-mono text-base font-black text-[#008f5d]">R 0</span>
+          </div>
+        </div>
+
+        <!-- STEP 3: PAYMENT METHOD & DYNAMIC BANKING -->
+        <div id="wizard-step-3" class="wizard-pane hidden space-y-4">
+          <h4 class="text-sm font-bold text-[#5b0a63] border-b pb-2">Step 3 — Contribution & Payment Option</h4>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <label class="p-4 border-2 rounded-xl cursor-pointer flex flex-col justify-between hover:border-[#008f5d] transition">
+              <div class="flex items-center gap-3">
+                <input type="radio" name="payMethod" value="EFT" checked onchange="togglePaymentSelection('EFT')" class="text-[#008f5d]">
+                <strong class="text-sm text-[#1e1e1e]">EFT / Bank Deposit</strong>
+              </div>
+              <p class="text-xs text-slate-500 mt-2">Transfer to Hawwā bank account (attach receipt in Step 4).</p>
+            </label>
+
+            <label class="p-4 border-2 rounded-xl cursor-pointer flex flex-col justify-between hover:border-[#008f5d] transition">
+              <div class="flex items-center gap-3">
+                <input type="radio" name="payMethod" value="CASH" onchange="togglePaymentSelection('CASH')" class="text-[#008f5d]">
+                <strong class="text-sm text-[#1e1e1e]">Cash Settlement</strong>
+              </div>
+              <p class="text-xs text-slate-500 mt-2">Settle in cash directly at the campus office.</p>
+            </label>
+          </div>
+
+          <div id="eftBankingDetailsBox" class="p-4 bg-[#fbf0fd] border border-[#5b0a6330] rounded-xl text-xs space-y-1 mt-4">
+            <strong class="text-[#5b0a63] block mb-1">Official Hawwā Institute Banking Details:</strong>
+            <div><strong>Bank:</strong> <span id="bankDisplayBank">-</span></div>
+            <div><strong>Account Name:</strong> <span id="bankDisplayName">-</span></div>
+            <div><strong>Account Number:</strong> <span id="bankDisplayNumber">-</span></div>
+            <div><strong>Branch Code:</strong> <span id="bankDisplayBranch">-</span></div>
+            <div><strong>Reference:</strong> <span id="bankDisplayRef">-</span></div>
+          </div>
+        </div>
+
+        <!-- STEP 4: PROOF UPLOAD (UP TO 10MB) -->
+        <div id="wizard-step-4" class="wizard-pane hidden space-y-4">
+          <h4 class="text-sm font-bold text-[#5b0a63] border-b pb-2">Step 4 — Upload Payment Receipt</h4>
+          <div id="eftProofContainer">
+            <p class="text-xs text-slate-600 mb-3">Upload your deposit receipt image, camera photo, or PDF (Max 10MB):</p>
+            <input type="file" id="proofFileInput" accept="image/*,application/pdf" onchange="handleProofPreview(event)" class="w-full p-3 border rounded text-xs bg-slate-50">
+            <div id="proofPreviewBox" class="hidden mt-4 p-4 border rounded-xl bg-slate-50 text-center">
+              <span class="text-xs font-bold block mb-2 text-slate-700">Receipt Attached: <span id="proofFileName"></span></span>
+              <img id="proofImagePreview" src="" class="hidden max-h-48 mx-auto rounded border shadow-sm">
+            </div>
+          </div>
+          <div id="cashSkipNotice" class="hidden p-4 bg-amber-50 border border-amber-200 rounded text-xs text-amber-900">
+            <i class="fa-solid fa-circle-info mr-1.5"></i> You selected <strong>CASH payment</strong>. No receipt upload required.
+          </div>
+        </div>
+
+        <!-- STEP 5: REVIEW, POPIA COMPLIANCE & MEDIA / VIDEO CONSENT -->
+        <div id="wizard-step-5" class="wizard-pane hidden space-y-5">
+          <h4 class="text-sm font-bold text-[#5b0a63] border-b pb-2">Step 5 — Review & Legal Consent</h4>
+          
+          <div class="p-4 bg-[#fdfdfc] border rounded-xl text-xs space-y-2">
+            <div><strong>Student Name:</strong> <span id="reviewName">-</span></div>
+            <div><strong>Contact:</strong> <span id="reviewContact">-</span></div>
+            <div><strong>Selected Programme(s):</strong> <span id="reviewCourses" class="font-bold text-[#5b0a63]">-</span></div>
+            <div><strong>Contribution / Fee Total:</strong> <span id="reviewTotal" class="font-bold text-[#008f5d]">-</span></div>
+            <div><strong>Settlement Method:</strong> <span id="reviewPayment" class="font-bold">-</span></div>
+          </div>
+
+          <!-- POPIA & SOCIAL MEDIA CONSENT -->
+          <div class="p-4 bg-[#fbf0fd] border-2 border-[#5b0a6340] rounded-xl text-xs space-y-3">
+            <div class="flex items-center gap-2 font-bold text-[#5b0a63] text-xs uppercase tracking-wider">
+              <i class="fa-solid fa-shield-halved"></i>
+              <span>POPIA Data Privacy & Media / Video Consent</span>
+            </div>
+            
+            <p class="text-[11px] text-slate-700 leading-relaxed">
+              <strong>1. POPIA Compliance:</strong> In terms of the Protection of Personal Information Act (POPIA), Hawwā Institute processes your personal data strictly for enrollment, communication, and administrative purposes [4].
+            </p>
+            <p class="text-[11px] text-slate-700 leading-relaxed">
+              <strong>2. Media & Photography Release:</strong> You acknowledge that Hawwā Institute documents student progress, events, and class activities through photographs and videos for institutional promotion and official social media channels. You grant permission to Hawwā Institute to use such media respectfully.
+            </p>
+
+            <label class="flex items-start gap-2.5 pt-2 border-t border-[#5b0a6320] cursor-pointer">
+              <input type="checkbox" id="regPopiaConsent" required class="w-4 h-4 text-[#5b0a63] rounded mt-0.5">
+              <span class="text-xs font-bold text-slate-900 leading-snug">
+                I confirm that I have read, understood, and agree to the POPIA Data Protection and Media / Social Video Consent terms of Hawwā Institute. *
+              </span>
+            </label>
+          </div>
+        </div>
+
+        <!-- WIZARD BUTTONS -->
+        <div class="flex justify-between items-center pt-6 border-t mt-8">
+          <button type="button" id="prevBtn" onclick="navigateStep(-1)" class="px-5 py-2.5 border rounded-full text-xs font-bold text-slate-700 hidden">← Back</button>
+          <div class="ml-auto flex gap-3">
+            <button type="button" id="nextBtn" onclick="navigateStep(1)" class="px-6 py-2.5 bg-[#5b0a63] hover:bg-[#420448] text-white rounded-full text-xs font-bold">Next Step →</button>
+            <button type="submit" id="submitRegBtn" class="px-6 py-2.5 bg-[#008f5d] hover:bg-[#006642] text-white rounded-full text-xs font-bold hidden"><i class="fa-solid fa-cloud-arrow-up mr-1.5"></i> Confirm & Submit</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- ========================================================================= -->
+<!-- RESPONSIVE FULL-SCREEN / DESKTOP ADMIN MASTER CONSOLE                     -->
+<!-- ========================================================================= -->
+<div id="adminModal" class="modal hidden">
+  
+  <!-- LOGIN SCREEN -->
+  <div id="adminLoginBox" class="bg-white w-full max-w-sm rounded-2xl shadow-2xl p-8 text-center relative border border-slate-200">
+    <button onclick="closeAdmin()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-800 text-xl font-bold">×</button>
+    <div class="w-12 h-12 rounded-full bg-[#fbf0fd] text-[#5b0a63] flex items-center justify-center mx-auto text-xl mb-3">
+      <i class="fa-solid fa-lock"></i>
+    </div>
+    <h3 class="font-serif text-2xl font-bold text-[#1e1e1e] mb-1">Hawwā Staff Access</h3>
+    <p class="text-xs text-slate-500 mb-6">Enter administrator password to open the master portal.</p>
+    
+    <input type="password" id="adminPass" placeholder="Admin password" class="w-full p-3 border rounded text-xs bg-slate-50 mb-3 outline-none focus:border-[#5b0a63]">
+    <button onclick="loginAdmin()" id="adminLoginBtn" class="w-full py-3 bg-[#5b0a63] hover:bg-[#420448] text-white rounded-xl text-xs font-bold transition">
+      Enter Admin Console →
+    </button>
+    <p id="loginErr" class="text-xs text-rose-700 bg-rose-50 border border-rose-200 p-2.5 rounded mt-3 hidden font-bold"></p>
+  </div>
+
+  <!-- DESKTOP & MOBILE ADMIN PORTAL WINDOW -->
+  <div id="adminDashBox" class="hidden w-full max-w-7xl h-full max-h-[96vh] bg-[#fdfdfc] rounded-2xl shadow-2xl flex flex-col overflow-hidden border-2 border-[#5b0a63]">
+    
+    <!-- Top Branded Admin Header -->
+    <div class="bg-[#18111a] text-white px-6 py-4 flex flex-wrap justify-between items-center gap-4 border-b border-[#36263a]">
+      <div class="flex items-center gap-3">
+        <img src="logo.png" alt="Logo" class="brand-logo-small bg-white !h-9">
+        <div>
+          <strong class="text-sm text-white block">Hawwā Institute — Administration Portal</strong>
+          <span class="text-[10px] text-[#e39fed]">Cloudflare KV Synced • ID Recycling Active</span>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-3">
+        <!-- BRANDED LUXURY SECTION JUMP DROPDOWN -->
+        <select id="adminSectionJumpDropdown" onchange="switchAdminTab(this.value)" class="bg-[#290d2e] border-2 border-[#5b0a63] text-xs text-[#e39fed] font-bold p-2.5 rounded-xl outline-none shadow-sm cursor-pointer">
+          <option value="tab-overview">📊 Dashboard Overview</option>
+          <option value="tab-registrations">👥 Student Applications & ID Recycling</option>
+          <option value="tab-payments">💳 Payment Verifications</option>
+          <option value="tab-banking">🏦 Banking & EFT Setup</option>
+          <option value="tab-messages">💬 WhatsApp Messenger</option>
+          <option value="tab-courses">📚 Course Catalog & Hadiya</option>
+          <option value="tab-timetable">🗓️ Timetable</option>
+          <option value="tab-resources">📖 Kutub & Resources</option>
+          <option value="tab-about">🏛️ About Hawwā Info</option>
+          <option value="tab-notices">📢 Notice Board</option>
+          <option value="tab-contacts-mgmt">📞 Named WhatsApp Desks & Socials</option>
+        </select>
+
+        <button onclick="saveAdminData()" id="adminSaveBtn" class="px-4 py-2.5 bg-[#008f5d] hover:bg-[#006642] text-white rounded-xl text-xs font-bold shadow transition">
+          <i class="fa-solid fa-cloud-arrow-up mr-1"></i> Save Changes
+        </button>
+        <button onclick="logoutAdmin()" class="px-4 py-2.5 bg-rose-700 hover:bg-rose-800 text-white rounded-xl text-xs font-bold transition flex items-center gap-1.5 shadow">
+          <i class="fa-solid fa-arrow-right-from-bracket"></i>
+          <span>Logout</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- MAIN SCROLLABLE ADMIN PANES -->
+    <div class="flex-grow p-6 overflow-y-auto bg-[#f8fafc]">
+      
+      <!-- TAB 1: OVERVIEW -->
+      <div id="tab-overview" class="admin-tab-pane space-y-6">
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
+          <div class="p-6 bg-white border border-slate-200 rounded-xl shadow-sm">
+            <span class="text-xs font-bold text-slate-500 uppercase">Active Students</span>
+            <strong id="dashTotalStudents" class="text-4xl font-black text-[#5b0a63] block mt-1">0</strong>
+          </div>
+          <div class="p-6 bg-white border border-slate-200 rounded-xl shadow-sm">
+            <span class="text-xs font-bold text-amber-600 uppercase">Awaiting Cash / Proof</span>
+            <strong id="dashAwaitingPayment" class="text-4xl font-black text-amber-600 block mt-1">0</strong>
+          </div>
+          <div class="p-6 bg-white border border-slate-200 rounded-xl shadow-sm">
+            <span class="text-xs font-bold text-[#008f5d] uppercase">Receipts To Verify</span>
+            <strong id="dashProofsToReview" class="text-4xl font-black text-[#008f5d] block mt-1">0</strong>
+          </div>
+        </div>
+
+        <div class="p-6 bg-white border border-slate-200 rounded-xl shadow-sm">
+          <h4 class="font-bold text-sm text-[#1e1e1e] mb-3">Cash Follow-up Queue (Cape Town)</h4>
+          <div id="dashCashQueue" class="space-y-2 text-xs"></div>
+        </div>
+      </div>
+
+      <!-- TAB 2: REGISTRATIONS (SEARCH, FILTERS, NUMBER RECYCLING & SECURE DELETE) -->
+      <div id="tab-registrations" class="admin-tab-pane hidden space-y-4">
+        <div class="p-4 bg-white border rounded-xl grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3">
+          <input type="text" id="filterSearch" oninput="applyRegistrationFilters()" placeholder="Search name, student #, cell..." class="p-2 border rounded text-xs">
+          <select id="filterCourse" onchange="applyRegistrationFilters()" class="p-2 border rounded text-xs bg-white"><option value="">All Programmes</option></select>
+          <select id="filterPaymentMethod" onchange="applyRegistrationFilters()" class="p-2 border rounded text-xs bg-white">
+            <option value="">All Payments</option>
+            <option value="EFT">EFT</option>
+            <option value="CASH">Cash</option>
+          </select>
+          <select id="filterStatus" onchange="applyRegistrationFilters()" class="p-2 border rounded text-xs bg-white">
+            <option value="">All Statuses</option>
+            <option value="NEW">NEW</option>
+            <option value="PAYMENT PROOF RECEIVED">Proof Received</option>
+            <option value="REGISTERED / APPROVED">APPROVED</option>
+            <option value="CASH PAYMENT — AWAITING PAYMENT">Awaiting Cash</option>
+          </select>
+          <button onclick="clearRegistrationFilters()" class="px-3 py-2 bg-slate-100 text-slate-700 font-bold rounded text-xs">Reset</button>
+        </div>
+
+        <div class="bg-white border rounded-xl overflow-hidden shadow-sm">
+          <div class="overflow-x-auto">
+            <table class="w-full text-left text-xs whitespace-nowrap">
+              <thead class="bg-[#fbf0fd] font-bold text-[#5b0a63]">
+                <tr>
+                  <th class="p-3">Student #</th>
+                  <th class="p-3">Full Name</th>
+                  <th class="p-3">Selected Course(s)</th>
+                  <th class="p-3">Fee / Contribution</th>
+                  <th class="p-3">Payment</th>
+                  <th class="p-3">POPIA</th>
+                  <th class="p-3">Status</th>
+                  <th class="p-3">Actions & WhatsApp</th>
+                  <th class="p-3">Deregister</th>
+                </tr>
+              </thead>
+              <tbody id="registrationsTableBody" class="divide-y text-slate-700 font-medium"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB 3: PAYMENTS & PROOFS -->
+      <div id="tab-payments" class="admin-tab-pane hidden space-y-4">
+        <div class="p-6 bg-white border rounded-xl">
+          <h4 class="font-bold text-sm text-[#1e1e1e] mb-3">EFT Payment Verification Desk</h4>
+          <div id="paymentProofsQueue" class="space-y-3"></div>
+        </div>
+      </div>
+
+      <!-- TAB 4: EDITABLE BANKING DETAILS -->
+      <div id="tab-banking" class="admin-tab-pane hidden space-y-4">
+        <div class="p-6 bg-white border rounded-xl space-y-4">
+          <h4 class="font-bold text-sm text-[#5b0a63] border-b pb-2">Legit Hawwā Institute Banking Details (EFT)</h4>
+          <p class="text-xs text-slate-500">These details are shown directly to students selecting EFT transfers:</p>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div><label class="text-xs font-bold text-slate-600">Bank Name</label><input type="text" id="editBankName" class="w-full p-2.5 border rounded text-xs"></div>
+            <div><label class="text-xs font-bold text-slate-600">Account Holder Name</label><input type="text" id="editBankAccountName" class="w-full p-2.5 border rounded text-xs"></div>
+            <div><label class="text-xs font-bold text-slate-600">Account Number</label><input type="text" id="editBankAccountNumber" class="w-full p-2.5 border rounded text-xs"></div>
+            <div><label class="text-xs font-bold text-slate-600">Branch Code</label><input type="text" id="editBankBranchCode" class="w-full p-2.5 border rounded text-xs"></div>
+            <div class="md:col-span-2"><label class="text-xs font-bold text-slate-600">Reference Format Note</label><input type="text" id="editBankReferenceNote" class="w-full p-2.5 border rounded text-xs"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB 5: WHATSAPP TEMPLATES -->
+      <div id="tab-messages" class="admin-tab-pane hidden space-y-4">
+        <div class="p-6 bg-white border rounded-xl space-y-4">
+          <h4 class="font-bold text-sm text-[#1e1e1e]">WhatsApp Message Templates</h4>
+          <div id="messageTemplatesList" class="space-y-4"></div>
+        </div>
+      </div>
+
+      <!-- TAB 6: COURSES CATALOG & HADIYA TOGGLE -->
+      <div id="tab-courses" class="admin-tab-pane hidden space-y-4">
+        <div class="p-6 bg-white border rounded-xl">
+          <div class="flex justify-between items-center mb-4">
+            <h4 class="font-bold text-sm">Course Management & Fee/Hadiya Model</h4>
+            <button onclick="addNewCourseAdmin()" class="px-3.5 py-2 bg-[#5b0a63] text-white rounded-lg text-xs font-bold">+ Add Programme</button>
+          </div>
+          <div id="adminCourses" class="space-y-4"></div>
+        </div>
+      </div>
+
+      <!-- TAB 7: TIMETABLE -->
+      <div id="tab-timetable" class="admin-tab-pane hidden space-y-4">
+        <div class="p-6 bg-white border rounded-xl">
+          <div class="flex justify-between items-center mb-4">
+            <h4 class="font-bold text-sm">Class Schedules</h4>
+            <button onclick="addTimetableRow()" class="px-3.5 py-2 bg-[#5b0a63] text-white rounded-lg text-xs font-bold">+ Add Slot</button>
+          </div>
+          <div id="adminTimetableRows" class="space-y-2"></div>
+        </div>
+      </div>
+
+      <!-- TAB 8: KUTUB & RESOURCES (10MB UPLOAD) -->
+      <div id="tab-resources" class="admin-tab-pane hidden space-y-4">
+        <div class="p-6 bg-white border rounded-xl">
+          <h4 class="font-bold text-sm text-[#1e1e1e] mb-3">Upload Kutub, Mutūn & Resources (Max 10MB)</h4>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-4">
+            <input type="text" id="docName" placeholder="Document / Kitāb Title" class="p-2 border rounded text-xs">
+            <input type="file" id="docFile" class="p-2 border rounded text-xs">
+            <button onclick="uploadDoc()" id="uploadDocBtn" class="px-3 py-2 bg-[#008f5d] text-white rounded text-xs font-bold">Upload to Library</button>
+          </div>
+          <div id="adminResources" class="space-y-2"></div>
+        </div>
+      </div>
+
+      <!-- TAB 9: ABOUT HAWWĀ -->
+      <div id="tab-about" class="admin-tab-pane hidden space-y-4">
+        <div class="p-6 bg-white border rounded-xl space-y-4">
+          <h4 class="font-bold text-sm text-[#5b0a63] border-b pb-2">Institute Identity & Vision</h4>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div><label class="text-xs font-bold text-slate-600">Institute Motto</label><input type="text" id="editAboutMotto" class="w-full p-2.5 border rounded text-xs"></div>
+            <div><label class="text-xs font-bold text-slate-600">Introduction</label><input type="text" id="editAboutIntro" class="w-full p-2.5 border rounded text-xs"></div>
+            <div class="md:col-span-2"><label class="text-xs font-bold text-slate-600">Vision Statement</label><textarea id="editAboutVision" rows="2" class="w-full p-2.5 border rounded text-xs"></textarea></div>
+            <div class="md:col-span-2"><label class="text-xs font-bold text-slate-600">Mission Statement</label><textarea id="editAboutMission" rows="2" class="w-full p-2.5 border rounded text-xs"></textarea></div>
+            <div class="md:col-span-2"><label class="text-xs font-bold text-slate-600">Educational Philosophy</label><textarea id="editAboutPhilosophy" rows="3" class="w-full p-2.5 border rounded text-xs"></textarea></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB 10: NOTICE BOARD -->
+      <div id="tab-notices" class="admin-tab-pane hidden space-y-4">
+        <div class="p-6 bg-white border rounded-xl space-y-3">
+          <h4 class="font-bold text-sm">Notice Board Announcement</h4>
+          <div><label class="text-xs font-bold text-slate-600">Notice Text</label><textarea id="editNotice" rows="3" class="w-full p-2.5 border rounded text-xs"></textarea></div>
+          <label class="flex items-center gap-2 text-xs font-bold">
+            <input type="checkbox" id="editNoticePublished"> Published across top banner
+          </label>
+        </div>
+      </div>
+
+      <!-- TAB 11: MULTIPLE NAMED WHATSAPP CONTACTS & SOCIALS -->
+      <div id="tab-contacts-mgmt" class="admin-tab-pane hidden space-y-4">
+        <div class="p-6 bg-white border rounded-xl space-y-4">
+          <div class="flex justify-between items-center border-b pb-2">
+            <div>
+              <h4 class="font-bold text-sm text-[#1e1e1e]">Official Named WhatsApp Desks</h4>
+              <p class="text-xs text-slate-500">Add contacts so students know who they are messaging (e.g. Moulana, Sister Fatima):</p>
+            </div>
+            <button onclick="addNamedContactAdmin()" class="px-3 py-1.5 bg-[#008f5d] text-white rounded text-xs font-bold">+ Add Contact Person</button>
+          </div>
+          
+          <div id="adminNamedContactsList" class="space-y-3"></div>
+
+          <div class="pt-4 border-t space-y-3">
+            <h4 class="font-bold text-sm text-[#1e1e1e]">Social Media & Location</h4>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div><label class="text-xs font-bold text-slate-600">General Email</label><input type="email" id="editEmail" class="w-full p-2.5 border rounded text-xs"></div>
+              <div><label class="text-xs font-bold text-slate-600">Campus Location</label><input type="text" id="editLocation" class="w-full p-2.5 border rounded text-xs"></div>
+              <div><label class="text-xs font-bold text-slate-600">Instagram URL</label><input type="text" id="editInstagram" class="w-full p-2.5 border rounded text-xs"></div>
+              <div><label class="text-xs font-bold text-slate-600">Facebook URL</label><input type="text" id="editFacebook" class="w-full p-2.5 border rounded text-xs"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ========================================================================= -->
+<!-- PROOF VIEWER MODAL                                                        -->
+<!-- ========================================================================= -->
+<div id="proofViewerModal" class="modal hidden">
+  <div class="bg-white max-w-lg w-full p-6 rounded-2xl shadow-2xl relative space-y-4">
+    <div class="flex justify-between items-center border-b pb-2">
+      <h3 class="font-bold text-sm text-[#5b0a63]">Payment Receipt Proof</h3>
+      <button onclick="closeProofViewer()" class="text-2xl text-slate-400 font-bold">×</button>
+    </div>
+    <div id="proofModalContent" class="text-center min-h-[180px] flex items-center justify-center"></div>
+    <div class="flex justify-end gap-2 pt-2 border-t" id="proofModalActions"></div>
+  </div>
+</div>
+
+<!-- ========================================================================= -->
+<!-- CORE JAVASCRIPT ENGINE                                                    -->
+<!-- ========================================================================= -->
+<script>
+window.addEventListener('scroll', () => document.getElementById('siteNav').classList.toggle('scrolled', scrollY > 30));
+function toggleMobileMenu() { document.getElementById('mobileMenu').classList.toggle('open'); }
+
+// SOUTH AFRICA (+27) SMART PHONE NORMALIZER
+function formatSAPhone(phone) {
+  if (!phone) return "";
+  let cleaned = String(phone).replace(/[^0-9]/g, '');
+  if (cleaned.startsWith('0')) {
+    cleaned = '27' + cleaned.substring(1);
+  } else if (!cleaned.startsWith('27') && cleaned.length === 9) {
+    cleaned = '27' + cleaned;
+  }
+  return cleaned;
+}
+
+const DEFAULT_DATA = {
+  about: {
+    motto: "A place to learn. A place to understand. A place to grow.",
+    intro: "Hawwā Institute provides a structured environment for seekers of sacred knowledge, bringing learning, understanding, and practical development together.",
+    vision: "Fostering a generation grounded in authentic classical knowledge and exemplary practical character.",
+    mission: "Delivering structured curricula taught by verified scholars with an emphasis on comprehension and practice.",
+    philosophy: "Empowering students through progressive stages of knowledge, bridging theory with personal implementation."
+  },
+  banking: {
+    bank: "Standard Bank",
+    accountName: "Hawwā Institute",
+    accountNumber: "0123456789",
+    branchCode: "250655",
+    referenceNote: "Student Name / Cell Number"
+  },
+  contacts: [
+    { name: "Moulana (Principal)", role: "Admissions & Islamic Inquiries", phone: "0749115610" },
+    { name: "Sister Fatima", role: "Female Student Coordinator", phone: "0820000000" }
+  ],
+  contact: { email: "admin@hawwainstitute.com", location: "Cape Town, South Africa", instagram: "", facebook: "" },
+  announcement: { text: "Official semester admissions are currently open.", published: true },
+  courses: [
+    { name: "Foundation Islamic Studies", category: "FOUNDATION", description: "Essential Fiqh, Aqeedah, and basic Arabic terminology.", schedule: "Mondays 18:00", duration: "1 Year", venue: "Main Campus", fee: "R 450", feeType: "fixed", active: true },
+    { name: "Advanced Fiqh & Usul", category: "FIQH", description: "Principles of Islamic jurisprudence for continuing seekers.", schedule: "Saturdays 09:00", duration: "2 Years", venue: "Main Campus", fee: "R 550", feeType: "fixed", active: true },
+    { name: "Classical Arabic Language", category: "ARABIC", description: "Master Nahw, Sarf, and Qur'anic vocabulary.", schedule: "Wednesdays 18:00", duration: "1 Year", venue: "Campus & Online", fee: "Voluntary Hadiya", feeType: "hadiya", active: true }
+  ],
+  timetable: [
+    { day: "Monday", time: "18:00 - 20:00", course: "Foundation Islamic Studies", venue: "Hall A" },
+    { day: "Wednesday", time: "18:00 - 20:00", course: "Classical Arabic Language", venue: "Hall A" },
+    { day: "Saturday", time: "09:00 - 12:00", course: "Advanced Fiqh & Usul", venue: "Hall B" }
+  ],
+  resources: [],
+  templates: [
+    { title: "REGISTRATION APPROVED", text: "Assalāmu ʿalaykum {name},\n\nYour registration with Hawwā Institute has been APPROVED.\nStudent ID: {studentNumber}\nCourse(s): {courses}\nTotal Contribution: {totalFee}\n\nJazākallāhu khayran." },
+    { title: "CASH PAYMENT FOLLOW-UP", text: "Assalāmu ʿalaykum {name},\n\nFollowing up regarding your cash payment for {courses}.\nStudent ID: {studentNumber}\nContribution: {totalFee}\n\nPlease contact administration to settle.\n\nJazākallāhu khayran." }
+  ],
+  registrations: []
+};
+
+let appData = structuredClone(DEFAULT_DATA);
+let adminPass = "";
+let adminAuthenticated = false;
+let currentWizardStep = 1;
+let registrationProofBase64 = null;
+let lastRegisteredStudent = null;
+
+function mergeData(publicData) {
+  const incoming = publicData || {};
+  appData = {
+    ...structuredClone(DEFAULT_DATA),
+    ...incoming,
+    about: { ...DEFAULT_DATA.about, ...(incoming.about || {}) },
+    banking: { ...DEFAULT_DATA.banking, ...(incoming.banking || {}) },
+    contact: { ...DEFAULT_DATA.contact, ...(incoming.contact || {}) },
+    contacts: Array.isArray(incoming.contacts) ? incoming.contacts : structuredClone(DEFAULT_DATA.contacts),
+    announcement: { ...DEFAULT_DATA.announcement, ...(incoming.announcement || {}) },
+    courses: Array.isArray(incoming.courses) ? incoming.courses : structuredClone(DEFAULT_DATA.courses),
+    timetable: Array.isArray(incoming.timetable) ? incoming.timetable : structuredClone(DEFAULT_DATA.timetable),
+    resources: Array.isArray(incoming.resources) ? incoming.resources : [],
+    templates: Array.isArray(incoming.templates) ? incoming.templates : structuredClone(DEFAULT_DATA.templates),
+    registrations: appData.registrations || []
+  };
+}
+
+function esc(v) { return String(v ?? "").replace(/[&<>"']/g, m => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[m])); }
+
+function showToast(msg) {
+  const t = document.getElementById("toastNotification");
+  document.getElementById("toastMessage").innerText = msg;
+  t.style.transform = "none"; t.style.opacity = "1";
+  clearTimeout(window._toastTimer);
+  window._toastTimer = setTimeout(() => { t.style.transform = "translateY(120px)"; t.style.opacity = "0"; }, 3000);
+}
+
+// LOAD DATA
+async function loadData() {
+  try {
+    const res = await fetch('/api/data', { cache: 'no-store' });
+    if (res.ok) {
+      const data = await res.json();
+      mergeData(data.public);
+      if (data.registrations && adminAuthenticated) appData.registrations = data.registrations;
+    }
+  } catch (e) { console.warn("Using local defaults.", e); }
+  renderPublicUI();
+}
+
+function renderPublicUI() {
+  const n = appData.announcement || {};
+  document.getElementById("live-announcement").innerText = n.published === false ? "Welcome to Hawwā Institute." : (n.text || "");
+
+  const abt = appData.about || DEFAULT_DATA.about;
+  document.getElementById("aboutMottoHeading").innerText = abt.motto || "";
+  document.getElementById("publicAbout").innerText = abt.intro || "";
+  document.getElementById("aboutVisionText").innerText = abt.vision || "";
+  document.getElementById("aboutMissionText").innerText = abt.mission || "";
+  document.getElementById("aboutPhilosophyText").innerText = abt.philosophy || "";
+
+  // Banking Details
+  const b = appData.banking || DEFAULT_DATA.banking;
+  document.getElementById("bankDisplayBank").innerText = b.bank || "";
+  document.getElementById("bankDisplayName").innerText = b.accountName || "";
+  document.getElementById("bankDisplayNumber").innerText = b.accountNumber || "";
+  document.getElementById("bankDisplayBranch").innerText = b.branchCode || "";
+  document.getElementById("bankDisplayRef").innerText = b.referenceNote || "";
+
+  // Courses Render
+  const courses = document.getElementById("publicCourses");
+  const multiCourseList = document.getElementById("multiCourseCheckboxList");
+  const filterCourseSelect = document.getElementById("filterCourse");
+
+  courses.innerHTML = "";
+  multiCourseList.innerHTML = "";
+  filterCourseSelect.innerHTML = '<option value="">All Programmes</option>';
+
+  (appData.courses || []).filter(c => c.active).forEach((c, i) => {
+    const isHadiya = c.feeType === 'hadiya';
+    const displayFee = isHadiya ? "Voluntary Hadiya (Donation)" : (c.fee || "Free");
+
+    courses.innerHTML += `
+      <article class="card">
+        <span class="card-badge">${esc(c.category || "PROGRAMME")}</span>
+        <div>
+          <h3 class="serif font-bold text-2xl text-[#5b0a63] mt-2 mb-2">${esc(c.name)}</h3>
+          <p class="text-xs text-slate-600 mb-4">${esc(c.description)}</p>
+          <div class="space-y-1 text-xs text-slate-500 pt-2 border-t">
+            <div><i class="fa-regular fa-clock text-[#008f5d] mr-1"></i> ${esc(c.schedule || "")}</div>
+            <div><i class="fa-solid fa-location-dot text-[#008f5d] mr-1"></i> ${esc(c.venue || "")}</div>
+            <div><i class="fa-solid fa-tag text-[#008f5d] mr-1"></i> <strong>${esc(displayFee)}</strong></div>
+          </div>
+        </div>
+        <div class="pt-6">
+          <button onclick="openRegistrationModal()" class="w-full py-2.5 bg-[#008f5d] hover:bg-[#006642] text-white font-bold text-xs rounded-full shadow">Register Now →</button>
+        </div>
+      </article>`;
+
+    multiCourseList.innerHTML += `
+      <label class="p-3 border rounded-xl flex items-center justify-between cursor-pointer hover:bg-slate-50">
+        <div class="flex items-center gap-3">
+          <input type="checkbox" name="selectedCourses" value="${esc(c.name)}" data-fee="${esc(c.fee || '0')}" data-type="${isHadiya ? 'hadiya' : 'fixed'}" onchange="recalculateTotal()" class="w-4 h-4 text-[#008f5d] rounded">
+          <div>
+            <strong class="text-sm text-[#1e1e1e]">${esc(c.name)}</strong>
+            <div class="text-xs text-slate-500">${esc(c.schedule || '')}</div>
+          </div>
+        </div>
+        <span class="text-xs font-bold ${isHadiya ? 'text-[#5b0a63]' : 'text-[#008f5d]'}">${esc(displayFee)}</span>
+      </label>`;
+
+    filterCourseSelect.innerHTML += `<option value="${esc(c.name)}">${esc(c.name)}</option>`;
+  });
+
+  // Timetable
+  const tb = document.getElementById("publicTimetable"); tb.innerHTML = "";
+  (appData.timetable || []).forEach(t => {
+    tb.innerHTML += `<div class="flex justify-between items-center p-3 border-b text-xs"><div><strong>${esc(t.course)}</strong><div class="text-slate-500">${esc(t.venue || '')}</div></div><div class="text-right font-bold text-[#008f5d]">${esc(t.day)}<br><span class="font-normal text-slate-400">${esc(t.time)}</span></div></div>`;
+  });
+
+  // Resources
+  const rl = document.getElementById("publicResources"); rl.innerHTML = "";
+  if (!appData.resources.length) rl.innerHTML = '<p class="text-xs text-slate-400">No Kutub or Mutūn resources uploaded yet.</p>';
+  appData.resources.forEach(r => {
+    rl.innerHTML += `<div class="flex justify-between items-center p-3 bg-white border rounded-lg text-xs"><div><strong class="text-[#5b0a63]">${esc(r.name)}</strong><div class="text-[10px] text-slate-400">${esc(r.date || "")}</div></div><a href="${r.base64}" download="${esc(r.name)}" class="px-3 py-1.5 bg-[#008f5d] text-white rounded text-[11px] font-bold"><i class="fa-solid fa-download mr-1"></i> Download</a></div>`;
+  });
+
+  // Named Contacts in Footer
+  const contactsContainer = document.getElementById("footerContactsContainer");
+  contactsContainer.innerHTML = "";
+  (appData.contacts || []).forEach(ct => {
+    const saPhone = formatSAPhone(ct.phone);
+    contactsContainer.innerHTML += `
+      <div class="p-2.5 bg-[#251b27] border border-[#3d2940] rounded-lg text-xs flex justify-between items-center">
+        <div>
+          <strong class="text-white block">${esc(ct.name)}</strong>
+          <span class="text-[10px] text-slate-400">${esc(ct.role)}</span>
+        </div>
+        <a href="https://wa.me/${saPhone}" target="_blank" class="px-2.5 py-1 bg-[#25d366] text-white font-bold text-[10px] rounded flex items-center gap-1">
+          <i class="fa-brands fa-whatsapp"></i> Chat
+        </a>
+      </div>`;
+  });
+}
+
+// MULTI-COURSE & HADIYA LIVE TOTAL CALCULATOR
+function recalculateTotal() {
+  const checked = document.querySelectorAll('input[name="selectedCourses"]:checked');
+  let totalFixed = 0;
+  let hasHadiya = false;
+
+  checked.forEach(cb => {
+    const isHadiya = cb.getAttribute('data-type') === 'hadiya';
+    if (isHadiya) {
+      hasHadiya = true;
+    } else {
+      const feeStr = cb.getAttribute('data-fee') || '0';
+      const num = parseInt(feeStr.replace(/[^0-9]/g, ''), 10) || 0;
+      totalFixed += num;
+    }
+  });
+
+  let totalText = `R ${totalFixed}`;
+  if (hasHadiya && totalFixed > 0) totalText += " + Voluntary Hadiya";
+  else if (hasHadiya && totalFixed === 0) totalText = "Voluntary Hadiya (Donation)";
+
+  document.getElementById("wizardCalculatedTotal").innerText = totalText;
+}
+
+// REGISTRATION WIZARD
+function openRegistrationModal() { document.getElementById("registrationModal").classList.remove("hidden"); currentWizardStep = 1; showStep(1); }
+function closeRegistrationModal() { document.getElementById("registrationModal").classList.add("hidden"); document.getElementById("step-success").classList.add("hidden"); document.getElementById("multiStepForm").classList.remove("hidden"); document.getElementById("multiStepForm").reset(); registrationProofBase64 = null; recalculateTotal(); }
+
+function showStep(step) {
+  document.querySelectorAll(".wizard-pane").forEach(p => p.classList.add("hidden"));
+  document.getElementById(`wizard-step-${step}`).classList.remove("hidden");
+  for (let i = 1; i <= 5; i++) { document.getElementById(`node-${i}`).className = `step-node ${i === step ? 'active' : (i < step ? 'done' : '')}`; }
+  document.getElementById("prevBtn").classList.toggle("hidden", step === 1);
+  document.getElementById("nextBtn").classList.toggle("hidden", step === 5);
+  document.getElementById("submitRegBtn").classList.toggle("hidden", step !== 5);
+  if (step === 5) populateReviewStep();
+}
+
+function navigateStep(dir) {
+  if (dir === 1) {
+    if (currentWizardStep === 1) {
+      const f = document.getElementById("regFname").value.trim(), s = document.getElementById("regSname").value.trim(), e = document.getElementById("regEmail").value.trim(), p = document.getElementById("regMobile").value.trim();
+      if (!f || !s || !e || !p) { alert("Please complete required personal details."); return; }
+    }
+    if (currentWizardStep === 2) {
+      const checked = document.querySelectorAll('input[name="selectedCourses"]:checked');
+      if (checked.length === 0) { alert("Please select at least one course."); return; }
+    }
+  }
+  currentWizardStep += dir;
+  showStep(currentWizardStep);
+}
+
+function togglePaymentSelection(method) {
+  const isEft = method === "EFT";
+  document.getElementById("eftBankingDetailsBox").classList.toggle("hidden", !isEft);
+  document.getElementById("eftProofContainer").classList.toggle("hidden", !isEft);
+  document.getElementById("cashSkipNotice").classList.toggle("hidden", isEft);
+}
+
+function handleProofPreview(e) {
+  const file = e.target.files[0];
+  if (!file) return;
+  if (file.size > 10485760) { alert("File exceeds 10MB limit."); e.target.value = ""; return; }
+  const reader = new FileReader();
+  reader.onload = () => {
+    registrationProofBase64 = { name: file.name, type: file.type, size: `${(file.size / 1024).toFixed(1)} KB`, data: reader.result };
+    document.getElementById("proofPreviewBox").classList.remove("hidden");
+    document.getElementById("proofFileName").innerText = file.name;
+    if (file.type.startsWith("image/")) {
+      const img = document.getElementById("proofImagePreview");
+      img.src = reader.result;
+      img.classList.remove("hidden");
+    }
+  };
+  reader.readAsDataURL(file);
+}
+
+function populateReviewStep() {
+  document.getElementById("reviewName").innerText = `${document.getElementById("regFname").value} ${document.getElementById("regSname").value}`;
+  document.getElementById("reviewContact").innerText = `${document.getElementById("regMobile").value} | ${document.getElementById("regEmail").value}`;
+  
+  const checked = Array.from(document.querySelectorAll('input[name="selectedCourses"]:checked')).map(cb => cb.value);
+  document.getElementById("reviewCourses").innerText = checked.join(", ");
+  document.getElementById("reviewTotal").innerText = document.getElementById("wizardCalculatedTotal").innerText;
+  
+  const pay = document.querySelector('input[name="payMethod"]:checked');
+  document.getElementById("reviewPayment").innerText = pay ? pay.value : "EFT";
+}
+
+async function handleRegistrationSubmit(e) {
+  e.preventDefault();
+  
+  const popiaChecked = document.getElementById("regPopiaConsent").checked;
+  if (!popiaChecked) {
+    alert("Please read and tick the POPIA and Media / Video Consent box to proceed with registration.");
+    return;
+  }
+
+  const btn = document.getElementById("submitRegBtn");
+  btn.disabled = true; btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin mr-1"></i> Registering...`;
+
+  const checkedCourses = Array.from(document.querySelectorAll('input[name="selectedCourses"]:checked')).map(cb => cb.value);
+  const pay = document.querySelector('input[name="payMethod"]:checked');
+
+  const newReg = {
+    fname: document.getElementById("regFname").value.trim(),
+    sname: document.getElementById("regSname").value.trim(),
+    phone: document.getElementById("regMobile").value.trim(),
+    whatsapp: document.getElementById("regWhatsApp").value.trim(),
+    email: document.getElementById("regEmail").value.trim(),
+    address: document.getElementById("regAddress").value.trim(),
+    courses: checkedCourses,
+    totalFee: document.getElementById("wizardCalculatedTotal").innerText,
+    paymentMethod: pay ? pay.value : "EFT",
+    proofFile: registrationProofBase64,
+    popiaConsent: true
+  };
+
+  try {
+    const res = await fetch("/api/data", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ action: "register", data: newReg })
+    });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error || "Failed");
+
+    lastRegisteredStudent = { ...newReg, studentNumber: data.studentNumber };
+
+    document.getElementById("multiStepForm").classList.add("hidden");
+    document.getElementById("step-success").classList.remove("hidden");
+    document.getElementById("assignedStudentNumber").innerText = data.studentNumber;
+    document.getElementById("slipStudentName").innerText = `${newReg.fname} ${newReg.sname}`;
+    document.getElementById("slipCourses").innerText = newReg.courses.join(", ");
+    document.getElementById("slipTotalFee").innerText = newReg.totalFee;
+
+    showToast(`Registration Successful! Student ID: ${data.studentNumber}`);
+  } catch (err) {
+    alert("Registration failed. Please try again.");
+  } finally {
+    btn.disabled = false; btn.innerHTML = `<i class="fa-solid fa-cloud-arrow-up mr-1.5"></i> Confirm & Submit`;
+  }
+}
+
+// STUDENT SHARE & PRINT ACTIONS
+function shareStudentConfirmationWhatsApp() {
+  if (!lastRegisteredStudent) return;
+  const saPhone = formatSAPhone(lastRegisteredStudent.whatsapp || lastRegisteredStudent.phone);
+  const msg = `Assalāmu ʿalaykum ${lastRegisteredStudent.fname},\n\nYour registration with Hawwā Institute is confirmed!\n\n*Student ID:* ${lastRegisteredStudent.studentNumber}\n*Courses:* ${lastRegisteredStudent.courses.join(', ')}\n*Contribution:* ${lastRegisteredStudent.totalFee}\n\nJazākallāhu khayran.`;
+  window.open(`https://wa.me/${saPhone}?text=${encodeURIComponent(msg)}`, '_blank');
+}
+
+function printRegistrationSlip() {
+  const printContent = document.getElementById("registrationSlipPrintArea").innerHTML;
+  const win = window.open('', '', 'height=500, width=600');
+  win.document.write(`<html><head><title>Hawwa Admission Slip</title><style>body{font-family:sans-serif;padding:30px;text-align:center;border:2px solid #5b0a63;border-radius:10px}</style></head><body><h2>Hawwā Institute Admission Slip</h2>${printContent}</body></html>`);
+  win.document.close();
+  win.print();
+}
+
+// RESPONSIVE ADMIN LOGIN / LOGOUT
+function openAdmin() {
+  document.getElementById("adminModal").classList.remove("hidden");
+  document.getElementById("adminLoginBox").classList.remove("hidden");
+  document.getElementById("adminDashBox").classList.add("hidden");
+  document.getElementById("adminPass").value = "";
+  document.getElementById("loginErr").classList.add("hidden");
+}
+
+function closeAdmin() { 
+  document.getElementById("adminModal").classList.add("hidden");
+  document.getElementById("adminPass").value = "";
+}
+
+function logoutAdmin() {
+  adminAuthenticated = false;
+  adminPass = "";
+  document.getElementById("adminPass").value = "";
+  document.getElementById("adminDashBox").classList.add("hidden");
+  document.getElementById("adminLoginBox").classList.remove("hidden");
+  closeAdmin();
+  showToast("Logged out from Admin Portal.");
+}
+
+async function loginAdmin() {
+  const p = document.getElementById("adminPass").value.trim();
+  const errBox = document.getElementById("loginErr");
+  if (!p) { errBox.innerText = "Please enter password."; errBox.classList.remove("hidden"); return; }
+
+  adminPass = p;
+  const btn = document.getElementById("adminLoginBtn"); btn.innerText = "Authenticating..."; btn.disabled = true;
+  errBox.classList.add("hidden");
+
+  try {
+    const res = await fetch("/api/data", { headers: { "Authorization": adminPass, "Cache-Control": "no-cache" } });
+    if (!res.ok) throw new Error("Unauthorized");
+    const data = await res.json();
+    if (!data.authenticated) throw new Error("Unauthorized");
+
+    mergeData(data.public);
+    appData.registrations = Array.isArray(data.registrations) ? data.registrations : [];
+    adminAuthenticated = true;
+
+    // Clear password input value from memory
+    document.getElementById("adminPass").value = "";
+
+    document.getElementById("adminLoginBox").classList.add("hidden");
+    document.getElementById("adminDashBox").classList.remove("hidden");
+    populateAdmin();
+    showToast("Authenticated as Hawwā Administrator");
+  } catch (e) {
+    errBox.innerText = "Incorrect password. Access denied.";
+    errBox.classList.remove("hidden");
+  } finally {
+    btn.innerText = "Enter Admin Console →"; btn.disabled = false;
+  }
+}
+
+function switchAdminTab(tabId) {
+  document.querySelectorAll(".admin-tab-pane").forEach(p => p.classList.add("hidden"));
+  document.getElementById(tabId).classList.remove("hidden");
+  document.getElementById("adminSectionJumpDropdown").value = tabId;
+}
+
+function populateAdmin() {
+  const regs = appData.registrations || [];
+  document.getElementById("dashTotalStudents").innerText = regs.length;
+  document.getElementById("dashAwaitingPayment").innerText = regs.filter(r => r.paymentStatus?.includes("awaiting")).length;
+  document.getElementById("dashProofsToReview").innerText = regs.filter(r => r.hasProof).length;
+
+  const cashQueue = document.getElementById("dashCashQueue");
+  const cashStudents = regs.filter(r => r.paymentMethod === "CASH");
+  cashQueue.innerHTML = !cashStudents.length ? `<p class="text-slate-400">No cash follow-ups pending.</p>` : "";
+  cashStudents.slice(0, 5).forEach(s => {
+    const saPhone = formatSAPhone(s.whatsapp || s.phone);
+    const msg = `Assalāmu ʿalaykum ${s.fname}, following up on your cash payment for ${Array.isArray(s.courses)?s.courses.join(', '):s.courses} (Student ID: ${s.studentNumber}). Contribution: ${s.totalFee}.`;
+    cashQueue.innerHTML += `
+      <div class="flex justify-between items-center p-2.5 bg-slate-50 border rounded-lg">
+        <div><strong>${s.studentNumber}</strong> — ${esc(s.fname)} ${esc(s.sname)} (${esc(s.phone)})</div>
+        <a href="https://wa.me/${saPhone}?text=${encodeURIComponent(msg)}" target="_blank" class="px-2.5 py-1 bg-[#25d366] text-white rounded font-bold text-xs"><i class="fa-brands fa-whatsapp"></i> Chat</a>
+      </div>`;
+  });
+
+  applyRegistrationFilters();
+  renderPaymentProofsQueue();
+  renderMessageTemplates();
+  renderAdminCourses();
+  renderAdminTimetable();
+  renderAdminResources();
+  renderAdminNamedContacts();
+
+  // Populate Banking Details
+  const b = appData.banking || DEFAULT_DATA.banking;
+  document.getElementById("editBankName").value = b.bank || "";
+  document.getElementById("editBankAccountName").value = b.accountName || "";
+  document.getElementById("editBankAccountNumber").value = b.accountNumber || "";
+  document.getElementById("editBankBranchCode").value = b.branchCode || "";
+  document.getElementById("editBankReferenceNote").value = b.referenceNote || "";
+
+  // Populate About Settings
+  const abt = appData.about || DEFAULT_DATA.about;
+  document.getElementById("editAboutMotto").value = abt.motto || "";
+  document.getElementById("editAboutIntro").value = abt.intro || "";
+  document.getElementById("editAboutVision").value = abt.vision || "";
+  document.getElementById("editAboutMission").value = abt.mission || "";
+  document.getElementById("editAboutPhilosophy").value = abt.philosophy || "";
+
+  // Notice
+  document.getElementById("editNotice").value = appData.announcement.text || "";
+  document.getElementById("editNoticePublished").checked = appData.announcement.published !== false;
+
+  // General Contacts
+  document.getElementById("editEmail").value = appData.contact.email || "";
+  document.getElementById("editLocation").value = appData.contact.location || "";
+  document.getElementById("editInstagram").value = appData.contact.instagram || "";
+  document.getElementById("editFacebook").value = appData.contact.facebook || "";
+}
+
+// REGISTRATIONS TABLE & PASSWORD PROTECTED DEREGISTRATION
+function applyRegistrationFilters() {
+  const search = document.getElementById("filterSearch").value.toLowerCase();
+  const course = document.getElementById("filterCourse").value;
+  const pay = document.getElementById("filterPaymentMethod").value;
+  const status = document.getElementById("filterStatus").value;
+
+  const filtered = (appData.registrations || []).filter(r => {
+    const mS = !search || r.studentNumber?.toLowerCase().includes(search) || r.fname?.toLowerCase().includes(search) || r.sname?.toLowerCase().includes(search) || r.phone?.includes(search);
+    const mC = !course || (Array.isArray(r.courses) ? r.courses.includes(course) : r.courses === course);
+    const mP = !pay || r.paymentMethod === pay;
+    const mSt = !status || r.status === status;
+    return mS && mC && mP && mSt;
+  });
+
+  const tbody = document.getElementById("registrationsTableBody");
+  tbody.innerHTML = !filtered.length ? `<tr><td colspan="9" class="p-4 text-center text-slate-400">No matching student records.</td></tr>` : "";
+
+  filtered.forEach(r => {
+    const saPhone = formatSAPhone(r.whatsapp || r.phone);
+    const courseList = Array.isArray(r.courses) ? r.courses.join(", ") : (r.courses || r.course);
+    const waApproveMsg = `Assalāmu ʿalaykum ${r.fname},\n\nYour registration with Hawwā Institute has been APPROVED.\nStudent ID: ${r.studentNumber}\nCourses: ${courseList}\n\nJazākallāhu khayran.`;
+
+    tbody.innerHTML += `
+      <tr class="hover:bg-slate-50 border-b">
+        <td class="p-3 font-mono font-bold text-[#5b0a63]">${r.studentNumber}</td>
+        <td class="p-3 font-bold">${esc(r.fname)} ${esc(r.sname)}<div class="text-[10px] text-slate-400 font-normal">${esc(r.phone)}</div></td>
+        <td class="p-3 text-xs">${esc(courseList)}</td>
+        <td class="p-3 font-bold text-[#008f5d]">${esc(r.totalFee || 'R 0')}</td>
+        <td class="p-3"><span class="px-2 py-0.5 rounded text-[10px] font-bold ${r.paymentMethod === 'EFT' ? 'bg-blue-100 text-blue-800' : 'bg-amber-100 text-amber-800'}">${r.paymentMethod}</span>${r.hasProof ? `<button onclick="viewPaymentProof('${r.studentNumber}')" class="ml-1 text-[10px] underline text-[#5b0a63] font-bold">Proof</button>` : ''}</td>
+        <td class="p-3"><span class="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-50 text-emerald-800 border border-emerald-200"><i class="fa-solid fa-check mr-1"></i> Agreed</span></td>
+        <td class="p-3">
+          <select onchange="updateRecordStatus('${r.studentNumber}', this.value)" class="p-1 border rounded text-[11px] font-bold">
+            <option value="NEW" ${r.status === 'NEW' ? 'selected' : ''}>NEW</option>
+            <option value="PAYMENT PROOF RECEIVED" ${r.status === 'PAYMENT PROOF RECEIVED' ? 'selected' : ''}>PROOF RECEIVED</option>
+            <option value="REGISTERED / APPROVED" ${r.status === 'REGISTERED / APPROVED' ? 'selected' : ''}>APPROVED</option>
+            <option value="CASH PAYMENT — AWAITING PAYMENT" ${r.status === 'CASH PAYMENT — AWAITING PAYMENT' ? 'selected' : ''}>AWAITING CASH</option>
+          </select>
+        </td>
+        <td class="p-3">
+          <a href="https://wa.me/${saPhone}?text=${encodeURIComponent(waApproveMsg)}" target="_blank" class="px-2 py-1 bg-[#25d366] text-white rounded font-bold text-[10px] inline-flex items-center gap-1">
+            <i class="fa-brands fa-whatsapp"></i> Notify
+          </a>
+        </td>
+        <td class="p-3">
+          <button onclick="deregisterStudentWithPassword('${r.studentNumber}')" class="px-2 py-1 bg-rose-100 hover:bg-rose-200 text-rose-700 rounded font-bold text-[10px]">
+            <i class="fa-solid fa-trash"></i> Delete
+          </button>
+        </td>
+      </tr>`;
+  });
+}
+
+function clearRegistrationFilters() {
+  document.getElementById("filterSearch").value = "";
+  document.getElementById("filterCourse").value = "";
+  document.getElementById("filterPaymentMethod").value = "";
+  document.getElementById("filterStatus").value = "";
+  applyRegistrationFilters();
+}
+
+// SECURE PASSWORD-PROTECTED DEREGISTRATION (RECYCLES ID & PURGES PROOF)
+async function deregisterStudentWithPassword(studentNumber) {
+  const confirmPass = prompt(`SECURITY CHECK:\nEnter Administrator Password to delete & recycle ${studentNumber}:`);
+  if (!confirmPass) return;
+
+  try {
+    const res = await fetch("/api/data", {
+      method: "POST",
+      headers: { "Content-Type": "application/json", "Authorization": confirmPass.trim() },
+      body: JSON.stringify({ action: "deleteRegistration", data: { studentNumber } })
+    });
+    if (!res.ok) throw new Error("Incorrect Password. Deletion cancelled.");
+
+    appData.registrations = appData.registrations.filter(r => r.studentNumber !== studentNumber);
+    populateAdmin();
+    showToast(`Student ${studentNumber} deregistered. ID recycled for next student.`);
+  } catch (err) {
+    alert(err.message);
+  }
+}
+
+// PROOFS VERIFICATION DESK
+function renderPaymentProofsQueue() {
+  const container = document.getElementById("paymentProofsQueue");
+  const proofs = (appData.registrations || []).filter(r => r.hasProof);
+  container.innerHTML = !proofs.length ? `<p class="text-xs text-slate-400">No payment receipts awaiting verification.</p>` : "";
+  proofs.forEach(r => {
+    container.innerHTML += `
+      <div class="flex justify-between items-center p-3 bg-slate-50 border rounded-lg text-xs">
+        <div><strong>${r.studentNumber}</strong> — ${esc(r.fname)} ${esc(r.sname)} (${esc(r.totalFee)})</div>
+        <div class="flex gap-2">
+          <button onclick="viewPaymentProof('${r.studentNumber}')" class="px-2.5 py-1 bg-slate-200 rounded font-bold">View Receipt</button>
+          <button onclick="updateRecordStatus('${r.studentNumber}', 'REGISTERED / APPROVED')" class="px-2.5 py-1 bg-[#008f5d] text-white rounded font-bold">Approve</button>
+        </div>
+      </div>`;
+  });
+}
+
+async function viewPaymentProof(studentNumber) {
+  const modal = document.getElementById("proofViewerModal");
+  const content = document.getElementById("proofModalContent");
+  const actions = document.getElementById("proofModalActions");
+
+  modal.classList.remove("hidden");
+  content.innerHTML = `<i class="fa-solid fa-spinner fa-spin text-2xl text-[#5b0a63]"></i>`;
+
+  try {
+    const res = await fetch(`/api/data?proofId=${studentNumber}`, {
+      headers: { "Authorization": adminPass }
+    });
+    const result = await res.json();
+    if (!res.ok) throw new Error(result.error || "Proof not found");
+
+    const p = result.proof;
+    if (p.fileType?.startsWith("image/")) {
+      content.innerHTML = `<img src="${p.data}" class="max-h-[60vh] mx-auto rounded shadow border">`;
+    } else {
+      content.innerHTML = `<div class="space-y-3"><i class="fa-solid fa-file-pdf text-5xl text-rose-700"></i><div class="text-xs font-bold">${p.fileName}</div><a href="${p.data}" download="${p.fileName}" class="px-4 py-2 bg-[#5b0a63] text-white rounded text-xs font-bold inline-block">Download Receipt</a></div>`;
+    }
+
+    actions.innerHTML = `<button onclick="updateRecordStatus('${studentNumber}', 'REGISTERED / APPROVED'); closeProofViewer();" class="px-4 py-2 bg-[#008f5d] text-white font-bold rounded text-xs">Approve Registration</button>`;
+  } catch (err) {
+    content.innerHTML = `<p class="text-xs text-rose-700">${err.message}</p>`;
+  }
+}
+function closeProofViewer() { document.getElementById("proofViewerModal").classList.add("hidden"); }
+
+function updateRecordStatus(studentNumber, status) {
+  const idx = appData.registrations.findIndex(r => r.studentNumber === studentNumber);
+  if (idx !== -1) {
+    appData.registrations[idx].status = status;
+    populateAdmin();
+    showToast(`Status updated for ${studentNumber}`);
+  }
+}
+
+// ADMIN NAMED CONTACTS DESKS
+function renderAdminNamedContacts() {
+  const list = document.getElementById("adminNamedContactsList");
+  list.innerHTML = "";
+  (appData.contacts || []).forEach((c, i) => {
+    list.innerHTML += `
+      <div class="p-3 bg-slate-50 border rounded-xl flex flex-wrap gap-2 items-center text-xs">
+        <input type="text" value="${esc(c.name)}" placeholder="Person Name" onchange="appData.contacts[${i}].name=this.value" class="p-2 border rounded flex-1">
+        <input type="text" value="${esc(c.role)}" placeholder="Role / Desk" onchange="appData.contacts[${i}].role=this.value" class="p-2 border rounded flex-1">
+        <input type="text" value="${esc(c.phone)}" placeholder="Phone (e.g. 0749115610)" onchange="appData.contacts[${i}].phone=this.value" class="p-2 border rounded w-36">
+        <button onclick="appData.contacts.splice(${i},1);renderAdminNamedContacts()" class="text-rose-600 font-bold px-2">×</button>
+      </div>`;
+  });
+}
+function addNamedContactAdmin() {
+  if (!appData.contacts) appData.contacts = [];
+  appData.contacts.push({ name: "Moulana / Staff Member", role: "Inquiries Desk", phone: "0749115610" });
+  renderAdminNamedContacts();
+}
+
+// ADMIN COURSES & HADIYA CONTROLS
+function renderAdminCourses() {
+  const box = document.getElementById("adminCourses"); box.innerHTML = "";
+  appData.courses.forEach((c, i) => {
+    box.innerHTML += `
+      <div class="p-4 bg-slate-50 border rounded-xl space-y-2 text-xs">
+        <div class="flex justify-between items-center">
+          <input type="text" value="${esc(c.name)}" onchange="appData.courses[${i}].name=this.value" class="font-bold p-1.5 border rounded w-1/2">
+          <label class="font-bold text-xs"><input type="checkbox" ${c.active ? 'checked' : ''} onchange="appData.courses[${i}].active=this.checked"> Active</label>
+        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-4 gap-2">
+          <input type="text" value="${esc(c.schedule)}" placeholder="Schedule" onchange="appData.courses[${i}].schedule=this.value" class="p-1 border rounded">
+          <input type="text" value="${esc(c.venue)}" placeholder="Venue" onchange="appData.courses[${i}].venue=this.value" class="p-1 border rounded">
+          <input type="text" value="${esc(c.fee)}" placeholder="Fee Amount (e.g. R 450)" onchange="appData.courses[${i}].fee=this.value" class="p-1 border rounded">
+          <select onchange="appData.courses[${i}].feeType=this.value;renderAdminCourses()" class="p-1 border rounded bg-white">
+            <option value="fixed" ${c.feeType !== 'hadiya' ? 'selected' : ''}>Fixed Monthly Fee</option>
+            <option value="hadiya" ${c.feeType === 'hadiya' ? 'selected' : ''}>Voluntary Hadiya</option>
+          </select>
+        </div>
+      </div>`;
+  });
+}
+function addNewCourseAdmin() { appData.courses.push({ name: "New Programme", category: "FOUNDATION", description: "Course overview...", schedule: "Weekly", duration: "1 Year", venue: "Campus", fee: "R 450", feeType: "fixed", active: true }); renderAdminCourses(); }
+
+function renderAdminTimetable() {
+  const box = document.getElementById("adminTimetableRows"); box.innerHTML = "";
+  appData.timetable.forEach((t, i) => {
+    box.innerHTML += `
+      <div class="grid grid-cols-4 gap-2 bg-slate-50 p-2 border rounded text-xs items-center">
+        <input type="text" value="${esc(t.day)}" onchange="appData.timetable[${i}].day=this.value" class="p-1 border rounded">
+        <input type="text" value="${esc(t.time)}" onchange="appData.timetable[${i}].time=this.value" class="p-1 border rounded">
+        <input type="text" value="${esc(t.course)}" onchange="appData.timetable[${i}].course=this.value" class="p-1 border rounded">
+        <div class="flex gap-2 items-center"><input type="text" value="${esc(t.venue || '')}" onchange="appData.timetable[${i}].venue=this.value" class="p-1 border rounded w-full"><button onclick="appData.timetable.splice(${i},1);renderAdminTimetable()" class="text-rose-600 font-bold">×</button></div>
+      </div>`;
+  });
+}
+function addTimetableRow() { appData.timetable.push({ day: "Monday", time: "18:00", course: "Course Name", venue: "Hall A" }); renderAdminTimetable(); }
+
+function renderAdminResources() {
+  const box = document.getElementById("adminResources"); box.innerHTML = "";
+  if (!appData.resources.length) box.innerHTML = '<p class="text-xs text-slate-400">No Kutub or Resources uploaded.</p>';
+  appData.resources.forEach((r, i) => {
+    box.innerHTML += `<div class="flex justify-between items-center p-3 bg-white border rounded text-xs"><div><strong>${esc(r.name)}</strong> (${esc(r.date || "")})</div><button onclick="appData.resources.splice(${i},1);renderAdminResources()" class="text-rose-600 font-bold">Delete</button></div>`;
+  });
+}
+
+function uploadDoc() {
+  const name = document.getElementById("docName").value.trim();
+  const file = document.getElementById("docFile").files[0];
+  if (!name || !file) return alert("Provide title and select file.");
+  if (file.size > 10485760) return alert("File exceeds 10MB limit.");
+
+  const reader = new FileReader();
+  reader.onload = () => {
+    appData.resources.push({ name, date: new Date().toLocaleDateString("en-GB"), base64: reader.result });
+    document.getElementById("docName").value = "";
+    document.getElementById("docFile").value = "";
+    renderAdminResources();
+    showToast("Uploaded to Kutub & Resources.");
+  };
+  reader.readAsDataURL(file);
+}
+
+function renderMessageTemplates() {
+  const container = document.getElementById("messageTemplatesList"); container.innerHTML = "";
+  (appData.templates || DEFAULT_DATA.templates).forEach((t, i) => {
+    container.innerHTML += `
+      <div class="p-3 bg-slate-50 border rounded text-xs space-y-2">
+        <input type="text" value="${esc(t.title)}" onchange="appData.templates[${i}].title=this.value" class="p-1.5 border rounded font-bold w-full">
+        <textarea rows="3" onchange="appData.templates[${i}].text=this.value" class="w-full p-2 border rounded">${esc(t.text)}</textarea>
+      </div>`;
+  });
+}
+
+async function saveAdminData() {
+  if (!adminAuthenticated) return;
+  const btn = document.getElementById("adminSaveBtn");
+  btn.disabled = true; btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin mr-1"></i> Saving...`;
+
+  appData.about = {
+    motto: document.getElementById("editAboutMotto").value.trim(),
+    intro: document.getElementById("editAboutIntro").value.trim(),
+    vision: document.getElementById("editAboutVision").value.trim(),
+    mission: document.getElementById("editAboutMission").value.trim(),
+    philosophy: document.getElementById("editAboutPhilosophy").value.trim()
+  };
+
+  appData.banking = {
+    bank: document.getElementById("editBankName").value.trim(),
+    accountName: document.getElementById("editBankAccountName").value.trim(),
+    accountNumber: document.getElementById("editBankAccountNumber").value.trim(),
+    branchCode: document.getElementById("editBankBranchCode").value.trim(),
+    referenceNote: document.getElementById("editBankReferenceNote").value.trim()
+  };
+
+  appData.announcement = {
+    text: document.getElementById("editNotice").value.trim(),
+    published: document.getElementById("editNoticePublished").checked
+  };
+
+  appData.contact = {
+    email: document.getElementById("editEmail").value.trim(),
+    location: document.getElementById("editLocation").value.trim(),
+    instagram: document.getElementById("editInstagram").value.trim(),
+    facebook: document.getElementById("editFacebook").value.trim()
+  };
+
+  try {
+    const res = await fetch("/api/data", {
+      method: "POST",
+      headers: { "Content-Type": "application/json", "Authorization": adminPass },
+      body: JSON.stringify({ action: "adminSave", data: appData })
+    });
+    if (!res.ok) throw new Error("Save failed");
+    renderPublicUI();
+    showToast("Hawwā platform updated globally.");
+  } catch (e) {
+    alert("Could not save to Cloudflare KV.");
+  } finally {
+    btn.disabled = false; btn.innerHTML = `<i class="fa-solid fa-cloud-arrow-up mr-1.5"></i> Save Changes`;
+  }
+}
+
+loadData();
+</script>
+</body>
+</html>
