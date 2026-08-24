@@ -10,52 +10,213 @@
 </head>
 <body class="antialiased flex flex-col min-h-screen">
 
-    <!-- NAVIGATION -->
-    <nav class="bg-white shadow-sm sticky top-0 z-50">
-        <div class="max-w-7xl mx-auto px-4 flex justify-between h-24 items-center">
-            <a href="index.html"><img class="h-16 w-auto object-contain" src="logo.png" alt="Hawwā Institute Logo"></a>
-            <div class="hidden md:flex space-x-8">
-                <a href="#about" class="text-gray-600 hover:text-[#115e59]">About</a>
-                <a href="#courses" class="text-gray-600 hover:text-[#115e59]">Courses</a>
-                <a href="register.html" class="bg-[#115e59] text-white px-5 py-2.5 rounded-md font-medium hover:bg-[#0f4c48]">Register</a>
+    <!-- HEADER / NAVIGATION -->
+    <nav class="bg-white shadow-md sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 py-4 md:py-2">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <a href="index.html" class="w-full md:w-auto flex justify-center mb-4 md:mb-0">
+                    <img class="max-h-28 md:max-h-24 w-full object-contain mix-blend-multiply" src="logo.png" alt="Hawwā Institute Logo">
+                </a>
+                <div class="hidden md:flex space-x-6 items-center">
+                    <a href="#about" class="text-gray-600 font-medium hover:text-[#115e59]">About</a>
+                    <a href="#courses" class="text-gray-600 font-medium hover:text-[#115e59]">Courses</a>
+                    <a href="#timetable" class="text-gray-600 font-medium hover:text-[#115e59]">Timetable</a>
+                    <a href="#resources" class="text-gray-600 font-medium hover:text-[#115e59]">Resources</a>
+                    <a href="register.html" class="bg-[#115e59] text-white px-6 py-2.5 rounded-md font-bold hover:bg-[#0f4c48] shadow-md transition">Register Online</a>
+                </div>
+            </div>
+            <!-- Mobile Menu -->
+            <div class="flex md:hidden justify-center space-x-4 border-t border-gray-100 pt-3">
+                <a href="#courses" class="text-sm font-medium text-gray-700">Courses</a>
+                <a href="#timetable" class="text-sm font-medium text-gray-700">Timetable</a>
+                <a href="#resources" class="text-sm font-medium text-gray-700">Resources</a>
+                <a href="register.html" class="text-sm font-bold text-[#115e59]">Register</a>
             </div>
         </div>
     </nav>
 
-    <!-- HERO SECTION -->
     <main class="flex-grow">
-        <div class="relative bg-[#0f172a] py-32 text-center px-4">
-            <h1 class="text-4xl font-extrabold text-white sm:text-6xl font-serif">Knowledge. Understanding. Practice.</h1>
-            <p class="mt-6 text-xl text-gray-300 max-w-2xl mx-auto">The official digital home of Hawwā Institute.</p>
+        <!-- HERO SECTION -->
+        <div class="relative bg-[#0f172a] py-24 sm:py-32 px-4 text-center">
+            <div class="absolute inset-0 bg-black/50"></div>
+            <div class="relative max-w-5xl mx-auto">
+                <h1 class="text-4xl sm:text-5xl lg:text-7xl font-extrabold text-white font-serif tracking-tight">Knowledge. Understanding. Practice.</h1>
+                <p class="mt-6 text-lg sm:text-xl text-gray-200 max-w-2xl mx-auto">The official digital home of Hawwā Institute. Dedicated to comprehensive Islamic education.</p>
+                <div class="mt-10 flex flex-col sm:flex-row justify-center items-center space-y-4 sm:space-y-0 sm:space-x-4">
+                    <a href="register.html" class="w-full sm:w-auto bg-white text-[#0f172a] px-8 py-3 rounded-md font-bold hover:bg-gray-100 shadow-md">Register Now</a>
+                    <a href="#timetable" class="w-full sm:w-auto bg-transparent text-white border border-white px-8 py-3 rounded-md font-bold hover:bg-white/10">View Timetable</a>
+                </div>
+            </div>
         </div>
 
         <!-- DYNAMIC OFFICIAL NOTICE BOARD -->
-        <div class="bg-amber-50 border-b border-amber-200 py-4">
+        <div class="bg-amber-50 border-b border-amber-200 py-5">
             <div class="max-w-7xl mx-auto px-4 flex items-center">
-                <span class="flex p-2 rounded-lg bg-amber-100 text-[#b45309] mr-3"><i class="fa-solid fa-bullhorn"></i></span>
-                <!-- This text gets replaced by the database automatically -->
-                <p id="live-announcement" class="text-sm font-medium text-amber-900">Loading official notices...</p>
+                <span class="flex p-3 rounded-lg bg-amber-100 text-[#b45309] mr-4 text-xl"><i class="fa-solid fa-bullhorn"></i></span>
+                <p id="live-announcement" class="text-sm sm:text-base font-medium text-amber-900">Loading official notices...</p>
             </div>
         </div>
+
+        <!-- ABOUT SECTION -->
+        <section id="about" class="py-16 bg-white px-4">
+            <div class="max-w-4xl mx-auto text-center">
+                <h2 class="text-3xl font-serif font-bold text-[#0f172a] mb-6">About Hawwā Institute</h2>
+                <p class="text-gray-600 leading-relaxed text-lg">Hawwā Institute provides a structured, premium environment for seekers of sacred knowledge. Our approach blends deep traditional learning with practical spiritual development.</p>
+            </div>
+        </section>
+
+        <!-- COURSES SECTION -->
+        <section id="courses" class="py-16 bg-gray-50 px-4 border-t border-gray-200">
+            <div class="max-w-7xl mx-auto">
+                <h2 class="text-3xl font-serif font-bold text-[#0f172a] mb-10 text-center">Our Programmes</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden flex flex-col">
+                        <div class="h-2 bg-[#115e59]"></div>
+                        <div class="p-6 flex-grow">
+                            <h3 class="text-xl font-serif font-bold text-gray-900 mt-2 mb-3">Foundation Islamic Studies</h3>
+                            <p class="text-gray-600 text-sm mb-4">A comprehensive introduction covering essential Fiqh, Aqeedah, and basic Arabic terminology.</p>
+                        </div>
+                        <div class="p-6 pt-0 mt-auto"><a href="register.html" class="block w-full text-center bg-[#0f172a] text-white py-2 rounded font-medium hover:bg-[#115e59]">Register</a></div>
+                    </div>
+                    <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden flex flex-col">
+                        <div class="h-2 bg-[#115e59]"></div>
+                        <div class="p-6 flex-grow">
+                            <h3 class="text-xl font-serif font-bold text-gray-900 mt-2 mb-3">Advanced Fiqh & Usul</h3>
+                            <p class="text-gray-600 text-sm mb-4">Deep dive into Islamic jurisprudence for students who completed the foundation tier.</p>
+                        </div>
+                        <div class="p-6 pt-0 mt-auto"><a href="register.html" class="block w-full text-center bg-[#0f172a] text-white py-2 rounded font-medium hover:bg-[#115e59]">Register</a></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TIMETABLE SECTION -->
+        <section id="timetable" class="py-16 bg-white px-4">
+            <div class="max-w-5xl mx-auto">
+                <h2 class="text-3xl font-serif font-bold text-[#0f172a] mb-8 text-center">Current Timetable</h2>
+                <div class="bg-white border border-gray-200 rounded-xl shadow-sm overflow-hidden">
+                    <table class="min-w-full divide-y divide-gray-200">
+                        <thead class="bg-[#0f172a] text-white">
+                            <tr>
+                                <th class="px-6 py-4 text-left text-sm font-bold uppercase">Day</th>
+                                <th class="px-6 py-4 text-left text-sm font-bold uppercase">Time</th>
+                                <th class="px-6 py-4 text-left text-sm font-bold uppercase">Course</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-gray-200">
+                            <tr class="hover:bg-gray-50">
+                                <td class="px-6 py-4 font-bold text-gray-900">Monday</td>
+                                <td class="px-6 py-4 text-gray-600">18:00 - 20:00</td>
+                                <td class="px-6 py-4 text-[#115e59] font-medium">Foundation Islamic Studies</td>
+                            </tr>
+                            <tr class="hover:bg-gray-50 bg-gray-50">
+                                <td class="px-6 py-4 font-bold text-gray-900">Saturday</td>
+                                <td class="px-6 py-4 text-gray-600">09:00 - 12:00</td>
+                                <td class="px-6 py-4 text-[#115e59] font-medium">Advanced Fiqh & Usul</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- RESOURCES / DOWNLOADS SECTION (NEW) -->
+        <section id="resources" class="py-16 bg-gray-50 px-4 border-t border-gray-200">
+            <div class="max-w-5xl mx-auto">
+                <h2 class="text-3xl font-serif font-bold text-[#0f172a] mb-4 text-center">Resources & Downloads</h2>
+                <p class="text-center text-gray-500 mb-8">Download official notes, forms, and reading materials.</p>
+                
+                <div id="resources-list" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <p class="text-gray-500">Loading resources...</p>
+                </div>
+            </div>
+        </section>
     </main>
 
-    <!-- Script to load dynamic data -->
+    <!-- FOOTER -->
+    <footer class="bg-[#0f172a] text-white mt-auto pt-16 pb-8 border-t-4 border-[#115e59]">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center md:text-left grid grid-cols-1 md:grid-cols-3 gap-12 mb-12">
+            <div>
+                <img class="h-20 w-auto bg-white p-2 rounded mb-6 mx-auto md:mx-0" src="logo.png" alt="Hawwā Logo">
+                <p class="text-gray-400 text-sm">Providing authentic knowledge with an emphasis on understanding and practice.</p>
+            </div>
+            <div>
+                <h3 class="text-lg font-serif font-bold text-white mb-6">Institute Links</h3>
+                <ul class="space-y-3">
+                    <li><a href="register.html" class="text-gray-400 hover:text-white transition">Online Registration</a></li>
+                    <li><a href="admin.html" class="text-[#b45309] hover:text-white font-bold transition">Admin Dashboard Login</a></li>
+                </ul>
+            </div>
+            <div>
+                <h3 class="text-lg font-serif font-bold text-white mb-6">Contact Us</h3>
+                <p class="text-gray-400 mb-3"><i class="fa-solid fa-envelope w-6 text-[#115e59]"></i> admin@hawwainstitute.com</p>
+                <p class="text-gray-400"><i class="fa-brands fa-whatsapp w-6 text-[#115e59]"></i> +27 80 000 0000</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- WHATSAPP BUTTON -->
+    <a href="https://wa.me/27800000000" target="_blank" class="whatsapp-float"><i class="fa-brands fa-whatsapp"></i></a>
+
+    <!-- SCRIPTS (Loads Announcements and Resources automatically) -->
     <script>
+        // Load Announcements
         async function loadAnnouncements() {
             try {
                 const response = await fetch('/api/announcements');
                 const data = await response.text();
-                if(data) {
-                    document.getElementById('live-announcement').innerHTML = `<strong>Official Notice:</strong> ${data}`;
-                } else {
-                    document.getElementById('live-announcement').innerHTML = "No new announcements at this time.";
-                }
-            } catch (e) {
-                console.log("Error loading announcements");
-            }
+                if(data && response.ok) document.getElementById('live-announcement').innerHTML = `<strong>Official Notice:</strong> ${data}`;
+            } catch (e) { console.log("Failed to load announcements"); }
         }
-        // Run immediately when page loads
+        
+        // Load Documents/Resources
+        async function loadResources() {
+            try {
+                const response = await fetch('/api/resources');
+                const data = await response.json();
+                const container = document.getElementById('resources-list');
+                
+                if(data.length === 0) {
+                    container.innerHTML = '<p class="text-gray-500">No documents available at this time.</p>';
+                    return;
+                }
+                
+                container.innerHTML = '';
+                data.forEach(item => {
+                    container.innerHTML += `
+                    <div class="bg-white p-4 rounded-lg shadow-sm border border-gray-200 flex justify-between items-center">
+                        <div class="flex items-center">
+                            <i class="fa-solid fa-file-pdf text-[#b45309] text-2xl mr-4"></i>
+                            <div>
+                                <h4 class="font-bold text-gray-900">${item.name}</h4>
+                                <p class="text-xs text-gray-500">Added: ${item.date}</p>
+                            </div>
+                        </div>
+                        <button id="btn-${item.id}" onclick="downloadFile('${item.id}', '${item.name}')" class="bg-[#115e59] text-white px-4 py-2 rounded text-sm font-bold hover:bg-[#0f4c48]">Download</button>
+                    </div>`;
+                });
+            } catch (e) { console.log("Failed to load resources"); }
+        }
+
+        // Handle the Download Click
+        async function downloadFile(id, fileName) {
+            const btn = document.getElementById(`btn-${id}`);
+            btn.innerText = "Downloading...";
+            try {
+                const response = await fetch(`/api/resources?id=${id}`);
+                const dataUrl = await response.text();
+                const a = document.createElement('a');
+                a.href = dataUrl;
+                a.download = fileName;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+            } catch(e) { alert("Download failed"); }
+            btn.innerText = "Download";
+        }
+
         loadAnnouncements();
+        loadResources();
     </script>
 </body>
-          </html>
+    </html>
