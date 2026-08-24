@@ -4,43 +4,78 @@
     <meta charset="UTF-8">
     <title>Hawwā Admin Dashboard</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
-<body class="bg-gray-100 p-8">
+<body class="bg-gray-100 p-4 md:p-8">
     
-    <div id="login-section" class="max-w-sm mx-auto bg-white p-8 mt-20 rounded-lg shadow-md">
-        <h2 class="text-2xl font-bold mb-4 text-[#0f172a]">Admin Login</h2>
-        <input type="password" id="admin-pass" placeholder="Enter Secure Password" class="w-full border p-2 rounded mb-4">
-        <button onclick="login()" class="w-full bg-[#0f172a] text-white p-2 rounded">Access Dashboard</button>
+    <!-- LOGIN SCREEN -->
+    <div id="login-section" class="max-w-sm mx-auto bg-white p-8 mt-20 rounded-lg shadow-md text-center">
+        <h2 class="text-2xl font-bold mb-6 text-[#0f172a]">Hawwā Admin Access</h2>
+        <input type="password" id="admin-pass" placeholder="Enter Secure Password" class="w-full border border-gray-300 p-3 rounded mb-4 focus:outline-none focus:border-[#115e59]">
+        <button onclick="login()" class="w-full bg-[#115e59] text-white p-3 rounded font-bold hover:bg-[#0f4c48]">Access Dashboard</button>
+        <a href="index.html" class="block mt-6 text-sm text-gray-500 hover:underline">Return to main website</a>
     </div>
 
-    <div id="dashboard-section" class="hidden max-w-4xl mx-auto space-y-8">
-        <div class="flex justify-between items-center">
-            <h1 class="text-3xl font-bold text-[#0f172a]">Admin Dashboard</h1>
-            <button onclick="logout()" class="text-red-500 underline">Logout</button>
-        </div>
-
-        <!-- Manage Dynamic Announcement -->
-        <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
-            <h2 class="text-xl font-bold mb-4">Update Live Website Announcement</h2>
-            <textarea id="new-announcement" class="w-full border p-2 rounded mb-4" rows="3" placeholder="Type new official notice here..."></textarea>
-            <button onclick="updateAnnouncement()" class="bg-[#b45309] text-white px-4 py-2 rounded">Publish to Website</button>
-            <p id="announce-status" class="text-green-600 mt-2 text-sm hidden">Live website updated successfully!</p>
-        </div>
-
-        <!-- View Real Registrations -->
-        <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
-            <div class="flex justify-between mb-4">
-                <h2 class="text-xl font-bold">Recent Registrations</h2>
-                <button onclick="loadRegistrations()" class="bg-[#115e59] text-white px-3 py-1 rounded text-sm">Refresh List</button>
+    <!-- MAIN DASHBOARD -->
+    <div id="dashboard-section" class="hidden max-w-5xl mx-auto space-y-8">
+        
+        <div class="flex flex-col md:flex-row justify-between items-center bg-[#0f172a] text-white p-6 rounded-lg shadow-md">
+            <h1 class="text-2xl md:text-3xl font-serif font-bold">Admin Dashboard</h1>
+            <div class="flex space-x-4 mt-4 md:mt-0">
+                <a href="index.html" class="text-gray-300 hover:text-white px-3 py-2 text-sm">View Website</a>
+                <button onclick="logout()" class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded text-sm font-bold">Secure Logout</button>
             </div>
-            <ul id="reg-list" class="space-y-3 divide-y divide-gray-100">
-                <li class="text-gray-500 text-sm">Click refresh to load database...</li>
-            </ul>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            
+            <!-- 1. MANAGE ANNOUNCEMENTS -->
+            <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
+                <h2 class="text-xl font-bold mb-4 text-[#0f172a]"><i class="fa-solid fa-bullhorn mr-2"></i> Notice Board</h2>
+                <p class="text-sm text-gray-500 mb-4">This updates the yellow banner on the main homepage instantly.</p>
+                <textarea id="new-announcement" class="w-full border border-gray-300 p-3 rounded mb-4 focus:outline-none focus:border-[#115e59]" rows="3" placeholder="Type new official notice here..."></textarea>
+                <button onclick="updateAnnouncement()" class="bg-[#b45309] text-white px-4 py-2 rounded font-bold w-full md:w-auto hover:bg-[#92400e]">Publish to Website</button>
+                <p id="announce-status" class="text-green-600 mt-3 text-sm font-bold hidden">Live website updated successfully!</p>
+            </div>
+
+            <!-- 2. UPLOAD DOCUMENTS / RESOURCES -->
+            <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
+                <h2 class="text-xl font-bold mb-4 text-[#0f172a]"><i class="fa-solid fa-file-arrow-up mr-2"></i> Upload Resource</h2>
+                <p class="text-sm text-gray-500 mb-4">Upload a PDF or document for students to download.</p>
+                
+                <input type="text" id="doc-name" placeholder="Document Name (e.g. Fiqh Notes Term 1)" class="w-full border border-gray-300 p-3 rounded mb-4 focus:outline-none focus:border-[#115e59]">
+                <input type="file" id="doc-file" class="w-full border border-gray-300 p-2 rounded mb-4">
+                
+                <button onclick="uploadResource()" id="upload-btn" class="bg-[#115e59] text-white px-4 py-2 rounded font-bold w-full md:w-auto hover:bg-[#0f4c48]">Upload Document</button>
+                <p id="upload-status" class="text-green-600 mt-3 text-sm font-bold hidden">Document uploaded to website!</p>
+            </div>
+        </div>
+
+        <!-- 3. VIEW REGISTRATIONS -->
+        <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-xl font-bold text-[#0f172a]"><i class="fa-solid fa-users mr-2"></i> Recent Registrations</h2>
+                <button onclick="loadRegistrations()" class="bg-gray-200 text-gray-800 px-4 py-2 rounded text-sm font-bold hover:bg-gray-300">Refresh List</button>
+            </div>
+            <div class="overflow-x-auto">
+                <table class="min-w-full divide-y divide-gray-200">
+                    <thead class="bg-gray-50">
+                        <tr>
+                            <th class="px-6 py-3 text-left text-xs font-bold text-gray-500 uppercase">Date</th>
+                            <th class="px-6 py-3 text-left text-xs font-bold text-gray-500 uppercase">Name</th>
+                            <th class="px-6 py-3 text-left text-xs font-bold text-gray-500 uppercase">Course</th>
+                            <th class="px-6 py-3 text-left text-xs font-bold text-gray-500 uppercase">Contact</th>
+                        </tr>
+                    </thead>
+                    <tbody id="reg-list" class="bg-white divide-y divide-gray-200">
+                        <tr><td colspan="4" class="px-6 py-4 text-sm text-gray-500 text-center">Loading database...</td></tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 
     <script>
-        // 1. Authentication Check
         let secretKey = sessionStorage.getItem('hawwa_admin_key');
         if(secretKey) showDashboard();
 
@@ -58,44 +93,86 @@
         function showDashboard() {
             document.getElementById('login-section').classList.add('hidden');
             document.getElementById('dashboard-section').classList.remove('hidden');
-            loadRegistrations(); // Automatically load data
+            loadRegistrations();
         }
 
-        // 2. Update Live Website (Changes Global Content instantly)
+        // API Call: Update Announcement
         async function updateAnnouncement() {
             const text = document.getElementById('new-announcement').value;
-            const response = await fetch('/api/announcements', {
+            const res = await fetch('/api/announcements', {
                 method: 'POST',
-                headers: { 'Authorization': secretKey }, // Send secret to prove admin
+                headers: { 'Authorization': secretKey },
                 body: text
             });
-            if(response.ok) {
+            if(res.ok) {
                 document.getElementById('announce-status').classList.remove('hidden');
                 setTimeout(() => document.getElementById('announce-status').classList.add('hidden'), 3000);
-            } else {
-                alert("Unauthorized! Incorrect admin password.");
-                logout();
-            }
+            } else { alert("Unauthorized! Wrong Password."); logout(); }
         }
 
-        // 3. Load Registrations from Database
+        // API Call: Upload Resource Document
+        async function uploadResource() {
+            const fileInput = document.getElementById('doc-file');
+            const nameInput = document.getElementById('doc-name').value;
+            const btn = document.getElementById('upload-btn');
+            
+            if(!fileInput.files[0] || !nameInput) return alert("Please provide a name and select a file.");
+            if(fileInput.files[0].size > 5000000) return alert("File is too large. Keep under 5MB."); // Prevent massive database bloat
+
+            btn.innerText = "Uploading...";
+            btn.disabled = true;
+
+            const reader = new FileReader();
+            reader.readAsDataURL(fileInput.files[0]);
+            
+            reader.onload = async function () {
+                const base64Data = reader.result;
+                const dateString = new Date().toLocaleDateString('en-GB');
+
+                const payload = { name: nameInput, date: dateString, data: base64Data };
+
+                const res = await fetch('/api/resources', {
+                    method: 'POST',
+                    headers: { 'Authorization': secretKey, 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                btn.innerText = "Upload Document";
+                btn.disabled = false;
+
+                if(res.ok) {
+                    document.getElementById('upload-status').classList.remove('hidden');
+                    document.getElementById('doc-name').value = '';
+                    fileInput.value = '';
+                    setTimeout(() => document.getElementById('upload-status').classList.add('hidden'), 3000);
+                } else { alert("Upload failed. Check authorization."); }
+            };
+        }
+
+        // API Call: Get Registrations
         async function loadRegistrations() {
             const list = document.getElementById('reg-list');
-            list.innerHTML = "Loading...";
+            const res = await fetch('/api/registrations', { headers: { 'Authorization': secretKey } });
             
-            const response = await fetch('/api/registrations', {
-                headers: { 'Authorization': secretKey } // Secure fetch
-            });
-            
-            if(!response.ok) return logout(); // Kick out if password wrong
+            if(!res.ok) return logout();
 
-            const data = await response.json();
+            const data = await res.json();
             list.innerHTML = "";
+            
+            if(data.length === 0) {
+                list.innerHTML = `<tr><td colspan="4" class="px-6 py-4 text-sm text-gray-500 text-center">No registrations yet.</td></tr>`;
+                return;
+            }
+
             data.forEach(reg => {
-                list.innerHTML += `<li class="pt-3">
-                    <p class="font-bold text-gray-800">${reg.name} <span class="text-sm font-normal text-gray-500">(${reg.course})</span></p>
-                    <p class="text-sm text-gray-600">Email: ${reg.email} | Phone: ${reg.phone}</p>
-                </li>`;
+                const date = new Date(reg.date).toLocaleDateString('en-GB');
+                list.innerHTML += `
+                <tr class="hover:bg-gray-50">
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${date}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm font-bold text-gray-900">${reg.firstName} ${reg.surname}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">${reg.course}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">${reg.email}<br>${reg.phone}</td>
+                </tr>`;
             });
         }
     </script>
