@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Hawwā Admin Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 p-8">
+    
+    <div id="login-section" class="max-w-sm mx-auto bg-white p-8 mt-20 rounded-lg shadow-md">
+        <h2 class="text-2xl font-bold mb-4 text-[#0f172a]">Admin Login</h2>
+        <input type="password" id="admin-pass" placeholder="Enter Secure Password" class="w-full border p-2 rounded mb-4">
+        <button onclick="login()" class="w-full bg-[#0f172a] text-white p-2 rounded">Access Dashboard</button>
+    </div>
+
+    <div id="dashboard-section" class="hidden max-w-4xl mx-auto space-y-8">
+        <div class="flex justify-between items-center">
+            <h1 class="text-3xl font-bold text-[#0f172a]">Admin Dashboard</h1>
+            <button onclick="logout()" class="text-red-500 underline">Logout</button>
+        </div>
+
+        <!-- Manage Dynamic Announcement -->
+        <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
+            <h2 class="text-xl font-bold mb-4">Update Live Website Announcement</h2>
+            <textarea id="new-announcement" class="w-full border p-2 rounded mb-4" rows="3" placeholder="Type new official notice here..."></textarea>
+            <button onclick="updateAnnouncement()" class="bg-[#b45309] text-white px-4 py-2 rounded">Publish to Website</button>
+            <p id="announce-status" class="text-green-600 mt-2 text-sm hidden">Live website updated successfully!</p>
+        </div>
+
+        <!-- View Real Registrations -->
+        <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
+            <div class="flex justify-between mb-4">
+                <h2 class="text-xl font-bold">Recent Registrations</h2>
+                <button onclick="loadRegistrations()" class="bg-[#115e59] text-white px-3 py-1 rounded text-sm">Refresh List</button>
+            </div>
+            <ul id="reg-list" class="space-y-3 divide-y divide-gray-100">
+                <li class="text-gray-500 text-sm">Click refresh to load database...</li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        // 1. Authentication Check
+        let secretKey = sessionStorage.getItem('hawwa_admin_key');
+        if(secretKey) showDashboard();
+
+        function login() {
+            secretKey = document.getElementById('admin-pass').value;
+            sessionStorage.setItem('hawwa_admin_key', secretKey);
+            showDashboard();
+        }
+
+        function logout() {
+            sessionStorage.removeItem('hawwa_admin_key');
+            location.reload();
+        }
+
+        function showDashboard() {
+            document.getElementById('login-section').classList.add('hidden');
+            document.getElementById('dashboard-section').classList.remove('hidden');
+            loadRegistrations(); // Automatically load data
+        }
+
+        // 2. Update Live Website (Changes Global Content instantly)
+        async function updateAnnouncement() {
+            const text = document.getElementById('new-announcement').value;
+            const response = await fetch('/api/announcements', {
+                method: 'POST',
+                headers: { 'Authorization': secretKey }, // Send secret to prove admin
+                body: text
+            });
+            if(response.ok) {
+                document.getElementById('announce-status').classList.remove('hidden');
+                setTimeout(() => document.getElementById('announce-status').classList.add('hidden'), 3000);
+            } else {
+                alert("Unauthorized! Incorrect admin password.");
+                logout();
+            }
+        }
+
+        // 3. Load Registrations from Database
+        async function loadRegistrations() {
+            const list = document.getElementById('reg-list');
+            list.innerHTML = "Loading...";
+            
+            const response = await fetch('/api/registrations', {
+                headers: { 'Authorization': secretKey } // Secure fetch
+            });
+            
+            if(!response.ok) return logout(); // Kick out if password wrong
+
+            const data = await response.json();
+            list.innerHTML = "";
+            data.forEach(reg => {
+                list.innerHTML += `<li class="pt-3">
+                    <p class="font-bold text-gray-800">${reg.name} <span class="text-sm font-normal text-gray-500">(${reg.course})</span></p>
+                    <p class="text-sm text-gray-600">Email: ${reg.email} | Phone: ${reg.phone}</p>
+                </li>`;
+            });
+        }
+    </script>
+</body>
+</html>
