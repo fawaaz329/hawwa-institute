@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hawwā Institute | Knowledge. Understanding. Practice.</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="antialiased flex flex-col min-h-screen">
+
+    <!-- NAVIGATION -->
+    <nav class="bg-white shadow-sm sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 flex justify-between h-24 items-center">
+            <a href="index.html"><img class="h-16 w-auto object-contain" src="logo.png" alt="Hawwā Institute Logo"></a>
+            <div class="hidden md:flex space-x-8">
+                <a href="#about" class="text-gray-600 hover:text-[#115e59]">About</a>
+                <a href="#courses" class="text-gray-600 hover:text-[#115e59]">Courses</a>
+                <a href="register.html" class="bg-[#115e59] text-white px-5 py-2.5 rounded-md font-medium hover:bg-[#0f4c48]">Register</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- HERO SECTION -->
+    <main class="flex-grow">
+        <div class="relative bg-[#0f172a] py-32 text-center px-4">
+            <h1 class="text-4xl font-extrabold text-white sm:text-6xl font-serif">Knowledge. Understanding. Practice.</h1>
+            <p class="mt-6 text-xl text-gray-300 max-w-2xl mx-auto">The official digital home of Hawwā Institute.</p>
+        </div>
+
+        <!-- DYNAMIC OFFICIAL NOTICE BOARD -->
+        <div class="bg-amber-50 border-b border-amber-200 py-4">
+            <div class="max-w-7xl mx-auto px-4 flex items-center">
+                <span class="flex p-2 rounded-lg bg-amber-100 text-[#b45309] mr-3"><i class="fa-solid fa-bullhorn"></i></span>
+                <!-- This text gets replaced by the database automatically -->
+                <p id="live-announcement" class="text-sm font-medium text-amber-900">Loading official notices...</p>
+            </div>
+        </div>
+    </main>
+
+    <!-- Script to load dynamic data -->
+    <script>
+        async function loadAnnouncements() {
+            try {
+                const response = await fetch('/api/announcements');
+                const data = await response.text();
+                if(data) {
+                    document.getElementById('live-announcement').innerHTML = `<strong>Official Notice:</strong> ${data}`;
+                } else {
+                    document.getElementById('live-announcement').innerHTML = "No new announcements at this time.";
+                }
+            } catch (e) {
+                console.log("Error loading announcements");
+            }
+        }
+        // Run immediately when page loads
+        loadAnnouncements();
+    </script>
+</body>
+          </html>
