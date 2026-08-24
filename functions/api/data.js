@@ -6,10 +6,10 @@ export async function onRequest(context) {
         "Cache-Control": "no-store"
     };
 
-    // Your Cloudflare Secret
+    // Secret stored in Cloudflare Dashboard
     const adminSecret = env.ADMIN_PASSWORD;
 
-    // Your Cloudflare KV binding
+    // Verify database connection
     if (!env.HAWWA_DB) {
         return new Response(
             JSON.stringify({ error: "HAWWA_DB binding is not configured." }),
@@ -18,240 +18,105 @@ export async function onRequest(context) {
     }
 
     // ==========================================
-    // GET — LOAD PUBLIC DATA / ADMIN DATA
+    // GET — LOAD PUBLIC DATA / VERIFY ADMIN
     // ==========================================
     if (request.method === "GET") {
         try {
-            const publicStr = await env.HAWWA_DB.get("public_state");
+            const suppliedPassword = request.headers.get("Authorization");
 
-            const publicData = publicStr
-                ? JSON.parse(publicStr)
-                : null;
+            // 1. IF USER IS TRYING TO LOG IN AS ADMIN:
+            if (suppliedPassword !== null && suppliedPassword !== "") {
+                // STRICT CHECK: If password doesn't match Cloudflare secret, REJECT!
+                if (!adminSecret || suppliedPassword.trim() !== adminSecret.trim()) {
+                    return new Response(
+                        JSON.stringify({ error: "Invalid administrator password." }),
+                        { status: 401, headers }
+                    );
+                }
 
-            // Check admin password
-            const suppliedPassword =
-                request.headers.get("Authorization") || "";
-
-            const isAdmin =
-                adminSecret &&
-                suppliedPassword === adminSecret;
-
-            // Admin gets registrations as well
-            if (isAdmin) {
-                const registrationStr =
-                    await env.HAWWA_DB.get("registrations");
-
-                const registrations = registrationStr
-                    ? JSON.parse(registrationStr)
-                    : [];
+                // PASSWORD IS CORRECT: Send public data + private registrations
+                const [publicStr, registrationStr] = await Promise.all([
+                    env.HAWWA_DB.get("public_state"),
+                    env.HAWWA_DB.get("registrations")
+                ]);
 
                 return new Response(
                     JSON.stringify({
-                        public: publicData,
-                        registrations: registrations
+                        authenticated: true,
+                        public: publicStr ? JSON.parse(publicStr) : null,
+                        registrations: registrationStr ? JSON.parse(registrationStr) : []
                     }),
-                    {
-                        status: 200,
-                        headers
-                    }
+                    { status: 200, headers }
                 );
             }
 
-            // Normal visitor only gets public information
+            // 2. NORMAL PUBLIC VISITOR (NO PASSWORD SENT)
+            const publicStr = await env.HAWWA_DB.get("public_state");
             return new Response(
                 JSON.stringify({
-                    public: publicData
+                    authenticated: false,
+                    public: publicStr ? JSON.parse(publicStr) : null
                 }),
-                {
-                    status: 200,
-                    headers
-                }
+                { status: 200, headers }
             );
 
         } catch (error) {
             return new Response(
-                JSON.stringify({
-                    error: "Unable to load Hawwā data."
-                }),
-                {
-                    status: 500,
-                    headers
-                }
+                JSON.stringify({ error: "Unable to load Hawwā data." }),
+                { status: 500, headers }
             );
         }
     }
 
     // ==========================================
-    // POST — REGISTRATION / ADMIN SAVE
+    // POST — STUDENT REGISTRATION / ADMIN SAVE
     // ==========================================
     if (request.method === "POST") {
         try {
             const body = await request.json();
 
-            // ==========================================
-            // A. STUDENT REGISTRATION
-            // ==========================================
+            // A. STUDENT SUBMITTING REGISTRATION
             if (body.action === "register") {
-
                 if (!body.data || typeof body.data !== "object") {
-                    return new Response(
-                        JSON.stringify({
-                            error: "Invalid registration."
-                        }),
-                        {
-                            status: 400,
-                            headers
-                        }
-                    );
+                    return new Response(JSON.stringify({ error: "Invalid data." }), { status: 400, headers });
                 }
 
-                const currentRegistrations =
-                    await env.HAWWA_DB.get("registrations");
+                const currentRegistrations = await env.HAWWA_DB.get("registrations");
+                const registrations = currentRegistrations ? JSON.parse(currentRegistrations) : [];
 
-                const registrations =
-                    currentRegistrations
-                        ? JSON.parse(currentRegistrations)
-                        : [];
-
-                const registration = {
+                registrations.push({
                     ...body.data,
+                    date: body.data.date || new Date().toLocaleDateString("en-GB"),
+                    status: body.data.status || "New"
+                });
 
-                    date:
-                        body.data.date ||
-                        new Date().toLocaleDateString("en-GB"),
-
-                    status:
-                        body.data.status ||
-                        "New"
-                };
-
-                registrations.push(registration);
-
-                await env.HAWWA_DB.put(
-                    "registrations",
-                    JSON.stringify(registrations)
-                );
-
-                return new Response(
-                    JSON.stringify({
-                        success: true
-                    }),
-                    {
-                        status: 200,
-                        headers
-                    }
-                );
+                await env.HAWWA_DB.put("registrations", JSON.stringify(registrations));
+                return new Response(JSON.stringify({ success: true }), { status: 200, headers });
             }
 
-            // ==========================================
-            // B. ADMIN SAVE
-            // ==========================================
+            // B. ADMIN SAVING CHANGES
             if (body.action === "adminSave") {
+                const suppliedPassword = request.headers.get("Authorization") || "";
 
-                const suppliedPassword =
-                    request.headers.get("Authorization") || "";
-
-                // Check Cloudflare ADMIN_PASSWORD secret
-                if (
-                    !adminSecret ||
-                    suppliedPassword !== adminSecret
-                ) {
-                    return new Response(
-                        JSON.stringify({
-                            error: "Unauthorized."
-                        }),
-                        {
-                            status: 401,
-                            headers
-                        }
-                    );
+                // STRICT AUTH CHECK BEFORE SAVING
+                if (!adminSecret || suppliedPassword.trim() !== adminSecret.trim()) {
+                    return new Response(JSON.stringify({ error: "Unauthorized." }), { status: 401, headers });
                 }
 
-                if (
-                    !body.data ||
-                    typeof body.data !== "object"
-                ) {
-                    return new Response(
-                        JSON.stringify({
-                            error: "Invalid site data."
-                        }),
-                        {
-                            status: 400,
-                            headers
-                        }
-                    );
-                }
+                const { registrations, ...publicData } = body.data;
 
-                // Keep registrations separate from public website data
-                const {
-                    registrations,
-                    ...publicData
-                } = body.data;
+                await env.HAWWA_DB.put("public_state", JSON.stringify(publicData));
+                await env.HAWWA_DB.put("registrations", JSON.stringify(Array.isArray(registrations) ? registrations : []));
 
-                // Save public website information
-                await env.HAWWA_DB.put(
-                    "public_state",
-                    JSON.stringify(publicData)
-                );
-
-                // Save registrations
-                await env.HAWWA_DB.put(
-                    "registrations",
-                    JSON.stringify(
-                        Array.isArray(registrations)
-                            ? registrations
-                            : []
-                    )
-                );
-
-                return new Response(
-                    JSON.stringify({
-                        success: true
-                    }),
-                    {
-                        status: 200,
-                        headers
-                    }
-                );
+                return new Response(JSON.stringify({ success: true }), { status: 200, headers });
             }
 
-            // Unknown POST action
-            return new Response(
-                JSON.stringify({
-                    error: "Unknown action."
-                }),
-                {
-                    status: 400,
-                    headers
-                }
-            );
+            return new Response(JSON.stringify({ error: "Unknown action." }), { status: 400, headers });
 
         } catch (error) {
-            return new Response(
-                JSON.stringify({
-                    error: "Invalid request."
-                }),
-                {
-                    status: 400,
-                    headers
-                }
-            );
+            return new Response(JSON.stringify({ error: "Invalid request." }), { status: 400, headers });
         }
     }
 
-    // ==========================================
-    // OTHER HTTP METHODS
-    // ==========================================
-    return new Response(
-        JSON.stringify({
-            error: "Method not allowed."
-        }),
-        {
-            status: 405,
-            headers: {
-                ...headers,
-                "Allow": "GET, POST"
-            }
-        }
-    );
-            }
+    return new Response(JSON.stringify({ error: "Method not allowed." }), { status: 405, headers });
+}
