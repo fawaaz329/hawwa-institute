@@ -1,0 +1,499 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Hawwā Institute | Knowledge. Understanding. Practice.</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--espresso:#211b16;--espresso2:#30261f;--olive:#46543d;--brass:#b18a55;--brass2:#d0ae78;--ivory:#f4eee4;--paper:#fbf8f2;--ink:#29231d;--muted:#756b60;--line:rgba(55,45,35,.14)}
+*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font-family:"DM Sans",sans-serif}.serif{font-family:"Cormorant Garamond",serif}
+.container{width:min(1180px,calc(100% - 40px));margin:auto}
+.nav{position:fixed;inset:0 0 auto;z-index:50;color:#fff;background:linear-gradient(#17130fcc,transparent);transition:.35s}.nav.scrolled{background:#211b16f2;backdrop-filter:blur(16px);box-shadow:0 10px 35px #0002}
+.navin{height:88px;display:flex;align-items:center;justify-content:space-between;gap:20px}.brand{display:flex;align-items:center;gap:12px;color:#fff;text-decoration:none}.brand img{width:55px;height:55px;object-fit:contain;border-radius:50%;background:#fff;padding:4px}.brand span{font-size:11px;letter-spacing:.27em;text-transform:uppercase;font-weight:700}
+.links{display:flex;gap:25px;align-items:center;font-size:11px;letter-spacing:.12em;text-transform:uppercase}.links a{color:#fff;text-decoration:none;opacity:.9}.links a:hover{color:var(--brass2)}.pill{border:1px solid #d0ae78aa;padding:12px 19px;border-radius:999px;background:#b18a5520}
+.menu{display:none;background:none;border:0;color:#fff;font-size:24px}
+.hero{min-height:760px;display:flex;align-items:center;position:relative;overflow:hidden;background:radial-gradient(circle at 72% 30%,#b18a5538,transparent 27%),radial-gradient(circle at 15% 80%,#59664b40,transparent 30%),linear-gradient(135deg,#17130f,#30261f 55%,#1e1914)}
+.hero:before{content:"";position:absolute;inset:0;opacity:.11;background-image:linear-gradient(30deg,#fff 12%,transparent 12.5%,transparent 87%,#fff 87.5%),linear-gradient(150deg,#fff 12%,transparent 12.5%,transparent 87%,#fff 87.5%);background-size:80px 140px;mask-image:linear-gradient(90deg,transparent,black 35%,black 75%,transparent)}
+.hero:after{content:"";position:absolute;right:-120px;top:110px;width:500px;height:560px;border:1px solid #d0ae7840;border-radius:260px 260px 0 0;box-shadow:0 0 0 28px #d0ae7808,0 0 0 56px #d0ae7805}
+.hero .content{position:relative;z-index:2;padding:170px 0 120px;max-width:790px}.eyebrow{font-size:10px;letter-spacing:.34em;text-transform:uppercase;color:var(--brass2);font-weight:700}
+.hero h1{font-size:clamp(64px,9vw,118px);line-height:.82;font-weight:500;color:#fff;margin:25px 0}.hero h1 em{color:var(--brass2);font-style:normal}.hero p{max-width:630px;color:#d7cec3;line-height:1.8;font-size:17px}
+.actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:34px}.btn{display:inline-flex;align-items:center;justify-content:center;padding:14px 22px;border-radius:999px;font-size:11px;letter-spacing:.13em;text-transform:uppercase;font-weight:700;border:1px solid transparent;cursor:pointer;text-decoration:none}.gold{background:var(--brass);color:#211b16}.outline{border-color:#fff6;color:#fff;background:#fff08}.outline:hover{border-color:var(--brass2);color:var(--brass2)}
+.notice{background:var(--olive);color:#f4eee4}.noticein{min-height:64px;display:flex;align-items:center;justify-content:space-between;gap:20px}.notice strong{color:var(--brass2);font-size:10px;letter-spacing:.22em;text-transform:uppercase;margin-right:15px}
+.section{padding:115px 0}.ivory{background:var(--ivory)}.dark{background:var(--espresso);color:#fff}.head{max-width:700px;margin-bottom:55px}.center{text-align:center;margin-left:auto;margin-right:auto}.head h2{font-size:clamp(48px,6vw,78px);line-height:.9;font-weight:500;margin:13px 0 20px}.head p{color:var(--muted);line-height:1.8;font-size:16px}.dark .head p{color:#bdb2a6}
+.intro{display:grid;grid-template-columns:1.05fr .95fr;gap:90px;align-items:center}.quote{font-size:clamp(40px,4.7vw,68px);line-height:.95;font-weight:500}.arch{min-height:430px;border:1px solid var(--line);border-radius:250px 250px 24px 24px;background:radial-gradient(circle at 50% 30%,#b18a5545,transparent 30%),linear-gradient(160deg,#5a604e,#302d25);position:relative}.arch:before{content:"HAWWĀ";position:absolute;inset:35px;border:1px solid #fff3;border-radius:210px 210px 12px 12px;display:flex;align-items:flex-end;justify-content:center;padding-bottom:45px;color:#fffb;letter-spacing:.4em;font-size:10px}
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}.card{min-height:390px;border:1px solid var(--line);background:#fff9;padding:35px 30px;position:relative;transition:.35s;overflow:hidden}.card:before{content:"";position:absolute;left:0;right:0;top:-130px;height:240px;border-radius:50%;background:#46543d0d}.card:hover{transform:translateY(-8px);box-shadow:0 25px 60px #32281e1a}.num{font-size:10px;letter-spacing:.22em;color:var(--brass);font-weight:700;position:relative}.card h3{position:relative;font-size:44px;line-height:.95;font-weight:500;margin:65px 0 18px}.card p{color:var(--muted);line-height:1.75;font-size:14px}.card a{position:absolute;bottom:30px;color:var(--olive);font-size:10px;font-weight:700;letter-spacing:.15em;text-transform:uppercase}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:25px}.panel{border:1px solid var(--line);padding:30px;background:#fff9}.panel h3{font-size:34px;font-weight:500;margin:0 0 25px}.row{display:grid;grid-template-columns:85px 1fr auto;gap:18px;padding:19px 0;border-top:1px solid var(--line);align-items:center}.day{font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:var(--brass);font-weight:700}.course{font-weight:700}.time{font-size:13px;color:var(--muted)}.resource{display:flex;justify-content:space-between;gap:15px;padding:16px 0;border-top:1px solid var(--line)}.resource a{color:var(--olive);font-size:10px;font-weight:700;text-transform:uppercase}
+.formbox{max-width:880px;margin:auto;background:#fff;border:1px solid var(--line);padding:55px}.formgrid{display:grid;grid-template-columns:1fr 1fr;gap:20px}label{display:block;font-size:10px;letter-spacing:.15em;text-transform:uppercase;font-weight:700;color:var(--muted);margin-bottom:8px}input,select,textarea{width:100%;padding:14px;border:1px solid #d8d0c4;background:#fcfaf6;outline:0;font:inherit}input:focus,select:focus,textarea:focus{border-color:var(--brass);box-shadow:0 0 0 3px #b18a551f}.full{grid-column:1/-1}
+footer{background:#17130f;color:#bdb2a6;padding:70px 0 30px}.foot{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:50px}footer h3{color:#fff;font-weight:500;font-size:28px;margin:0 0 15px}footer a{color:inherit;text-decoration:none}footer a:hover{color:var(--brass2)}
+.modal{position:fixed;inset:0;background:#120e0acc;backdrop-filter:blur(14px);z-index:100;display:flex;align-items:center;justify-content:center;padding:20px}.hidden{display:none!important}.admin{background:var(--paper);width:min(1100px,100%);max-height:90vh;overflow:auto;box-shadow:0 30px 100px #0006}.adminhead{background:var(--espresso);color:#fff;padding:20px 25px;display:flex;justify-content:space-between;align-items:center}.admincontent{padding:25px;display:grid;grid-template-columns:1fr 1fr;gap:18px}.admincard{background:#fff;border:1px solid var(--line);padding:20px}.admincard.full{grid-column:1/-1}.admincard input,.admincard textarea{margin:4px 0}
+@media(max-width:900px){.links{display:none}.menu{display:block}.navin{height:76px}.hero{min-height:700px}.hero .content{padding-top:140px}.hero h1{font-size:clamp(58px,17vw,90px)}.intro,.grid2,.foot{grid-template-columns:1fr}.cards{grid-template-columns:1fr}.formbox{padding:30px 20px}.formgrid{grid-template-columns:1fr}.admincontent{grid-template-columns:1fr}.admincard.full{grid-column:auto}.row{grid-template-columns:70px 1fr}.row .time{grid-column:2}.noticein{padding:14px 0;align-items:flex-start}}
+.mobile{display:none;background:#211b16f7;padding:8px 20px 16px}.mobile.open{display:block}.mobile a{display:block;padding:13px 0;color:#fff;border-bottom:1px solid #fff1;font-size:11px;letter-spacing:.12em;text-transform:uppercase;text-decoration:none}
+</style>
+<style>
+.admincard input,.admincard select,.admincard textarea{width:100%;padding:10px;border:1px solid #ddd1c2;background:#fff;font:inherit;color:var(--ink);margin:3px 0}
+.admincard label{margin-top:3px}
+.admincard button{font-family:inherit}
+.admincard table th{font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+</style>
+</head><body>
+
+<div id="toastNotification" style="position:fixed;right:20px;bottom:20px;z-index:150;background:#211b16;color:#fff;padding:14px 18px;border-left:3px solid #b18a55;transform:translateY(120px);opacity:0;transition:.3s"><span id="toastMessage">Update confirmed.</span></div>
+
+<nav id="siteNav" class="nav"><div class="container navin">
+<a href="#home" class="brand"><img src="logo.png" alt="Hawwā Institute Logo"><span>Hawwā Institute</span></a>
+<div class="links"><a href="#about">About</a><a href="#courses">Courses</a><a href="#timetable">Timetable</a><a href="#announcements">Notices</a><a href="#resources">Resources</a><a href="#contact">Contact</a><a href="#register" class="pill">Register</a></div>
+<button class="menu" onclick="toggleMobileMenu()">☰</button></div>
+<div id="mobileMenu" class="mobile"><a href="#about">About</a><a href="#courses">Courses</a><a href="#timetable">Timetable</a><a href="#announcements">Notices</a><a href="#resources">Resources</a><a href="#contact">Contact</a><a href="#register">Register</a></div></nav>
+
+<header id="home" class="hero"><div class="container content"><div class="eyebrow">The official digital home of Hawwā Institute</div>
+<h1 class="serif">Knowledge.<br><em>Understanding.</em><br>Practice.</h1>
+<p>A refined home for learning, registration, official notices, timetables and resources — designed around the real experience of Hawwā students and families.</p>
+<div class="actions"><a class="btn gold" href="#courses">Explore Courses →</a><a class="btn outline" href="#register">Register with Hawwā</a></div></div></header>
+
+<section class="notice"><div class="container noticein"><div><strong>From Hawwā</strong><span id="live-announcement">Loading official notices...</span></div><a href="#announcements" style="color:#d0ae78;text-decoration:none;font-size:10px;letter-spacing:.12em;text-transform:uppercase">View notice →</a></div></section>
+
+<section id="about" class="section ivory"><div class="container intro"><div class="head"><div class="eyebrow">Welcome to Hawwā</div><div class="quote serif">A place to learn.<br>A place to understand.<br>A place to grow.</div><p>Hawwā Institute provides a structured environment for seekers of sacred knowledge, bringing learning, understanding and practical development together.</p></div><div class="arch"></div></div></section>
+
+<section id="courses" class="section"><div class="container">
+<div class="head center"><div class="eyebrow">Programmes</div><h2 class="serif">Begin your journey.</h2>
+<p id="coursesIntro">Explore the programmes available through Hawwā Institute.</p></div>
+<div id="publicCourses" class="cards"></div>
+</div></section>
+
+<section id="timetable" class="section ivory"><div class="container"><div class="head"><div class="eyebrow">This week at Hawwā</div><h2 class="serif">Time well spent.</h2><p>Class times and programmes are maintained by the Hawwā administration.</p></div><div class="grid2"><div class="panel"><h3 class="serif">Timetable</h3><div id="publicTimetable"><div class="row"><div class="day">Loading</div><div class="course">Loading timetable...</div><div class="time">—</div></div></div></div><div id="resources" class="panel"><h3 class="serif">Resources</h3><div id="publicResources"><p style="color:var(--muted)">Loading resources...</p></div></div></div></div></section>
+
+<section id="announcements" class="section dark"><div class="container"><div class="head center"><div class="eyebrow">Official notice board</div><h2 class="serif">From Hawwā.</h2><p>Important institute updates, registration notices, class changes and upcoming information in one permanent place.</p></div></div></section>
+
+<section id="events" class="section dark"><div class="container">
+<div class="head center"><div class="eyebrow">Workshops & Events</div><h2 class="serif">What's coming up.</h2>
+<p>Keep up with upcoming Hawwā workshops, programmes and institute events.</p></div>
+<div id="publicEvents" class="cards"></div>
+</div></section><section id="register" class="section ivory"><div class="container"><div class="formbox"><div class="head center" style="margin-bottom:35px"><div class="eyebrow">Registration</div><h2 class="serif">Begin your journey.</h2><p>Complete the form below to register your interest with Hawwā Institute.</p></div>
+<div id="regSuccess" class="hidden" style="background:#eef4eb;border:1px solid #c9d7c2;padding:20px;text-align:center;margin-bottom:25px"><strong>JazakAllahu Khairan!</strong><br><span style="font-size:13px">Your registration was received. Hawwā will contact you regarding the next steps.</span></div>
+<form id="regForm" onsubmit="submitRegistration(event)"><div class="formgrid">
+<div><label>First Name</label><input type="text" id="regFname" required></div><div><label>Surname</label><input type="text" id="regSname" required></div>
+<div><label>Email Address</label><input type="email" id="regEmail" required></div><div><label>WhatsApp Number</label><input type="tel" id="regPhone" required></div>
+<div class="full"><label>Select Course</label><select id="regCourse" required><option value="">Choose a programme</option><option value="Islam 101">Islam 101</option><option value="Advanced Fiqh & Usul">Advanced Fiqh & Usul</option><option value="Classical Arabic">Classical Arabic</option></select></div>
+<div class="full"><button id="regBtn" type="submit" class="btn gold" style="width:100%">Submit Registration →</button></div></div></form></div></div></section>
+
+<footer id="contact"><div class="container foot"><div><div class="brand"><img src="logo.png" alt="Hawwā Institute Logo"><span>Hawwā Institute</span></div><p style="max-width:400px;line-height:1.8;margin-top:22px">Knowledge, understanding and practice — the official digital home of Hawwā Institute.</p></div><div><h3 class="serif">Explore</h3><p><a href="#about">About</a></p><p><a href="#courses">Courses</a></p><p><a href="#timetable">Timetable</a></p><p><a href="#resources">Resources</a></p></div><div><h3 class="serif">Contact</h3><p><a href="#">WhatsApp Hawwā</a></p><p><a href="mailto:admin@hawwainstitute.com">Email Hawwā</a></p><p><a href="#">Social Media</a></p><p><button onclick="openAdmin()" style="background:none;border:0;color:#b18a55;cursor:pointer;letter-spacing:.1em;text-transform:uppercase;font-size:10px">Admin Portal</button></p></div></div><div class="container" style="border-top:1px solid #fff1;margin-top:55px;padding-top:20px;font-size:11px">© 2026 Hawwā Institute. All rights reserved.</div></footer>
+
+<div id="adminModal" class="modal hidden">
+<div id="adminLoginBox" class="admin" style="max-width:430px">
+  <div class="adminhead"><div><strong>Hawwā Admin</strong><div style="font-size:10px;opacity:.65;margin-top:3px">Secure institute control centre</div></div>
+    <button onclick="closeAdmin()" style="background:none;border:0;color:#fff;font-size:22px">×</button></div>
+  <div style="padding:35px">
+    <p class="serif" style="font-size:38px;margin:0 0 8px">Welcome back.</p>
+    <p style="font-size:13px;color:var(--muted);line-height:1.6;margin:0 0 22px">Sign in to manage Hawwā's public information, resources and registrations.</p>
+    <input type="password" id="adminPass" placeholder="Admin password" autocomplete="current-password" style="width:100%;padding:14px;border:1px solid #ddd1c2">
+    <button onclick="loginAdmin()" class="btn gold" style="width:100%;margin-top:15px">Enter Admin →</button>
+    <p id="loginErr" style="color:#a33;font-size:12px;display:none;margin-top:12px">Incorrect password or server unavailable.</p>
+  </div>
+</div>
+
+<div id="adminDashBox" class="admin hidden">
+  <div class="adminhead">
+    <div><strong>Hawwā Master Console</strong><div style="font-size:10px;opacity:.65;margin-top:3px">Changes are saved to Cloudflare KV</div></div>
+    <div style="display:flex;gap:6px;align-items:center">
+      <button onclick="saveAdminData()" class="btn gold" style="padding:9px 14px">Save Changes</button>
+      <button onclick="closeAdmin()" class="btn outline" style="padding:9px 14px">Exit</button>
+    </div>
+  </div>
+
+  <div class="admincontent">
+    <div class="admincard full" style="background:linear-gradient(135deg,#f6f0e6,#fff)">
+      <div style="display:flex;justify-content:space-between;gap:20px;align-items:flex-start;flex-wrap:wrap">
+        <div><div class="eyebrow">Dashboard</div><h3 class="serif" style="font-size:36px;margin:4px 0 0">Hawwā at a glance</h3></div>
+        <div style="display:flex;gap:10px;flex-wrap:wrap">
+          <div style="border:1px solid var(--line);padding:10px 14px;background:#fff"><small style="color:var(--muted)">Registrations</small><strong id="statRegs" style="display:block;font-size:22px">0</strong></div>
+          <div style="border:1px solid var(--line);padding:10px 14px;background:#fff"><small style="color:var(--muted)">Courses</small><strong id="statCourses" style="display:block;font-size:22px">0</strong></div>
+          <div style="border:1px solid var(--line);padding:10px 14px;background:#fff"><small style="color:var(--muted)">Resources</small><strong id="statResources" style="display:block;font-size:22px">0</strong></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="admincard">
+      <div class="eyebrow">Notice Board</div><h3 style="margin:4px 0 15px">Official Notice</h3>
+      <input id="editNoticeTitle" placeholder="Notice title">
+      <textarea id="editNotice" rows="4" placeholder="Notice text"></textarea>
+      <label style="margin-top:8px">Publish</label><select id="editNoticePublished"><option value="true">Published</option><option value="false">Hidden</option></select>
+    </div>
+
+    <div class="admincard">
+      <div class="eyebrow">Site Settings</div><h3 style="margin:4px 0 15px">Institute Information</h3>
+      <input id="editTagline" placeholder="Tagline">
+      <textarea id="editAbout" rows="4" placeholder="About Hawwā"></textarea>
+      <input id="editEmail" placeholder="Email address">
+      <input id="editWhatsApp" placeholder="WhatsApp link or number">
+      <input id="editLocation" placeholder="Location / venue">
+    </div>
+
+    <div class="admincard full">
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap">
+        <div><div class="eyebrow">Programmes</div><h3 style="margin:4px 0 0">Course Management</h3></div>
+        <button onclick="addCourse()" class="btn gold">+ Add Course</button>
+      </div>
+      <div id="adminCourses" style="margin-top:15px;display:grid;gap:12px"></div>
+    </div>
+
+    <div class="admincard full">
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap">
+        <div><div class="eyebrow">Schedule</div><h3 style="margin:4px 0 0">Timetable Management</h3></div>
+        <button onclick="addTimetableRow()" class="btn gold">+ Add Class</button>
+      </div>
+      <div id="adminTimetableRows" style="margin-top:15px;display:grid;gap:8px"></div>
+    </div>
+
+    <div class="admincard full">
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap">
+        <div><div class="eyebrow">Workshops</div><h3 style="margin:4px 0 0">Events Management</h3></div>
+        <button onclick="addEvent()" class="btn gold">+ Add Event</button>
+      </div>
+      <div id="adminEvents" style="margin-top:15px;display:grid;gap:12px"></div>
+    </div>
+
+    <div class="admincard full">
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap">
+        <div><div class="eyebrow">Resources</div><h3 style="margin:4px 0 0">Documents & Downloads</h3></div>
+        <div style="display:flex;gap:7px;flex-wrap:wrap">
+          <input type="text" id="docName" placeholder="Document name" style="min-width:190px">
+          <input type="file" id="docFile" style="max-width:260px">
+          <button onclick="uploadDoc()" class="btn gold">Attach</button>
+        </div>
+      </div>
+      <p style="font-size:11px;color:var(--muted);margin:10px 0 0">For this KV-based setup, keep individual files under 2 MB.</p>
+      <div id="adminResources" style="margin-top:15px;display:grid;gap:8px"></div>
+    </div>
+
+    <div class="admincard full">
+      <div><div class="eyebrow">Registrations</div><h3 style="margin:4px 0 15px">Student Applications</h3></div>
+      <div style="overflow:auto"><table style="width:100%;text-align:left;font-size:13px;border-collapse:collapse">
+        <thead><tr><th style="padding:8px;border-bottom:1px solid var(--line)">Date</th><th style="padding:8px;border-bottom:1px solid var(--line)">Name</th><th style="padding:8px;border-bottom:1px solid var(--line)">Course</th><th style="padding:8px;border-bottom:1px solid var(--line)">Contact</th><th style="padding:8px;border-bottom:1px solid var(--line)">Status</th><th style="padding:8px;border-bottom:1px solid var(--line)"></th></tr></thead>
+        <tbody id="adminRegRows"></tbody>
+      </table></div>
+    </div>
+
+    <div class="admincard full">
+      <div class="eyebrow">Social & Contact</div><h3 style="margin:4px 0 15px">Links</h3>
+      <div class="formgrid">
+        <div><label>Instagram</label><input id="editInstagram" placeholder="https://instagram.com/..."></div>
+        <div><label>Facebook</label><input id="editFacebook" placeholder="https://facebook.com/..."></div>
+        <div><label>YouTube</label><input id="editYoutube" placeholder="https://youtube.com/..."></div>
+        <div><label>Other Social / Link</label><input id="editOtherSocial" placeholder="https://..."></div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+<script>
+window.addEventListener('scroll',()=>document.getElementById('siteNav').classList.toggle('scrolled',scrollY>30));
+function toggleMobileMenu(){document.getElementById('mobileMenu').classList.toggle('open')}
+
+const DEFAULT_DATA = {
+  tagline:"Knowledge. Understanding. Practice.",
+  about:"Hawwā Institute provides a structured environment for seekers of sacred knowledge, bringing learning, understanding and practical development together.",
+  contact:{email:"",whatsapp:"",location:""},
+  socials:{instagram:"",facebook:"",youtube:"",other:""},
+  announcement:{title:"Official Notice",text:"Registration information will be updated here.",published:true,date:""},
+  courses:[
+    {name:"Islam 101",category:"FOUNDATION",description:"A comprehensive introduction to essential Islamic knowledge, designed for those beginning or strengthening their foundation.",level:"Foundation",audience:"Adults & beginners",schedule:"",duration:"",venue:""},
+    {name:"Advanced Fiqh & Usul",category:"FIQH",description:"Deepen your understanding of Islamic jurisprudence and the principles that underpin it.",level:"Advanced",audience:"Continuing students",schedule:"",duration:"",venue:""},
+    {name:"Classical Arabic",category:"ARABIC",description:"Build your connection with the language of revelation through grammar, morphology and vocabulary.",level:"Foundation / Intermediate",audience:"Adults & students",schedule:"",duration:"",venue:""}
+  ],
+  timetable:[
+    {day:"Monday",time:"18:00 - 20:00",course:"Islam 101",venue:""},
+    {day:"Saturday",time:"09:00 - 12:00",course:"Advanced Fiqh & Usul",venue:""}
+  ],
+  events:[],
+  resources:[],
+  registrations:[]
+};
+
+let appData = structuredClone(DEFAULT_DATA);
+let adminPass = "";
+let adminAuthenticated = false;
+
+function mergeData(publicData){
+  const incoming = publicData || {};
+  appData = {
+    ...structuredClone(DEFAULT_DATA),
+    ...incoming,
+    contact:{...DEFAULT_DATA.contact,...(incoming.contact||{})},
+    socials:{...DEFAULT_DATA.socials,...(incoming.socials||{})},
+    announcement:{...DEFAULT_DATA.announcement,...(incoming.announcement||{})},
+    courses:Array.isArray(incoming.courses)?incoming.courses:structuredClone(DEFAULT_DATA.courses),
+    timetable:Array.isArray(incoming.timetable)?incoming.timetable:structuredClone(DEFAULT_DATA.timetable),
+    events:Array.isArray(incoming.events)?incoming.events:[],
+    resources:Array.isArray(incoming.resources)?incoming.resources:[],
+    registrations:appData.registrations||[]
+  };
+}
+function esc(v){
+  return String(v??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]));
+}
+function safeUrl(v){
+  const x=String(v||"").trim();
+  if(!x) return "#";
+  if(/^https?:\/\//i.test(x) || /^mailto:/i.test(x) || /^tel:/i.test(x) || /^data:application\/(pdf|octet-stream)/i.test(x)) return x;
+  return "#";
+}
+function showToast(msg){
+  const t=document.getElementById("toastNotification");
+  document.getElementById("toastMessage").innerText=msg;
+  t.style.transform="none"; t.style.opacity="1";
+  clearTimeout(window._toastTimer);
+  window._toastTimer=setTimeout(()=>{t.style.transform="translateY(120px)";t.style.opacity="0"},3000);
+}
+
+async function loadData(){
+  try{
+    const res=await fetch('/api/data',{cache:'no-store'});
+    if(res.ok){
+      const data=await res.json();
+      mergeData(data.public);
+      if(data.registrations && adminAuthenticated) appData.registrations=data.registrations;
+    }
+  }catch(e){console.warn("Hawwā API unavailable; using local defaults.",e)}
+  renderPublicUI();
+}
+
+function renderPublicUI(){
+  const n=appData.announcement||{};
+  const live=document.getElementById("live-announcement");
+  live.innerHTML=n.published===false ? "No current public notice." : `${esc(n.title||"Official Notice")}: ${esc(n.text||"")}`;
+
+  document.getElementById("coursesIntro").innerText=appData.tagline||"Explore the programmes available through Hawwā Institute.";
+  const courses=document.getElementById("publicCourses");
+  courses.innerHTML="";
+  (appData.courses||[]).forEach((c,i)=>{
+    courses.innerHTML+=`<article class="card">
+      <div class="num">${String(i+1).padStart(2,"0")} / ${esc(c.category||"PROGRAMME")}</div>
+      <h3 class="serif">${esc(c.name)}</h3>
+      <p>${esc(c.description)}</p>
+      <p style="font-size:11px;margin-top:14px"><strong>${esc(c.level||"")}</strong>${c.audience?` · ${esc(c.audience)}`:""}${c.duration?` · ${esc(c.duration)}`:""}</p>
+      <a href="#register">Register / enquire →</a>
+    </article>`;
+  });
+
+  const tb=document.getElementById("publicTimetable"); tb.innerHTML="";
+  if(!(appData.timetable||[]).length) tb.innerHTML='<p style="color:var(--muted)">Timetable will be published here.</p>';
+  (appData.timetable||[]).forEach(t=>{
+    tb.innerHTML+=`<div class="row"><div class="day">${esc(t.day)}</div><div><div class="course">${esc(t.course)}</div>${t.venue?`<div class="time">${esc(t.venue)}</div>`:""}</div><div class="time">${esc(t.time)}</div></div>`;
+  });
+
+  const rl=document.getElementById("publicResources"); rl.innerHTML="";
+  if(!(appData.resources||[]).length) rl.innerHTML='<p style="color:var(--muted)">No documents uploaded yet.</p>';
+  (appData.resources||[]).forEach(r=>{
+    rl.innerHTML+=`<div class="resource"><div><strong>${esc(r.name)}</strong><div style="font-size:10px;color:var(--muted)">${esc(r.date||"")} ${r.category?` · ${esc(r.category)}`:""}</div></div><a href="${safeUrl(r.base64)}" download="${esc(r.name||"document")}">Download →</a></div>`;
+  });
+
+  const ev=document.getElementById("publicEvents"); ev.innerHTML="";
+  const events=(appData.events||[]).filter(x=>x.published!==false);
+  if(!events.length) ev.innerHTML='<div style="grid-column:1/-1;text-align:center;color:#bdb2a6">Upcoming workshops and events will appear here.</div>';
+  events.forEach((e,i)=>{
+    ev.innerHTML+=`<article class="card" style="background:#fff0f0a">
+      <div class="num">${esc(e.date||"UPCOMING")} ${e.time?` / ${esc(e.time)}`:""}</div>
+      <h3 class="serif">${esc(e.title||"Hawwā Event")}</h3>
+      <p>${esc(e.description||"")}</p>
+      ${e.venue?`<p style="font-size:11px;margin-top:15px"><strong>Venue:</strong> ${esc(e.venue)}</p>`:""}
+      ${e.link?`<a href="${safeUrl(e.link)}" target="_blank" rel="noopener">More information →</a>`:""}
+    </article>`;
+  });
+
+  const about=document.querySelector("#about .head p"); if(about) about.innerText=appData.about||DEFAULT_DATA.about;
+  const tagline=document.querySelector("#home .hero h1"); if(tagline && appData.tagline) {
+    // Keep the premium headline layout; tagline is used in metadata/intro instead of breaking the design.
+  }
+}
+
+async function submitRegistration(e){
+  e.preventDefault();
+  const btn=document.getElementById("regBtn"); btn.innerText="Submitting..."; btn.disabled=true;
+  const newReg={
+    date:new Date().toLocaleDateString("en-GB"),
+    fname:document.getElementById("regFname").value.trim(),
+    sname:document.getElementById("regSname").value.trim(),
+    email:document.getElementById("regEmail").value.trim(),
+    phone:document.getElementById("regPhone").value.trim(),
+    course:document.getElementById("regCourse").value,
+    status:"New"
+  };
+  try{
+    const res=await fetch("/api/data",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({action:"register",data:newReg})});
+    if(!res.ok) throw new Error("Registration failed");
+    appData.registrations.push(newReg);
+    document.getElementById("regForm").style.display="none";
+    document.getElementById("regSuccess").classList.remove("hidden");
+    showToast("Registration submitted successfully");
+  }catch(err){
+    btn.innerText="Submit Registration →"; btn.disabled=false;
+    alert("We could not submit the registration right now. Please try again.");
+  }
+}
+
+function openAdmin(){
+  document.getElementById("adminModal").classList.remove("hidden");
+  document.getElementById("adminLoginBox").classList.remove("hidden");
+  document.getElementById("adminDashBox").classList.add("hidden");
+  document.getElementById("loginErr").style.display="none";
+  setTimeout(()=>document.getElementById("adminPass").focus(),50);
+}
+function closeAdmin(){document.getElementById("adminModal").classList.add("hidden");adminAuthenticated=false;adminPass="";}
+async function loginAdmin(){
+  const p=document.getElementById("adminPass").value;
+  if(!p) return;
+  adminPass=p;
+  try{
+    const res=await fetch("/api/data",{headers:{"Authorization":adminPass,"Cache-Control":"no-cache"}});
+    if(!res.ok) throw new Error("Unauthorized");
+    const data=await res.json();
+    mergeData(data.public);
+    appData.registrations=Array.isArray(data.registrations)?data.registrations:[];
+    adminAuthenticated=true;
+    showAdminDash();
+  }catch(e){
+    document.getElementById("loginErr").style.display="block";
+  }
+}
+function showAdminDash(){
+  document.getElementById("adminLoginBox").classList.add("hidden");
+  document.getElementById("adminDashBox").classList.remove("hidden");
+  populateAdmin();
+  showToast("Authenticated as Hawwā Admin");
+}
+function populateAdmin(){
+  document.getElementById("editNoticeTitle").value=appData.announcement.title||"";
+  document.getElementById("editNotice").value=appData.announcement.text||"";
+  document.getElementById("editNoticePublished").value=String(appData.announcement.published!==false);
+  document.getElementById("editTagline").value=appData.tagline||"";
+  document.getElementById("editAbout").value=appData.about||"";
+  document.getElementById("editEmail").value=appData.contact.email||"";
+  document.getElementById("editWhatsApp").value=appData.contact.whatsapp||"";
+  document.getElementById("editLocation").value=appData.contact.location||"";
+  document.getElementById("editInstagram").value=appData.socials.instagram||"";
+  document.getElementById("editFacebook").value=appData.socials.facebook||"";
+  document.getElementById("editYoutube").value=appData.socials.youtube||"";
+  document.getElementById("editOtherSocial").value=appData.socials.other||"";
+  renderAdminCourses(); renderAdminTimetable(); renderAdminEvents(); renderAdminResources(); renderAdminRegistrations();
+  document.getElementById("statRegs").innerText=appData.registrations.length;
+  document.getElementById("statCourses").innerText=appData.courses.length;
+  document.getElementById("statResources").innerText=appData.resources.length;
+}
+function fieldRow(label,value,cls=""){
+  return `<div><label>${label}</label><input class="${cls}" value="${esc(value)}"></div>`;
+}
+function renderAdminCourses(){
+  const box=document.getElementById("adminCourses"); box.innerHTML="";
+  appData.courses.forEach((c,i)=>{
+    box.innerHTML+=`<div style="border:1px solid var(--line);padding:15px;background:#fcfaf6">
+      <div style="display:flex;justify-content:space-between;align-items:center"><strong>Course ${i+1}</strong><button onclick="removeCourse(${i})" style="border:0;background:none;color:#a33;cursor:pointer">Remove</button></div>
+      <div class="formgrid" style="margin-top:10px">
+        ${fieldRow("Course name",c.name,"c-name")}
+        ${fieldRow("Category / label",c.category,"c-category")}
+        ${fieldRow("Level",c.level,"c-level")}
+        ${fieldRow("Audience",c.audience,"c-audience")}
+        ${fieldRow("Schedule",c.schedule,"c-schedule")}
+        ${fieldRow("Duration",c.duration,"c-duration")}
+        ${fieldRow("Venue",c.venue,"c-venue")}
+        <div class="full"><label>Description</label><textarea class="c-description" rows="3">${esc(c.description)}</textarea></div>
+      </div></div>`;
+  });
+}
+function addCourse(){appData.courses.push({name:"New Course",category:"PROGRAMME",description:"Course description",level:"",audience:"",schedule:"",duration:"",venue:""});renderAdminCourses();}
+function removeCourse(i){if(confirm("Remove this course?")){appData.courses.splice(i,1);renderAdminCourses();}}
+
+function renderAdminTimetable(){
+  const box=document.getElementById("adminTimetableRows");box.innerHTML="";
+  appData.timetable.forEach((t,i)=>{
+    box.innerHTML+=`<div class="formgrid" style="border:1px solid var(--line);padding:10px;background:#fcfaf6">
+      ${fieldRow("Day",t.day,"tt-day")}${fieldRow("Time",t.time,"tt-time")}${fieldRow("Course",t.course,"tt-course")}${fieldRow("Venue",t.venue||"","tt-venue")}
+      <div style="display:flex;align-items:end"><button onclick="removeTimetable(${i})" class="btn" style="background:#f7e8e6;color:#9b3d33;padding:10px 14px">Remove</button></div>
+    </div>`;
+  });
+}
+function addTimetableRow(){appData.timetable.push({day:"",time:"",course:"",venue:""});renderAdminTimetable();}
+function removeTimetable(i){appData.timetable.splice(i,1);renderAdminTimetable();}
+
+function renderAdminEvents(){
+  const box=document.getElementById("adminEvents");box.innerHTML="";
+  appData.events.forEach((e,i)=>{
+    box.innerHTML+=`<div style="border:1px solid var(--line);padding:15px;background:#fcfaf6">
+      <div style="display:flex;justify-content:space-between"><strong>Event ${i+1}</strong><button onclick="removeEvent(${i})" style="border:0;background:none;color:#a33">Remove</button></div>
+      <div class="formgrid" style="margin-top:10px">
+      ${fieldRow("Title",e.title||"","ev-title")}${fieldRow("Date",e.date||"","ev-date")}${fieldRow("Time",e.time||"","ev-time")}${fieldRow("Venue",e.venue||"","ev-venue")}${fieldRow("Action / info link",e.link||"","ev-link")}
+      <div><label>Publish</label><select class="ev-published"><option value="true" ${e.published!==false?"selected":""}>Published</option><option value="false" ${e.published===false?"selected":""}>Hidden</option></select></div>
+      <div class="full"><label>Description</label><textarea class="ev-description" rows="3">${esc(e.description||"")}</textarea></div>
+      </div></div>`;
+  });
+}
+function addEvent(){appData.events.push({title:"New Workshop",date:"",time:"",venue:"",description:"",link:"",published:true});renderAdminEvents();}
+function removeEvent(i){appData.events.splice(i,1);renderAdminEvents();}
+
+function renderAdminResources(){
+  const box=document.getElementById("adminResources");box.innerHTML="";
+  appData.resources.forEach((r,i)=>{
+    box.innerHTML+=`<div style="display:flex;justify-content:space-between;gap:12px;align-items:center;border:1px solid var(--line);padding:10px;background:#fff">
+      <div><strong>${esc(r.name)}</strong><div style="font-size:10px;color:var(--muted)">${esc(r.date||"")} ${r.category?` · ${esc(r.category)}`:""}</div></div>
+      <button onclick="removeResource(${i})" class="btn" style="background:#f7e8e6;color:#9b3d33;padding:9px 12px">Delete</button>
+    </div>`;
+  });
+}
+function uploadDoc(){
+  const name=document.getElementById("docName").value.trim(), file=document.getElementById("docFile").files[0];
+  if(!name||!file){alert("Enter a document name and select a file.");return}
+  if(file.size>2000000){alert("For this KV setup, keep each document under 2 MB.");return}
+  const reader=new FileReader();
+  reader.onload=()=>{appData.resources.push({name,date:new Date().toLocaleDateString("en-GB"),category:"",type:file.type||"application/octet-stream",base64:reader.result});document.getElementById("docName").value="";document.getElementById("docFile").value="";renderAdminResources();document.getElementById("statResources").innerText=appData.resources.length;showToast("Document attached. Click Save Changes.");};
+  reader.readAsDataURL(file);
+}
+function removeResource(i){if(confirm("Delete this resource?")){appData.resources.splice(i,1);renderAdminResources();document.getElementById("statResources").innerText=appData.resources.length;}}
+
+function renderAdminRegistrations(){
+  const tbody=document.getElementById("adminRegRows");tbody.innerHTML="";
+  if(!appData.registrations.length){tbody.innerHTML='<tr><td colspan="6" style="padding:15px;color:var(--muted)">No registrations yet.</td></tr>';return}
+  appData.registrations.forEach((r,i)=>{
+    tbody.innerHTML+=`<tr>
+      <td style="padding:8px;border-bottom:1px solid var(--line)">${esc(r.date)}</td>
+      <td style="padding:8px;border-bottom:1px solid var(--line);font-weight:700">${esc(r.fname)} ${esc(r.sname)}</td>
+      <td style="padding:8px;border-bottom:1px solid var(--line)">${esc(r.course)}</td>
+      <td style="padding:8px;border-bottom:1px solid var(--line);font-size:12px">${esc(r.phone)}<br>${esc(r.email)}</td>
+      <td style="padding:8px;border-bottom:1px solid var(--line)"><select onchange="appData.registrations[${i}].status=this.value"><option ${r.status==="New"||!r.status?"selected":""}>New</option><option ${r.status==="Contacted"?"selected":""}>Contacted</option><option ${r.status==="Accepted"?"selected":""}>Accepted</option><option ${r.status==="Declined"?"selected":""}>Declined</option></select></td>
+      <td style="padding:8px;border-bottom:1px solid var(--line)"><button onclick="deleteReg(${i})" style="border:0;background:none;color:#a33;cursor:pointer">Delete</button></td>
+    </tr>`;
+  });
+}
+function deleteReg(i){if(confirm("Delete this registration?")){appData.registrations.splice(i,1);renderAdminRegistrations();document.getElementById("statRegs").innerText=appData.registrations.length;}}
+
+function gatherAdminData(){
+  appData.tagline=document.getElementById("editTagline").value.trim();
+  appData.about=document.getElementById("editAbout").value.trim();
+  appData.contact={email:document.getElementById("editEmail").value.trim(),whatsapp:document.getElementById("editWhatsApp").value.trim(),location:document.getElementById("editLocation").value.trim()};
+  appData.socials={instagram:document.getElementById("editInstagram").value.trim(),facebook:document.getElementById("editFacebook").value.trim(),youtube:document.getElementById("editYoutube").value.trim(),other:document.getElementById("editOtherSocial").value.trim()};
+  appData.announcement={...appData.announcement,title:document.getElementById("editNoticeTitle").value.trim(),text:document.getElementById("editNotice").value.trim(),published:document.getElementById("editNoticePublished").value==="true",date:appData.announcement.date||new Date().toLocaleDateString("en-GB")};
+
+  appData.courses=[...document.querySelectorAll("#adminCourses > div")].map(box=>({
+    name:box.querySelector(".c-name").value.trim(),category:box.querySelector(".c-category").value.trim(),level:box.querySelector(".c-level").value.trim(),audience:box.querySelector(".c-audience").value.trim(),
+    schedule:box.querySelector(".c-schedule").value.trim(),duration:box.querySelector(".c-duration").value.trim(),venue:box.querySelector(".c-venue").value.trim(),description:box.querySelector(".c-description").value.trim()
+  }));
+  appData.timetable=[...document.querySelectorAll("#adminTimetableRows > div")].map(box=>({day:box.querySelector(".tt-day").value.trim(),time:box.querySelector(".tt-time").value.trim(),course:box.querySelector(".tt-course").value.trim(),venue:box.querySelector(".tt-venue").value.trim()}));
+  appData.events=[...document.querySelectorAll("#adminEvents > div")].map(box=>({title:box.querySelector(".ev-title").value.trim(),date:box.querySelector(".ev-date").value.trim(),time:box.querySelector(".ev-time").value.trim(),venue:box.querySelector(".ev-venue").value.trim(),link:box.querySelector(".ev-link").value.trim(),published:box.querySelector(".ev-published").value==="true",description:box.querySelector(".ev-description").value.trim()}));
+}
+
+async function saveAdminData(){
+  if(!adminAuthenticated){alert("Please log in again.");return}
+  gatherAdminData();
+  const btns=document.querySelectorAll("#adminDashBox .adminhead .btn");btns[0].disabled=true;btns[0].innerText="Saving...";
+  try{
+    const res=await fetch("/api/data",{method:"POST",headers:{"Content-Type":"application/json","Authorization":adminPass},body:JSON.stringify({action:"adminSave",data:appData})});
+    if(!res.ok) throw new Error("Save failed");
+    renderPublicUI();showToast("Hawwā website updated globally.");
+  }catch(e){alert("Cloudflare could not save the changes. Nothing has been confirmed as saved.");}
+  finally{btns[0].disabled=false;btns[0].innerText="Save Changes";}
+}
+
+loadData();
+</script>
+
+</body>
+</html>
