@@ -6,7 +6,7 @@ export async function onRequest(context) {
         "Cache-Control": "no-store, no-cache, must-revalidate"
     };
 
-    // Auto-connect to your Cloudflare KV binding
+    // Connects to your Cloudflare KV binding
     const kv = env.HAWWA_KV || env.hawwa_kv || env.HAWWA_DB || env.hawwa_db;
     const adminSecret = env.ADMIN_PASSWORD;
 
@@ -17,7 +17,7 @@ export async function onRequest(context) {
     const url = new URL(request.url);
 
     // =========================================================================
-    // 1. GET — PUBLIC DATA, ADMIN VERIFICATION & PROOF VIEWING
+    // 1. GET — PUBLIC CONTENT, ADMIN VERIFICATION & PROOF VIEWING
     // =========================================================================
     if (request.method === "GET") {
         try {
@@ -29,17 +29,19 @@ export async function onRequest(context) {
                     return new Response(JSON.stringify({ error: "Invalid administrator password." }), { status: 401, headers });
                 }
 
-                const [publicStr, regStr, counterStr] = await Promise.all([
+                const [publicStr, regStr, counterStr, recycledStr] = await Promise.all([
                     kv.get("public_state"),
                     kv.get("registrations"),
-                    kv.get("student_counter")
+                    kv.get("student_counter"),
+                    kv.get("recycled_numbers")
                 ]);
 
                 return new Response(JSON.stringify({
                     authenticated: true,
                     public: publicStr ? JSON.parse(publicStr) : null,
                     registrations: regStr ? JSON.parse(regStr) : [],
-                    counter: counterStr ? parseInt(counterStr, 10) : 1
+                    counter: counterStr ? parseInt(counterStr, 10) : 1,
+                    recycledNumbers: recycledStr ? JSON.parse(recycledStr) : []
                 }), { status: 200, headers });
             }
 
@@ -56,52 +58,73 @@ export async function onRequest(context) {
     }
 
     // =========================================================================
-    // 2. POST — REGISTRATIONS, STATUS UPDATES & DELETION WITH SECURITY
+    // 2. POST — REGISTRATIONS, RECYCLING & SECURE STUDENT DELETION
     // =========================================================================
     if (request.method === "POST") {
         try {
             const body = await request.json();
 
-            // A. STUDENT SUBMITTING MULTI-COURSE REGISTRATION
+            // A. STUDENT SUBMITTING REGISTRATION (WITH NUMBER RECYCLING)
             if (body.action === "register") {
                 const regData = body.data;
                 if (!regData || !regData.fname || !regData.email || !regData.courses || regData.courses.length === 0) {
                     return new Response(JSON.stringify({ error: "Missing required registration details." }), { status: 400, headers });
                 }
 
-                // Generate server-side sequential ID: HAW-260001
-                const currentCounterStr = await kv.get("student_counter");
-                let counter = currentCounterStr ? parseInt(currentCounterStr, 10) : 1;
-                const currentYear = new Date().getFullYear().toString().slice(-2);
-                const studentNumber = `HAW-${currentYear}${String(counter).padStart(4, '0')}`;
-                await kv.put("student_counter", String(counter + 1));
+                // 1. Check for recycled student numbers first to prevent gaps/duplicates
+                let studentNumber;
+                const recycledStr = await kv.get("recycled_numbers");
+                let recycledList = recycledStr ? JSON.parse(recycledStr) : [];
+
+                if (recycledList && recycledList.length > 0) {
+                    studentNumber = recycledList.shift();
+                    await kv.put("recycled_numbers", JSON.stringify(recycledList));
+                } else {
+                    const currentCounterStr = await kv.get("student_counter");
+                    let counter = currentCounterStr ? parseInt(currentCounterStr, 10) : 1;
+                    const currentYear = new Date().getFullYear().toString().slice(-2);
+                    studentNumber = `HAW-${currentYear}${String(counter).padStart(4, '0')}`;
+                    await kv.put("student_counter", String(counter + 1));
+                }
+
+                // 2. Save payment proof receipt
+                let hasProof = false;
+                if (regData.paymentMethod === "EFT" && regData.proofFile) {
+                    const proofRecord = {
+                        studentNumber,
+                        fileName: regData.proofFile.name || "receipt.pdf",
+                        fileType: regData.proofFile.type || "application/octet-stream",
+                        fileSize: regData.proofFile.size || "Unknown",
+                        data: regData.proofFile.data,
+                        uploadedAt: new Date().toISOString()
+                    };
+                    await kv.put(`proof_${studentNumber}`, JSON.stringify(proofRecord));
+                    hasProof = true;
+                }
 
                 let paymentStatus = regData.paymentMethod === "EFT" 
-                    ? (regData.proofFile ? "payment_proof_received" : "awaiting_payment") 
+                    ? (hasProof ? "payment_proof_received" : "awaiting_payment") 
                     : "awaiting_cash_payment";
                     
                 let regStatus = regData.paymentMethod === "EFT" 
-                    ? (regData.proofFile ? "PAYMENT PROOF RECEIVED" : "AWAITING PAYMENT") 
+                    ? (hasProof ? "PAYMENT PROOF RECEIVED" : "AWAITING PAYMENT") 
                     : "CASH PAYMENT — AWAITING PAYMENT";
 
                 const newRecord = {
                     studentNumber,
                     fname: regData.fname.trim(),
                     sname: regData.sname.trim(),
-                    preferredName: (regData.preferredName || "").trim(),
-                    idNumber: (regData.idNumber || "").trim(),
-                    dob: regData.dob || "",
-                    gender: regData.gender || "",
                     phone: regData.phone.trim(),
                     whatsapp: (regData.whatsapp || regData.phone).trim(),
                     email: regData.email.trim(),
                     address: (regData.address || "").trim(),
-                    courses: regData.courses, // Array of selected course names
+                    courses: regData.courses,
+                    feeType: regData.feeType || "monthly",
                     totalFee: regData.totalFee || "R 0",
                     paymentMethod: regData.paymentMethod || "EFT",
                     paymentStatus,
                     status: regStatus,
-                    proofFile: regData.proofFile || null,
+                    hasProof,
                     notes: "",
                     date: new Date().toLocaleDateString("en-GB", { day: "2-digit", month: "short", year: "numeric" }),
                     timestamp: new Date().toISOString()
@@ -138,7 +161,7 @@ export async function onRequest(context) {
                 return new Response(JSON.stringify({ success: true }), { status: 200, headers });
             }
 
-            // C. ADMIN DELETING/DEREGISTERING A STUDENT (PASSWORD PROTECTED)
+            // C. ADMIN DELETING/DEREGISTERING A STUDENT (RECYCLES ID & PURGES PROOF)
             if (body.action === "deleteRegistration") {
                 const suppliedPassword = request.headers.get("Authorization") || "";
                 if (!adminSecret || suppliedPassword.trim() !== adminSecret.trim()) {
@@ -149,10 +172,22 @@ export async function onRequest(context) {
                 const existingRegsStr = await kv.get("registrations");
                 let registrations = existingRegsStr ? JSON.parse(existingRegsStr) : [];
 
+                // Remove student record
                 registrations = registrations.filter(r => r.studentNumber !== studentNumber);
                 await kv.put("registrations", JSON.stringify(registrations));
 
-                return new Response(JSON.stringify({ success: true, message: `Deregistered ${studentNumber}` }), { status: 200, headers });
+                // 1. Purge proof image/PDF from storage
+                await kv.delete(`proof_${studentNumber}`);
+
+                // 2. Recycle the student number so it is reused for the next registration
+                const recycledStr = await kv.get("recycled_numbers");
+                let recycledList = recycledStr ? JSON.parse(recycledStr) : [];
+                if (!recycledList.includes(studentNumber)) {
+                    recycledList.push(studentNumber);
+                    await kv.put("recycled_numbers", JSON.stringify(recycledList));
+                }
+
+                return new Response(JSON.stringify({ success: true, message: `Deregistered ${studentNumber}. ID recycled.` }), { status: 200, headers });
             }
 
             return new Response(JSON.stringify({ error: "Unknown action." }), { status: 400, headers });
@@ -163,4 +198,4 @@ export async function onRequest(context) {
     }
 
     return new Response(JSON.stringify({ error: "Method not allowed." }), { status: 405, headers });
-}
+                    }
