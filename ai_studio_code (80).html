@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hawwā Institute | Official Digital Hub</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Inter', 'sans-serif'], serif: ['Playfair Display', 'serif'] },
+                    colors: { brand: { dark: '#0f172a', green: '#115e59', gold: '#b45309', light: '#f8fafc' } }
+                }
+            }
+        }
+    </script>
+    <style>
+        .custom-scrollbar::-webkit-scrollbar { width: 6px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: #f1f1f1; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #115e59; border-radius: 10px; }
+    </style>
+</head>
+<body class="bg-brand-light text-slate-800 font-sans antialiased flex flex-col min-h-screen">
+
+    <!-- ================= NOTIFICATION TOAST ================= -->
+    <div id="toastNotification" class="fixed bottom-6 right-6 z-[100] transform translate-y-24 opacity-0 transition-all duration-300 flex items-center gap-3 px-5 py-3.5 rounded-xl bg-brand-dark text-white font-medium shadow-2xl border border-brand-gold/50 pointer-events-none">
+        <i id="toastIcon" class="fa-solid fa-circle-check text-brand-gold"></i>
+        <span id="toastMessage" class="text-sm">Update confirmed.</span>
+    </div>
+
+    <!-- ================= MASSIVE LOGO BANNER ================= -->
+    <div class="w-full bg-white border-b border-gray-200 py-4 md:py-6 flex justify-center items-center">
+        <!-- Make sure logo.png is uploaded to your GitHub! -->
+        <img src="logo.png" alt="Hawwā Institute Logo" class="h-24 md:h-32 object-contain mix-blend-multiply">
+    </div>
+
+    <!-- ================= STICKY NAVIGATION ================= -->
+    <nav class="bg-brand-dark text-white sticky top-0 z-40 shadow-md">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-center md:justify-between h-14">
+                <div class="hidden md:flex space-x-8 text-sm font-semibold tracking-wider uppercase">
+                    <a href="#home" class="hover:text-brand-gold transition">Home</a>
+                    <a href="#about" class="hover:text-brand-gold transition">About</a>
+                    <a href="#courses" class="hover:text-brand-gold transition">Courses</a>
+                    <a href="#timetable" class="hover:text-brand-gold transition">Timetable</a>
+                    <a href="#resources" class="hover:text-brand-gold transition">Resources</a>
+                </div>
+                <div class="flex space-x-4">
+                    <a href="#register" class="bg-brand-green hover:bg-emerald-700 text-white px-5 py-1.5 rounded text-sm font-bold tracking-wider uppercase transition shadow-lg border border-emerald-600">Register Online</a>
+                    <button onclick="toggleMobileMenu()" class="md:hidden text-white"><i class="fa-solid fa-bars text-xl"></i></button>
+                </div>
+            </div>
+        </div>
+        <!-- Mobile Menu -->
+        <div id="mobileMenu" class="hidden md:hidden bg-slate-800 text-sm font-semibold uppercase tracking-wider text-center border-t border-slate-700">
+            <a href="#about" onclick="toggleMobileMenu()" class="block py-3 border-b border-slate-700 hover:text-brand-gold">About</a>
+            <a href="#courses" onclick="toggleMobileMenu()" class="block py-3 border-b border-slate-700 hover:text-brand-gold">Courses</a>
+            <a href="#timetable" onclick="toggleMobileMenu()" class="block py-3 border-b border-slate-700 hover:text-brand-gold">Timetable</a>
+            <a href="#resources" onclick="toggleMobileMenu()" class="block py-3 hover:text-brand-gold">Resources</a>
+        </div>
+    </nav>
+
+    <!-- ================= HERO SECTION ================= -->
+    <section id="home" class="relative bg-brand-dark py-20 sm:py-32 px-4 text-center border-b-[6px] border-brand-green">
+        <div class="absolute inset-0 bg-black/40"></div>
+        <div class="relative max-w-4xl mx-auto">
+            <h1 class="text-4xl sm:text-6xl font-bold text-white font-serif leading-tight">Knowledge. Understanding. Practice.</h1>
+            <p class="mt-6 text-lg text-gray-300 font-light">The official digital home of Hawwā Institute. Dedicated to comprehensive Islamic education and guiding practical application.</p>
+        </div>
+    </section>
+
+    <!-- ================= DYNAMIC NOTICE BOARD ================= -->
+    <div class="bg-amber-50 border-b border-amber-200 py-4 shadow-inner">
+        <div class="max-w-7xl mx-auto px-4 flex items-center justify-center md:justify-start">
+            <span class="flex p-2 rounded-lg bg-amber-100 text-brand-gold mr-3"><i class="fa-solid fa-bullhorn"></i></span>
+            <p id="live-announcement" class="text-sm font-bold text-amber-900 tracking-wide">Loading official notices...</p>
+        </div>
+    </div>
+
+    <!-- ================= MAIN CONTENT ================= -->
+    <main class="flex-grow max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-12 space-y-20">
+
+        <!-- ABOUT -->
+        <section id="about" class="text-center max-w-3xl mx-auto">
+            <h2 class="text-3xl font-serif font-bold text-brand-dark mb-6">About Hawwā Institute</h2>
+            <p class="text-slate-600 leading-relaxed">Hawwā Institute provides a structured, premium environment for seekers of sacred knowledge. Our approach blends deep traditional learning with practical spiritual development, ensuring students do not merely memorize, but truly understand and implement what they learn.</p>
+        </section>
+
+        <!-- COURSES -->
+        <section id="courses">
+            <h2 class="text-3xl font-serif font-bold text-brand-dark mb-8 text-center">Our Programmes</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+                    <div class="h-2 bg-brand-green"></div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-serif font-bold text-brand-dark mb-2">Foundation Islamic Studies</h3>
+                        <p class="text-sm text-slate-500 mb-4">A comprehensive introduction covering essential Fiqh, Aqeedah, and basic Arabic terminology.</p>
+                        <a href="#register" class="text-brand-green font-bold text-sm hover:underline"><i class="fa-solid fa-pen-to-square mr-1"></i> Enroll Now</a>
+                    </div>
+                </div>
+                <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+                    <div class="h-2 bg-brand-green"></div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-serif font-bold text-brand-dark mb-2">Advanced Fiqh & Usul</h3>
+                        <p class="text-sm text-slate-500 mb-4">Deep dive into Islamic jurisprudence designed for students who have completed the foundation tier.</p>
+                        <a href="#register" class="text-brand-green font-bold text-sm hover:underline"><i class="fa-solid fa-pen-to-square mr-1"></i> Enroll Now</a>
+                    </div>
+                </div>
+                <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+                    <div class="h-2 bg-brand-green"></div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-serif font-bold text-brand-dark mb-2">Classical Arabic</h3>
+                        <p class="text-sm text-slate-500 mb-4">Learn the language of the Qur'an focusing on grammar, morphology, and vocabulary.</p>
+                        <a href="#register" class="text-brand-green font-bold text-sm hover:underline"><i class="fa-solid fa-pen-to-square mr-1"></i> Enroll Now</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TIMETABLE & RESOURCES -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+            <section id="timetable" class="bg-white p-6 md:p-8 rounded-2xl shadow-sm border border-gray-200">
+                <h2 class="text-2xl font-serif font-bold text-brand-dark mb-6 border-b pb-3"><i class="fa-regular fa-calendar text-brand-gold mr-2"></i> Class Timetable</h2>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left text-sm">
+                        <thead class="bg-slate-50 text-slate-600 font-bold uppercase">
+                            <tr><th class="p-3">Day</th><th class="p-3">Time</th><th class="p-3">Course</th></tr>
+                        </thead>
+                        <tbody id="publicTimetable" class="divide-y divide-gray-100 font-medium text-brand-dark">
+                            <tr><td colspan="3" class="p-4 text-center text-slate-400">Loading timetable...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section id="resources" class="bg-white p-6 md:p-8 rounded-2xl shadow-sm border border-gray-200">
+                <h2 class="text-2xl font-serif font-bold text-brand-dark mb-6 border-b pb-3"><i class="fa-solid fa-folder-open text-brand-gold mr-2"></i> Documents & Resources</h2>
+                <div id="publicResources" class="space-y-3 max-h-[300px] overflow-y-auto custom-scrollbar pr-2">
+                    <p class="text-slate-400 text-sm">Loading resources...</p>
+                </div>
+            </section>
+        </div>
+
+        <!-- ONLINE REGISTRATION FORM -->
+        <section id="register" class="max-w-2xl mx-auto bg-white p-8 md:p-10 rounded-2xl shadow-xl border-t-4 border-brand-green">
+            <div class="text-center mb-8">
+                <h2 class="text-3xl font-serif font-bold text-brand-dark">Student Registration</h2>
+                <p class="text-slate-500 mt-2 text-sm">Complete the form below to secure your placement.</p>
+            </div>
+            
+            <div id="regSuccess" class="hidden bg-emerald-50 text-emerald-800 border border-emerald-200 p-6 rounded-xl text-center mb-6">
+                <i class="fa-solid fa-circle-check text-4xl mb-3 text-emerald-600"></i>
+                <h3 class="font-bold text-lg">JazakAllahu Khairan!</h3>
+                <p class="text-sm mt-1">Your registration was received. We will contact you soon.</p>
+            </div>
+
+            <form id="regForm" onsubmit="submitRegistration(event)" class="space-y-5">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 mb-1 uppercase">First Name</label>
+                        <input type="text" id="regFname" required class="w-full border border-gray-300 p-2.5 rounded focus:ring-2 focus:ring-brand-green outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 mb-1 uppercase">Surname</label>
+                        <input type="text" id="regSname" required class="w-full border border-gray-300 p-2.5 rounded focus:ring-2 focus:ring-brand-green outline-none">
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 mb-1 uppercase">Email Address</label>
+                    <input type="email" id="regEmail" required class="w-full border border-gray-300 p-2.5 rounded focus:ring-2 focus:ring-brand-green outline-none">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 mb-1 uppercase">WhatsApp Number</label>
+                    <input type="tel" id="regPhone" required class="w-full border border-gray-300 p-2.5 rounded focus:ring-2 focus:ring-brand-green outline-none">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 mb-1 uppercase">Select Course</label>
+                    <select id="regCourse" required class="w-full border border-gray-300 p-2.5 rounded focus:ring-2 focus:ring-brand-green outline-none bg-white">
+                        <option value="">Choose...</option>
+                        <option value="Foundation Islamic Studies">Foundation Islamic Studies</option>
+                        <option value="Advanced Fiqh & Usul">Advanced Fiqh & Usul</option>
+                        <option value="Classical Arabic">Classical Arabic</option>
+                    </select>
+                </div>
+                <button type="submit" id="regBtn" class="w-full bg-brand-dark hover:bg-brand-green text-white font-bold py-4 rounded transition shadow-md mt-4">Submit Registration</button>
+            </form>
+        </section>
+
+    </main>
+
+    <!-- ================= FOOTER ================= -->
+    <footer class="bg-brand-dark text-slate-400 py-10 border-t border-slate-800 mt-auto">
+        <div class="max-w-7xl mx-auto px-4 flex flex-col md:flex-row justify-between items-center gap-6">
+            <div class="flex items-center gap-4">
+                <img src="logo.png" alt="Logo" class="h-10 bg-white p-1 rounded mix-blend-screen">
+                <p class="text-xs">&copy; 2026 Hawwā Institute. All rights reserved.</p>
+            </div>
+            <div class="flex gap-6 text-sm">
+                <a href="mailto:admin@hawwainstitute.com" class="hover:text-white"><i class="fa-solid fa-envelope mr-1"></i> Email</a>
+                <a href="#" class="hover:text-white"><i class="fa-brands fa-whatsapp mr-1"></i> WhatsApp</a>
+                <!-- ADMIN TRIGGER -->
+                <button onclick="openAdmin()" class="text-brand-gold hover:text-white font-bold transition"><i class="fa-solid fa-lock mr-1"></i> Admin Portal</button>
+            </div>
+        </div>
+    </footer>
+
+
+    <!-- ================= SECURE ADMIN MODAL ================= -->
+    <div id="adminModal" class="fixed inset-0 bg-slate-900/80 backdrop-blur-sm hidden z-50 overflow-y-auto flex items-center justify-center p-4">
+        
+        <!-- LOGIN BOX -->
+        <div id="adminLoginBox" class="bg-white w-full max-w-sm rounded-2xl p-8 text-center shadow-2xl relative">
+            <button onclick="closeAdmin()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-800 text-xl"><i class="fa-solid fa-xmark"></i></button>
+            <i class="fa-solid fa-shield-halved text-4xl text-brand-gold mb-4"></i>
+            <h2 class="text-2xl font-serif font-bold text-brand-dark mb-6">Admin Access</h2>
+            <input type="password" id="adminPass" placeholder="Enter Secure Password" class="w-full border p-3 rounded mb-4 focus:ring-2 outline-none">
+            <button onclick="loginAdmin()" class="w-full bg-brand-green text-white font-bold py-3 rounded hover:bg-emerald-700">Login</button>
+            <p id="loginErr" class="text-red-500 text-xs mt-3 hidden">Incorrect Password.</p>
+        </div>
+
+        <!-- DASHBOARD -->
+        <div id="adminDashBox" class="hidden bg-slate-50 w-full max-w-5xl rounded-2xl shadow-2xl overflow-hidden my-8 border border-slate-300 relative">
+            <!-- Header -->
+            <div class="bg-brand-dark p-4 flex justify-between items-center text-white">
+                <h2 class="font-serif text-xl font-bold"><i class="fa-solid fa-gears text-brand-gold mr-2"></i> Hawwā Master Console</h2>
+                <div class="space-x-3">
+                    <button onclick="saveAdminData()" class="bg-brand-green hover:bg-emerald-600 px-4 py-1.5 rounded text-sm font-bold shadow"><i class="fa-solid fa-cloud-arrow-up mr-1"></i> Save to Web</button>
+                    <button onclick="closeAdmin()" class="bg-rose-700 hover:bg-rose-800 px-3 py-1.5 rounded text-sm font-bold">Exit</button>
+                </div>
+            </div>
+
+            <div class="p-6 grid grid-cols-1 lg:grid-cols-2 gap-6 max-h-[80vh] overflow-y-auto custom-scrollbar">
+                
+                <!-- 1. Edit Announcement -->
+                <div class="bg-white p-5 rounded-xl shadow-sm border">
+                    <h3 class="font-bold text-brand-dark mb-3"><i class="fa-solid fa-bullhorn mr-2"></i> Edit Official Notice</h3>
+                    <textarea id="editNotice" rows="2" class="w-full border p-2 rounded text-sm outline-none focus:border-brand-green" placeholder="e.g. Registration is now open."></textarea>
+                </div>
+
+                <!-- 2. Document Upload -->
+                <div class="bg-white p-5 rounded-xl shadow-sm border">
+                    <h3 class="font-bold text-brand-dark mb-3"><i class="fa-solid fa-file-arrow-up mr-2"></i> Upload Resource (PDF/Doc)</h3>
+                    <input type="text" id="docName" placeholder="Document Name" class="w-full border p-2 rounded text-sm mb-2 outline-none">
+                    <input type="file" id="docFile" class="w-full text-sm mb-2">
+                    <button onclick="uploadDoc()" class="bg-brand-dark text-white text-xs px-3 py-2 rounded font-bold">Attach to Resources</button>
+                </div>
+
+                <!-- 3. Edit Timetable -->
+                <div class="bg-white p-5 rounded-xl shadow-sm border lg:col-span-2">
+                    <div class="flex justify-between mb-3">
+                        <h3 class="font-bold text-brand-dark"><i class="fa-regular fa-calendar mr-2"></i> Manage Timetable</h3>
+                        <button onclick="addTimetableRow()" class="text-xs bg-brand-green text-white px-2 py-1 rounded">+ Add Class</button>
+                    </div>
+                    <div id="adminTimetableRows" class="space-y-2"></div>
+                </div>
+
+                <!-- 4. View Registrations -->
+                <div class="bg-white p-5 rounded-xl shadow-sm border lg:col-span-2">
+                    <h3 class="font-bold text-brand-dark mb-4"><i class="fa-solid fa-users mr-2"></i> Student Registrations</h3>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left text-sm whitespace-nowrap">
+                            <thead class="bg-slate-100 font-bold text-slate-600">
+                                <tr><th class="p-2">Date</th><th class="p-2">Name</th><th class="p-2">Course</th><th class="p-2">Contact</th><th class="p-2">Action</th></tr>
+                            </thead>
+                            <tbody id="adminRegRows" class="divide-y text-slate-700 font-medium"></tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- ================= SYSTEM LOGIC (JS) ================= -->
+    <script>
+        // STATE MANAGEMENT
+        let appData = {
+            announcement: "Registration for the 2026 semester is currently open.",
+            timetable: [
+                { day: "Monday", time: "18:00 - 20:00", course: "Foundation Islamic Studies" },
+                { day: "Saturday", time: "09:00 - 12:00", course: "Advanced Fiqh & Usul" }
+            ],
+            resources: [], // { name, date, base64 }
+            registrations: [] // { date, fname, sname, email, phone, course }
+        };
+        let adminPass = "";
+
+        // INITIALIZATION
+        async function loadData() {
+            try {
+                // Tries to load from Cloudflare API
+                const res = await fetch('/api/data');
+                if (res.ok) {
+                    const data = await res.json();
+                    if(data.public) appData = { ...appData, ...data.public };
+                }
+            } catch(e) { console.log("Running in Local/Mockup Mode"); }
+            renderPublicUI();
+        }
+
+        function renderPublicUI() {
+            // Notice
+            document.getElementById("live-announcement").innerHTML = `<strong>Official Notice:</strong> ${appData.announcement}`;
+            
+            // Timetable
+            const tBody = document.getElementById("publicTimetable");
+            tBody.innerHTML = "";
+            appData.timetable.forEach(t => {
+                tBody.innerHTML += `<tr class="hover:bg-slate-50"><td class="p-3 font-bold">${t.day}</td><td class="p-3 text-slate-500">${t.time}</td><td class="p-3 text-brand-green">${t.course}</td></tr>`;
+            });
+
+            // Resources
+            const rList = document.getElementById("publicResources");
+            rList.innerHTML = "";
+            if(appData.resources.length === 0) rList.innerHTML = "<p class='text-slate-400 text-sm'>No documents uploaded yet.</p>";
+            appData.resources.forEach((r, i) => {
+                rList.innerHTML += `
+                <div class="flex justify-between items-center bg-slate-50 p-3 rounded-lg border border-slate-100">
+                    <div><h4 class="font-bold text-brand-dark text-sm">${r.name}</h4><p class="text-[10px] text-slate-400">Added: ${r.date}</p></div>
+                    <a href="${r.base64}" download="${r.name}" class="bg-brand-dark text-white text-[11px] font-bold px-3 py-1.5 rounded hover:bg-brand-green transition"><i class="fa-solid fa-download mr-1"></i> Download</a>
+                </div>`;
+            });
+        }
+
+        // REGISTRATION SUBMISSION
+        async function submitRegistration(e) {
+            e.preventDefault();
+            const btn = document.getElementById("regBtn");
+            btn.innerText = "Saving..."; btn.disabled = true;
+
+            const newReg = {
+                date: new Date().toLocaleDateString('en-GB'),
+                fname: document.getElementById("regFname").value,
+                sname: document.getElementById("regSname").value,
+                email: document.getElementById("regEmail").value,
+                phone: document.getElementById("regPhone").value,
+                course: document.getElementById("regCourse").value
+            };
+
+            try {
+                // Send to Cloudflare
+                await fetch('/api/data', {
+                    method: 'POST', headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ action: "register", data: newReg })
+                });
+            } catch(e) {} // Fails silently in local mode
+
+            appData.registrations.push(newReg); // Save to local state just in case
+            
+            document.getElementById("regForm").style.display = "none";
+            document.getElementById("regSuccess").classList.remove("hidden");
+            showToast("Registration Submitted Successfully");
+        }
+
+        // ADMIN CONTROLS
+        function openAdmin() { document.getElementById("adminModal").classList.remove("hidden"); }
+        function closeAdmin() { document.getElementById("adminModal").classList.add("hidden"); }
+        
+        async function loginAdmin() {
+            adminPass = document.getElementById("adminPass").value;
+            try {
+                // Validate with Cloudflare
+                const res = await fetch('/api/data', { headers: { 'Authorization': adminPass } });
+                if (res.ok) {
+                    const data = await res.json();
+                    if(data.registrations) appData.registrations = data.registrations; // Pull hidden data
+                    showAdminDash();
+                } else { document.getElementById("loginErr").classList.remove("hidden"); }
+            } catch(e) {
+                // Local testing bypass if API doesn't exist yet
+                if(adminPass === "demo") showAdminDash();
+                else document.getElementById("loginErr").classList.remove("hidden");
+            }
+        }
+
+        function showAdminDash() {
+            document.getElementById("adminLoginBox").classList.add("hidden");
+            document.getElementById("adminDashBox").classList.remove("hidden");
+            
+            // Populate Fields
+            document.getElementById("editNotice").value = appData.announcement;
+            renderAdminTimetable();
+            renderAdminRegistrations();
+            showToast("Authenticated as Admin");
+        }
+
+        // Admin: Timetable Management
+        function renderAdminTimetable() {
+            const div = document.getElementById("adminTimetableRows");
+            div.innerHTML = "";
+            appData.timetable.forEach((t, i) => {
+                div.innerHTML += `
+                <div class="flex gap-2">
+                    <input type="text" value="${t.day}" class="border p-1 text-sm w-1/4 rounded tt-day">
+                    <input type="text" value="${t.time}" class="border p-1 text-sm w-1/4 rounded tt-time">
+                    <input type="text" value="${t.course}" class="border p-1 text-sm flex-grow rounded tt-course">
+                    <button onclick="this.parentElement.remove()" class="text-red-500"><i class="fa-solid fa-trash"></i></button>
+                </div>`;
+            });
+        }
+        function addTimetableRow() {
+            document.getElementById("adminTimetableRows").innerHTML += `
+                <div class="flex gap-2">
+                    <input type="text" placeholder="Day" class="border p-1 text-sm w-1/4 rounded tt-day">
+                    <input type="text" placeholder="Time" class="border p-1 text-sm w-1/4 rounded tt-time">
+                    <input type="text" placeholder="Course" class="border p-1 text-sm flex-grow rounded tt-course">
+                    <button onclick="this.parentElement.remove()" class="text-red-500"><i class="fa-solid fa-trash"></i></button>
+                </div>`;
+        }
+
+        // Admin: Resource Upload (Base64)
+        function uploadDoc() {
+            const name = document.getElementById("docName").value;
+            const file = document.getElementById("docFile").files[0];
+            if(!name || !file) return alert("Enter name and select file");
+            if(file.size > 2000000) return alert("File too large. Keep under 2MB.");
+            
+            const reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = function() {
+                appData.resources.push({ name: name, date: new Date().toLocaleDateString('en-GB'), base64: reader.result });
+                document.getElementById("docName").value = "";
+                showToast("Document attached. Remember to click 'Save to Web'.");
+            };
+        }
+
+        // Admin: View Registrations
+        function renderAdminRegistrations() {
+            const tbody = document.getElementById("adminRegRows");
+            tbody.innerHTML = "";
+            appData.registrations.forEach((r, i) => {
+                tbody.innerHTML += `
+                <tr class="border-b">
+                    <td class="p-2">${r.date}</td>
+                    <td class="p-2 font-bold">${r.fname} ${r.sname}</td>
+                    <td class="p-2">${r.course}</td>
+                    <td class="p-2 text-xs">${r.phone}<br>${r.email}</td>
+                    <td class="p-2"><button onclick="deleteReg(${i})" class="text-red-500"><i class="fa-solid fa-trash"></i></button></td>
+                </tr>`;
+            });
+        }
+        function deleteReg(index) { appData.registrations.splice(index, 1); renderAdminRegistrations(); }
+
+        // SAVE EVERYTHING TO CLOUDFLARE
+        async function saveAdminData() {
+            // Gather edited data
+            appData.announcement = document.getElementById("editNotice").value;
+            
+            appData.timetable = [];
+            document.querySelectorAll("#adminTimetableRows > div").forEach(row => {
+                appData.timetable.push({
+                    day: row.querySelector(".tt-day").value,
+                    time: row.querySelector(".tt-time").value,
+                    course: row.querySelector(".tt-course").value
+                });
+            });
+
+            try {
+                await fetch('/api/data', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json', 'Authorization': adminPass },
+                    body: JSON.stringify({ action: "adminSave", data: appData })
+                });
+                showToast("Live Website Updated Globally!");
+                renderPublicUI();
+            } catch(e) { showToast("Saved Locally (API Error)"); renderPublicUI(); }
+        }
+
+        // Helpers
+        function toggleMobileMenu() { document.getElementById("mobileMenu").classList.toggle("hidden"); }
+        function showToast(msg) {
+            const t = document.getElementById("toastNotification");
+            document.getElementById("toastMessage").innerText = msg;
+            t.classList.remove("translate-y-24", "opacity-0");
+            setTimeout(() => t.classList.add("translate-y-24", "opacity-0"), 3000);
+        }
+
+        // Run on start
+        loadData();
+    </script>
+</body>
+</html>
