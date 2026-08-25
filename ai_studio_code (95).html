@@ -1,0 +1,414 @@
+<!doctype html>
+<html lang="en" class="scroll-smooth">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Hawwā Institute | Islamic Knowledge • Divine Guidance</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,400;1,600&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+<style>
+:root {
+  --brand-green: #008f5d;
+  --dark-green: #006642;
+  --light-green: #eaf6f0;
+  --brand-purple: #5b0a63;
+  --dark-purple: #420448;
+  --light-purple: #fbf0fd;
+  --paper: #fdfdfc;
+  --ink: #1e1e1e;
+  --line: rgba(0, 143, 93, 0.14);
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--paper); color: var(--ink); font-family: "DM Sans", sans-serif; }
+.serif { font-family: "Cormorant Garamond", serif; }
+.container { width: min(1200px, calc(100% - 40px)); margin: auto; }
+
+/* HEADER & NAVBAR */
+.nav { position: fixed; inset: 0 0 auto; z-index: 50; background: #ffffff; border-bottom: 2px solid var(--brand-purple); box-shadow: 0 2px 12px rgba(91,10,99,0.08); }
+.navin { min-height: 80px; display: flex; align-items: center; justify-content: space-between; gap: 20px; }
+.brand { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+.brand-logo-small { height: 50px; width: auto; object-fit: contain; background: #fff; border: 2px solid #1a1a1a; border-radius: 8px; padding: 2px; }
+.brand span { font-size: 13px; letter-spacing: .2em; text-transform: uppercase; font-weight: 800; color: var(--brand-purple); }
+
+.links { display: flex; gap: 22px; align-items: center; font-size: 11px; letter-spacing: .12em; text-transform: uppercase; font-weight: 700; }
+.links a { color: #2d3748; text-decoration: none; transition: .2s; }
+.links a:hover { color: var(--brand-green); }
+.pill-cta { border: 2px solid var(--brand-green); color: #fff !important; background: var(--brand-green); padding: 10px 22px; border-radius: 999px; font-weight: 700; text-decoration: none; display: inline-block; transition: .2s; }
+.pill-cta:hover { background: var(--dark-green); border-color: var(--dark-green); }
+
+/* HERO */
+.hero { min-height: 720px; display: flex; align-items: center; justify-content: center; background: linear-gradient(180deg, #ffffff 0%, #f4faf7 60%, #ebf6f1 100%); border-bottom: 3px solid var(--brand-purple); padding-top: 100px; padding-bottom: 60px; text-align: center; }
+.hero-logo-main { max-height: 240px; width: auto; object-fit: contain; margin: 0 auto 30px; filter: drop-shadow(0 10px 25px rgba(91,10,99,0.15)); }
+
+/* SECTIONS */
+.notice-bar { background: var(--brand-purple); color: #fff; padding: 12px 0; font-size: 13px; font-weight: 500; }
+.section { padding: 90px 0; }
+.section-green { background: var(--light-green); }
+
+.cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 28px; }
+.card { background: #fff; border: 1.5px solid var(--line); border-radius: 12px; padding: 32px; transition: .3s; display: flex; flex-direction: column; justify-content: space-between; position: relative; overflow: hidden; }
+.card:hover { transform: translateY(-5px); border-color: var(--brand-green); box-shadow: 0 16px 35px rgba(0, 143, 93, 0.12); }
+.card-badge { position: absolute; top: 0; right: 0; background: var(--brand-purple); color: #fff; font-size: 9px; font-weight: 800; letter-spacing: .15em; text-transform: uppercase; padding: 6px 14px; border-bottom-left-radius: 8px; }
+
+@media(max-width:900px){
+  .links { display: none; }
+  .menu { display: block; }
+  .hero-logo-main { max-height: 180px; }
+}
+.mobile { display: none; background: #ffffff; border-bottom: 2px solid var(--brand-purple); padding: 16px 24px; }
+.mobile.open { display: block; }
+.mobile a { display: block; padding: 12px 0; font-size: 13px; font-weight: 700; color: var(--brand-purple); text-decoration: none; border-bottom: 1px solid #f1f5f9; }
+</style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav id="siteNav" class="nav">
+  <div class="container navin">
+    <a href="index.html" class="brand">
+      <img src="logo.png" alt="Hawwā Logo" class="brand-logo-small">
+      <span>Hawwā Institute</span>
+    </a>
+    <div class="links">
+      <a href="#home">Home</a>
+      <a href="#about">About</a>
+      <a href="#courses">Programmes</a>
+      <a href="#how-to-register">How to Register</a>
+      <a href="#timetable">Timetable</a>
+      <a href="#resources">Kutub & Resources</a>
+      <a href="#contact">Contact</a>
+      <a href="register.html" class="pill-cta"><i class="fa-solid fa-pen-to-square mr-1.5"></i> Register Now</a>
+    </div>
+    <button class="menu text-slate-800 text-2xl" onclick="toggleMobileMenu()" aria-label="Toggle Menu">☰</button>
+  </div>
+  <div id="mobileMenu" class="mobile">
+    <a href="#home" onclick="toggleMobileMenu()">Home</a>
+    <a href="#about" onclick="toggleMobileMenu()">About Hawwā</a>
+    <a href="#courses" onclick="toggleMobileMenu()">Programmes</a>
+    <a href="#how-to-register" onclick="toggleMobileMenu()">How to Register</a>
+    <a href="#timetable" onclick="toggleMobileMenu()">Timetable</a>
+    <a href="#resources" onclick="toggleMobileMenu()">Kutub & Resources</a>
+    <a href="#contact" onclick="toggleMobileMenu()">Contact</a>
+    <a href="register.html" style="color:var(--brand-green)">Register Online →</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<header id="home" class="hero">
+  <div class="container max-w-4xl">
+    <img src="logo.png" alt="Hawwā Emblem" class="hero-logo-main">
+    <div class="inline-block px-4 py-1.5 bg-[#eaf6f0] border border-[#008f5d40] text-[#008f5d] font-bold text-xs tracking-widest uppercase rounded-full mb-3">
+      Islamic Knowledge • Divine Guidance
+    </div>
+    <h1 class="serif text-5xl sm:text-6xl md:text-7xl font-bold text-[#1e1e1e] leading-tight mb-4">
+      Knowledge. Understanding. Practice.
+    </h1>
+    <p id="publicTagline" class="text-base sm:text-lg text-slate-600 max-w-2xl mx-auto mb-8 font-normal">
+      A refined digital hub for authentic sacred Islamic education, student admissions, announcements, and academic resources in South Africa.
+    </p>
+    <div class="flex justify-center gap-4 flex-wrap">
+      <a href="register.html" class="px-8 py-3.5 bg-[#008f5d] hover:bg-[#006642] text-white font-bold text-xs uppercase tracking-wider rounded-full shadow-lg transition">
+        <i class="fa-solid fa-id-card mr-2"></i> Register Online
+      </a>
+      <a href="#courses" class="px-8 py-3.5 border-2 border-[#5b0a63] text-[#5b0a63] hover:bg-[#fbf0fd] font-bold text-xs uppercase tracking-wider rounded-full transition">
+        Explore Courses →
+      </a>
+    </div>
+  </div>
+</header>
+
+<!-- NOTICE BAR -->
+<section class="notice-bar">
+  <div class="container flex justify-between items-center px-4">
+    <div class="flex items-center gap-3">
+      <span class="bg-[#d4a745] text-[#1e1e1e] text-[10px] uppercase font-extrabold px-2.5 py-0.5 rounded">Notice</span>
+      <span id="live-announcement">Official admissions are currently open.</span>
+    </div>
+    <a href="#courses" class="text-white underline text-xs uppercase tracking-wider font-bold">Details</a>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about" class="section">
+  <div class="container text-center max-w-4xl">
+    <span class="text-xs font-extrabold text-[#5b0a63] tracking-widest uppercase block mb-2">About The Institute</span>
+    <h2 class="serif text-4xl sm:text-5xl font-bold text-[#1e1e1e] mb-6" id="aboutMottoHeading">A place to learn. A place to understand.</h2>
+    <p id="publicAbout" class="text-base text-slate-600 leading-relaxed mb-12">
+      Hawwā Institute provides a structured, premium environment for seekers of sacred knowledge, synthesizing deep traditional learning with practical spiritual development.
+    </p>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-left">
+      <div class="p-8 bg-[#fdfdfc] border border-[#008f5d25] rounded-xl shadow-sm">
+        <span class="text-xs font-bold tracking-widest text-[#008f5d] uppercase block mb-2">Our Vision</span>
+        <h3 class="font-serif text-2xl font-bold text-[#5b0a63] mb-2">Sacred Understanding</h3>
+        <p class="text-xs text-slate-600 leading-relaxed" id="aboutVisionText">Fostering a generation grounded in authentic classical knowledge and exemplary practical character.</p>
+      </div>
+
+      <div class="p-8 bg-[#fdfdfc] border border-[#008f5d25] rounded-xl shadow-sm">
+        <span class="text-xs font-bold tracking-widest text-[#008f5d] uppercase block mb-2">Our Mission</span>
+        <h3 class="font-serif text-2xl font-bold text-[#5b0a63] mb-2">Scholarly Excellence</h3>
+        <p class="text-xs text-slate-600 leading-relaxed" id="aboutMissionText">Delivering structured curricula taught by verified scholars with an emphasis on comprehension and practice.</p>
+      </div>
+
+      <div class="p-8 bg-[#fdfdfc] border border-[#008f5d25] rounded-xl shadow-sm">
+        <span class="text-xs font-bold tracking-widest text-[#008f5d] uppercase block mb-2">Educational Philosophy</span>
+        <h3 class="font-serif text-2xl font-bold text-[#5b0a63] mb-2">Gradual Mastery</h3>
+        <p class="text-xs text-slate-600 leading-relaxed" id="aboutPhilosophyText">Empowering students through progressive stages of knowledge, bridging theory with personal implementation.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COURSES -->
+<section id="courses" class="section section-green">
+  <div class="container">
+    <div class="text-center max-w-2xl mx-auto mb-12">
+      <span class="text-xs font-extrabold text-[#008f5d] tracking-widest uppercase block mb-2">Programmes</span>
+      <h2 class="serif text-4xl sm:text-5xl font-bold text-[#1e1e1e]">Academic Offerings</h2>
+      <p class="text-sm text-slate-600 mt-2">Select courses below to enroll. Multiple courses can be selected during registration.</p>
+    </div>
+    <div id="publicCourses" class="cards"></div>
+  </div>
+</section>
+
+<!-- HOW TO REGISTER -->
+<section id="how-to-register" class="section">
+  <div class="container max-w-4xl text-center">
+    <span class="text-xs font-extrabold text-[#5b0a63] tracking-widest uppercase block mb-2">Student Workflow</span>
+    <h2 class="serif text-4xl font-bold text-[#1e1e1e] mb-10">How Registration Works</h2>
+    
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
+      <div class="p-6 bg-white border border-slate-200 rounded-xl shadow-sm">
+        <div class="w-10 h-10 rounded-full bg-[#fbf0fd] text-[#5b0a63] font-bold text-base flex items-center justify-center mx-auto mb-3">1</div>
+        <h4 class="font-bold text-sm text-slate-900 mb-1">Pick Courses</h4>
+        <p class="text-xs text-slate-500">Tick 1 or more programmes.</p>
+      </div>
+      <div class="p-6 bg-white border border-slate-200 rounded-xl shadow-sm">
+        <div class="w-10 h-10 rounded-full bg-[#fbf0fd] text-[#5b0a63] font-bold text-base flex items-center justify-center mx-auto mb-3">2</div>
+        <h4 class="font-bold text-sm text-slate-900 mb-1">Personal Info</h4>
+        <p class="text-xs text-slate-500">Provide contact & SA WhatsApp.</p>
+      </div>
+      <div class="p-6 bg-white border border-slate-200 rounded-xl shadow-sm">
+        <div class="w-10 h-10 rounded-full bg-[#fbf0fd] text-[#5b0a63] font-bold text-base flex items-center justify-center mx-auto mb-3">3</div>
+        <h4 class="font-bold text-sm text-slate-900 mb-1">Payment / Hadiya</h4>
+        <p class="text-xs text-slate-500">Fixed fee or voluntary gift.</p>
+      </div>
+      <div class="p-6 bg-white border border-slate-200 rounded-xl shadow-sm">
+        <div class="w-10 h-10 rounded-full bg-[#eaf6f0] text-[#008f5d] font-bold text-base flex items-center justify-center mx-auto mb-3">4</div>
+        <h4 class="font-bold text-sm text-slate-900 mb-1">POPIA & ID</h4>
+        <p class="text-xs text-slate-500">Consent & get <code>HAW-26XXXX</code>.</p>
+      </div>
+    </div>
+
+    <div class="mt-10">
+      <a href="register.html" class="px-8 py-3.5 bg-[#5b0a63] hover:bg-[#420448] text-white font-bold text-xs uppercase tracking-wider rounded-full shadow-lg inline-block transition">
+        <i class="fa-solid fa-pen-nib mr-2"></i> Open Registration Page →
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- TIMETABLE & KUTUB -->
+<section id="timetable" class="section section-green">
+  <div class="container grid grid-cols-1 lg:grid-cols-2 gap-10">
+    <div class="p-8 bg-white border border-[#008f5d25] rounded-xl shadow-sm">
+      <h3 class="font-serif text-3xl font-bold text-[#5b0a63] mb-6"><i class="fa-regular fa-calendar-days text-[#008f5d] mr-2"></i> Class Timetable</h3>
+      <div id="publicTimetable" class="space-y-3"></div>
+    </div>
+    
+    <div id="resources" class="p-8 bg-white border border-[#008f5d25] rounded-xl shadow-sm">
+      <h3 class="font-serif text-3xl font-bold text-[#5b0a63] mb-6"><i class="fa-solid fa-book-quran text-[#008f5d] mr-2"></i> Kutub, Mutūn & Resources</h3>
+      <div id="publicResources" class="space-y-3"></div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER WITH EDITABLE SUMMARY & GENERAL EMAIL -->
+<footer id="contact" class="bg-[#18111a] text-[#b8aab9] pt-16 pb-10 border-t-4 border-[#5b0a63]">
+  <div class="container grid grid-cols-1 md:grid-cols-3 gap-10 pb-12 border-b border-[#2d2230]">
+    <div>
+      <div class="brand mb-4">
+        <img src="logo.png" alt="Logo" class="brand-logo-small bg-white">
+        <span class="text-white">Hawwā Institute</span>
+      </div>
+      <p id="footerAboutSummary" class="text-xs leading-relaxed text-slate-400">
+        Islamic Knowledge • Divine Guidance. Providing authentic classical education with an emphasis on understanding and practice.
+      </p>
+      <p id="footerLocation" class="text-xs text-[#008f5d] font-bold mt-4"><i class="fa-solid fa-location-dot mr-1"></i> Cape Town, South Africa</p>
+    </div>
+
+    <div>
+      <h4 class="text-xs font-bold text-white uppercase tracking-widest mb-4">Quick Navigation</h4>
+      <ul class="space-y-2 text-xs">
+        <li><a href="#about" class="hover:text-white">About Hawwā</a></li>
+        <li><a href="#courses" class="hover:text-white">Approved Programmes</a></li>
+        <li><a href="#timetable" class="hover:text-white">Timetable Schedule</a></li>
+        <li><a href="#resources" class="hover:text-white">Kutub & Mutūn Resources</a></li>
+        <li><a href="register.html" class="text-[#008f5d] font-bold">Online Student Registration</a></li>
+      </ul>
+    </div>
+
+    <div>
+      <h4 class="text-xs font-bold text-white uppercase tracking-widest mb-4">Contact & Inquiries</h4>
+      <p id="footerGeneralEmail" class="text-xs mb-3 font-semibold text-slate-300">
+        <a href="mailto:admin@hawwainstitute.com" class="hover:text-[#008f5d] flex items-center gap-2">
+          <i class="fa-solid fa-envelope text-[#008f5d] text-sm"></i>
+          <span id="footerEmailText">admin@hawwainstitute.com</span>
+        </a>
+      </p>
+      
+      <div id="footerContactsContainer" class="space-y-2 mb-4"></div>
+
+      <div class="pt-2">
+        <a href="admin.html" class="px-4 py-2 border border-[#5b0a63] bg-[#290d2e] text-[#e39fed] rounded-lg text-xs font-bold uppercase tracking-wider hover:bg-[#5b0a63] hover:text-white transition inline-block">
+          <i class="fa-solid fa-lock mr-1.5"></i> Admin Portal
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div class="container pt-6 text-center text-xs text-slate-500">
+    © 2026 Hawwā Institute. All rights reserved. • Cape Town, South Africa
+  </div>
+</footer>
+
+<script>
+window.addEventListener('scroll', () => document.getElementById('siteNav').classList.toggle('scrolled', scrollY > 30));
+function toggleMobileMenu() { document.getElementById('mobileMenu').classList.toggle('open'); }
+
+function formatSAPhone(phone) {
+  if (!phone) return "";
+  let cleaned = String(phone).replace(/[^0-9]/g, '');
+  if (cleaned.startsWith('0')) cleaned = '27' + cleaned.substring(1);
+  else if (!cleaned.startsWith('27') && cleaned.length === 9) cleaned = '27' + cleaned;
+  return cleaned;
+}
+
+let appData = {
+  about: { 
+    motto: "A place to learn. A place to understand. A place to grow.", 
+    intro: "Hawwā Institute provides a structured environment for seekers of sacred knowledge...", 
+    footerText: "Islamic Knowledge • Divine Guidance. Providing authentic classical education with an emphasis on understanding and practice.",
+    vision: "Fostering authentic knowledge.", 
+    mission: "Delivering structured curricula.", 
+    philosophy: "Gradual mastery." 
+  },
+  contacts: [
+    { name: "Moulana (Principal)", role: "Admissions Desk", phone: "0749115610" }, 
+    { name: "Sister Fatima", role: "Female Coordinator", phone: "0820000000" }
+  ],
+  contact: { email: "admin@hawwainstitute.com", location: "Cape Town, South Africa" },
+  announcement: { text: "Official semester admissions are currently open.", published: true },
+  courses: [
+    { name: "Foundation Islamic Studies", category: "FOUNDATION", description: "Essential Fiqh, Aqeedah, and basic Arabic terminology.", schedule: "Mondays 18:00", venue: "Main Campus", fee: "R 450", feeType: "fixed", active: true },
+    { name: "Advanced Fiqh & Usul", category: "FIQH", description: "Principles of Islamic jurisprudence for continuing seekers.", schedule: "Saturdays 09:00", venue: "Main Campus", fee: "R 550", feeType: "fixed", active: true },
+    { name: "Classical Arabic Language", category: "ARABIC", description: "Master Nahw, Sarf, and Qur'anic vocabulary.", schedule: "Wednesdays 18:00", venue: "Campus & Online", fee: "Voluntary Hadiya", feeType: "hadiya", active: true }
+  ],
+  timetable: [
+    { day: "Monday", time: "18:00 - 20:00", course: "Foundation Islamic Studies", venue: "Hall A" },
+    { day: "Wednesday", time: "18:00 - 20:00", course: "Classical Arabic Language", venue: "Hall A" },
+    { day: "Saturday", time: "09:00 - 12:00", course: "Advanced Fiqh & Usul", venue: "Hall B" }
+  ],
+  resources: []
+};
+
+function esc(v) { return String(v ?? "").replace(/[&<>"']/g, m => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[m])); }
+
+async function loadData() {
+  try {
+    const res = await fetch('/api/data', { cache: 'no-store' });
+    if (res.ok) {
+      const data = await res.json();
+      if (data.public) appData = { ...appData, ...data.public };
+    }
+  } catch (e) {}
+  renderPublicUI();
+}
+
+function renderPublicUI() {
+  const n = appData.announcement || {};
+  document.getElementById("live-announcement").innerText = n.published === false ? "Welcome to Hawwā Institute." : (n.text || "");
+
+  const abt = appData.about || {};
+  document.getElementById("aboutMottoHeading").innerText = abt.motto || "";
+  document.getElementById("publicAbout").innerText = abt.intro || "";
+  document.getElementById("aboutVisionText").innerText = abt.vision || "";
+  document.getElementById("aboutMissionText").innerText = abt.mission || "";
+  document.getElementById("aboutPhilosophyText").innerText = abt.philosophy || "";
+  
+  if (document.getElementById("footerAboutSummary")) {
+    document.getElementById("footerAboutSummary").innerText = abt.footerText || "Islamic Knowledge • Divine Guidance. Providing authentic classical education with an emphasis on understanding and practice.";
+  }
+
+  // General Email Display Fix
+  const generalEmail = appData.contact?.email || "admin@hawwainstitute.com";
+  if (document.getElementById("footerEmailText")) {
+    document.getElementById("footerEmailText").innerText = generalEmail;
+    document.getElementById("footerGeneralEmail").querySelector("a").href = `mailto:${generalEmail}`;
+  }
+
+  // Courses
+  const courses = document.getElementById("publicCourses");
+  courses.innerHTML = "";
+  (appData.courses || []).filter(c => c.active).forEach((c, i) => {
+    const isHadiya = c.feeType === 'hadiya';
+    const displayFee = isHadiya ? "Voluntary Hadiya (Donation)" : (c.fee || "Free");
+    courses.innerHTML += `
+      <article class="card">
+        <span class="card-badge">${esc(c.category || "PROGRAMME")}</span>
+        <div>
+          <h3 class="serif font-bold text-2xl text-[#5b0a63] mt-2 mb-2">${esc(c.name)}</h3>
+          <p class="text-xs text-slate-600 mb-4">${esc(c.description)}</p>
+          <div class="space-y-1 text-xs text-slate-500 pt-2 border-t">
+            <div><i class="fa-regular fa-clock text-[#008f5d] mr-1"></i> ${esc(c.schedule || "")}</div>
+            <div><i class="fa-solid fa-location-dot text-[#008f5d] mr-1"></i> ${esc(c.venue || "")}</div>
+            <div><i class="fa-solid fa-tag text-[#008f5d] mr-1"></i> <strong>${esc(displayFee)}</strong></div>
+          </div>
+        </div>
+        <div class="pt-6">
+          <a href="register.html" class="w-full py-2.5 bg-[#008f5d] hover:bg-[#006642] text-white font-bold text-xs rounded-full shadow text-center block">Register for this Course →</a>
+        </div>
+      </article>`;
+  });
+
+  // Timetable
+  const tb = document.getElementById("publicTimetable"); tb.innerHTML = "";
+  (appData.timetable || []).forEach(t => {
+    tb.innerHTML += `<div class="flex justify-between items-center p-3 border-b text-xs"><div><strong>${esc(t.course)}</strong><div class="text-slate-500">${esc(t.venue || '')}</div></div><div class="text-right font-bold text-[#008f5d]">${esc(t.day)}<br><span class="font-normal text-slate-400">${esc(t.time)}</span></div></div>`;
+  });
+
+  // Resources
+  const rl = document.getElementById("publicResources"); rl.innerHTML = "";
+  if (!appData.resources || !appData.resources.length) rl.innerHTML = '<p class="text-xs text-slate-400">No Kutub or Mutūn resources uploaded yet.</p>';
+  else {
+    appData.resources.forEach(r => {
+      rl.innerHTML += `<div class="flex justify-between items-center p-3 bg-white border rounded-lg text-xs"><div><strong class="text-[#5b0a63]">${esc(r.name)}</strong><div class="text-[10px] text-slate-400">${esc(r.date || "")}</div></div><a href="${r.base64}" download="${esc(r.name)}" class="px-3 py-1.5 bg-[#008f5d] text-white rounded text-[11px] font-bold"><i class="fa-solid fa-download mr-1"></i> Download</a></div>`;
+    });
+  }
+
+  // Named Contacts
+  const contactsContainer = document.getElementById("footerContactsContainer");
+  contactsContainer.innerHTML = "";
+  (appData.contacts || []).forEach(ct => {
+    const saPhone = formatSAPhone(ct.phone);
+    contactsContainer.innerHTML += `
+      <div class="p-2.5 bg-[#251b27] border border-[#3d2940] rounded-lg text-xs flex justify-between items-center">
+        <div>
+          <strong class="text-white block">${esc(ct.name)}</strong>
+          <span class="text-[10px] text-slate-400">${esc(ct.role)}</span>
+        </div>
+        <a href="https://wa.me/${saPhone}" target="_blank" class="px-2.5 py-1 bg-[#25d366] text-white font-bold text-[10px] rounded flex items-center gap-1">
+          <i class="fa-brands fa-whatsapp"></i> Chat
+        </a>
+      </div>`;
+  });
+}
+
+loadData();
+</script>
+</body>
+</html>
