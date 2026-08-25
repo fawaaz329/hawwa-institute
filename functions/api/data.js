@@ -76,7 +76,7 @@ export async function onRequest(context) {
         try {
             const body = await request.json();
 
-            // A. Student Submitting Multi-Course Registration
+            // A. Student Submitting Registration
             if (body.action === "register") {
                 const regData = body.data;
                 if (!regData || !regData.fname || !regData.email || !regData.courses || regData.courses.length === 0) {
@@ -136,6 +136,7 @@ export async function onRequest(context) {
                     status: regStatus,
                     hasProof,
                     notes: "",
+                    paymentHistory: [], // Array of monthly fee / Hadiya logs
                     date: new Date().toLocaleDateString("en-GB", { day: "2-digit", month: "short", year: "numeric" }),
                     timestamp: new Date().toISOString()
                 };
@@ -197,7 +198,7 @@ export async function onRequest(context) {
                 return new Response(JSON.stringify({ success: true }), { status: 200, headers });
             }
 
-            // D. Admin Deleting Proof File Only (Keeps Student Intact)
+            // D. Admin Deleting Proof File Only
             if (body.action === "deleteProofOnly") {
                 const suppliedPassword = request.headers.get("Authorization") || "";
                 if (!adminSecret || suppliedPassword.trim() !== adminSecret.trim()) {
@@ -220,6 +221,79 @@ export async function onRequest(context) {
                 return new Response(JSON.stringify({ success: true }), { status: 200, headers });
             }
 
+            // E. Admin Logging Student Monthly Fee / Hadiya Payment
+            if (body.action === "logStudentPayment") {
+                const suppliedPassword = request.headers.get("Authorization") || "";
+                if (!adminSecret || suppliedPassword.trim() !== adminSecret.trim()) {
+                    return new Response(JSON.stringify({ error: "Unauthorized: Invalid Password." }), { status: 401, headers });
+                }
+
+                const { studentNumber, paymentEntry } = body.data;
+                const existingRegsStr = await kv.get("registrations");
+                let registrations = existingRegsStr ? JSON.parse(existingRegsStr) : [];
+                const idx = registrations.findIndex(r => r.studentNumber === studentNumber);
+                if (idx !== -1) {
+                    if (!Array.isArray(registrations[idx].paymentHistory)) {
+                        registrations[idx].paymentHistory = [];
+                    }
+                    registrations[idx].paymentHistory.unshift({
+                        id: `pay_${Date.now()}`,
+                        date: paymentEntry.date || new Date().toLocaleDateString("en-GB"),
+                        month: paymentEntry.month || "Current Month",
+                        amount: paymentEntry.amount || "R 0",
+                        method: paymentEntry.method || "EFT",
+                        note: paymentEntry.note || ""
+                    });
+                    await kv.put("registrations", JSON.stringify(registrations));
+                    return new Response(JSON.stringify({ success: true, paymentHistory: registrations[idx].paymentHistory }), { status: 200, headers });
+                }
+                return new Response(JSON.stringify({ error: "Student not found." }), { status: 404, headers });
+            }
+
+            // F. Admin Deleting a Single Monthly Payment Log
+            if (body.action === "deleteStudentPaymentLog") {
+                const suppliedPassword = request.headers.get("Authorization") || "";
+                if (!adminSecret || suppliedPassword.trim() !== adminSecret.trim()) {
+                    return new Response(JSON.stringify({ error: "Unauthorized: Invalid Password." }), { status: 401, headers });
+                }
+
+                const { studentNumber, paymentId } = body.data;
+                const existingRegsStr = await kv.get("registrations");
+                let registrations = existingRegsStr ? JSON.parse(existingRegsStr) : [];
+                const idx = registrations.findIndex(r => r.studentNumber === studentNumber);
+                if (idx !== -1 && Array.isArray(registrations[idx].paymentHistory)) {
+                    registrations[idx].paymentHistory = registrations[idx].paymentHistory.filter(p => p.id !== paymentId);
+                    await kv.put("registrations", JSON.stringify(registrations));
+                    return new Response(JSON.stringify({ success: true, paymentHistory: registrations[idx].paymentHistory }), { status: 200, headers });
+                }
+                return new Response(JSON.stringify({ error: "Record not found." }), { status: 404, headers });
+            }
+
+            // G. Master Year-End Reset (Wipes All Registrations, Cleans Receipts, Resets Counter)
+            if (body.action === "yearEndMasterReset") {
+                const suppliedPassword = request.headers.get("Authorization") || "";
+                if (!adminSecret || suppliedPassword.trim() !== adminSecret.trim()) {
+                    return new Response(JSON.stringify({ error: "Unauthorized: Invalid Administrator Password." }), { status: 401, headers });
+                }
+
+                // 1. Fetch current registrations to purge all proof receipts
+                const existingRegsStr = await kv.get("registrations");
+                const registrations = existingRegsStr ? JSON.parse(existingRegsStr) : [];
+
+                for (const r of registrations) {
+                    if (r.studentNumber) {
+                        await kv.delete(`proof_${r.studentNumber}`);
+                    }
+                }
+
+                // 2. Wipe student records, recycled queue, and reset counter to 1
+                await kv.put("registrations", JSON.stringify([]));
+                await kv.put("recycled_numbers", JSON.stringify([]));
+                await kv.put("student_counter", "1");
+
+                return new Response(JSON.stringify({ success: true, message: "System successfully reset for the new academic year." }), { status: 200, headers });
+            }
+
             return new Response(JSON.stringify({ error: "Unknown action." }), { status: 400, headers });
 
         } catch (error) {
@@ -228,4 +302,4 @@ export async function onRequest(context) {
     }
 
     return new Response(JSON.stringify({ error: "Method not allowed." }), { status: 405, headers });
-                    }
+                                                        }
