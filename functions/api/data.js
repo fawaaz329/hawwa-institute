@@ -6,7 +6,6 @@ export async function onRequest(context) {
         "Cache-Control": "no-store, no-cache, must-revalidate"
     };
 
-    // Connects to your Cloudflare KV binding
     const kv = env.HAWWA_KV || env.hawwa_kv || env.HAWWA_DB || env.hawwa_db;
     const adminSecret = env.ADMIN_PASSWORD;
 
@@ -16,14 +15,27 @@ export async function onRequest(context) {
 
     const url = new URL(request.url);
 
-    // =========================================================================
-    // 1. GET — PUBLIC CONTENT, ADMIN VERIFICATION & PROOF VIEWING
-    // =========================================================================
+    // ==========================================
+    // 1. GET REQUESTS
+    // ==========================================
     if (request.method === "GET") {
         try {
             const suppliedPassword = request.headers.get("Authorization");
+            const proofId = url.searchParams.get("proofId");
 
-            // ADMIN REQUEST: Must match ADMIN_PASSWORD exactly
+            // A. Fetch Specific Payment Proof (Admin Only)
+            if (proofId) {
+                if (!adminSecret || suppliedPassword?.trim() !== adminSecret.trim()) {
+                    return new Response(JSON.stringify({ error: "Unauthorized access to proof." }), { status: 401, headers });
+                }
+                const proofData = await kv.get(`proof_${proofId}`);
+                if (!proofData) {
+                    return new Response(JSON.stringify({ error: "Proof document not found." }), { status: 404, headers });
+                }
+                return new Response(JSON.stringify({ success: true, proof: JSON.parse(proofData) }), { status: 200, headers });
+            }
+
+            // B. Admin Sign In
             if (suppliedPassword !== null && suppliedPassword !== "") {
                 if (!adminSecret || suppliedPassword.trim() !== adminSecret.trim()) {
                     return new Response(JSON.stringify({ error: "Invalid administrator password." }), { status: 401, headers });
@@ -45,7 +57,7 @@ export async function onRequest(context) {
                 }), { status: 200, headers });
             }
 
-            // PUBLIC VISITOR
+            // C. Public Visitor
             const publicStr = await kv.get("public_state");
             return new Response(JSON.stringify({
                 authenticated: false,
@@ -57,21 +69,20 @@ export async function onRequest(context) {
         }
     }
 
-    // =========================================================================
-    // 2. POST — REGISTRATIONS, RECYCLING & SECURE STUDENT DELETION
-    // =========================================================================
+    // ==========================================
+    // 2. POST REQUESTS
+    // ==========================================
     if (request.method === "POST") {
         try {
             const body = await request.json();
 
-            // A. STUDENT SUBMITTING REGISTRATION (WITH NUMBER RECYCLING)
+            // A. Student Submitting Multi-Course Registration
             if (body.action === "register") {
                 const regData = body.data;
                 if (!regData || !regData.fname || !regData.email || !regData.courses || regData.courses.length === 0) {
-                    return new Response(JSON.stringify({ error: "Missing required registration details." }), { status: 400, headers });
+                    return new Response(JSON.stringify({ error: "Missing required details." }), { status: 400, headers });
                 }
 
-                // 1. Check for recycled student numbers first to prevent gaps/duplicates
                 let studentNumber;
                 const recycledStr = await kv.get("recycled_numbers");
                 let recycledList = recycledStr ? JSON.parse(recycledStr) : [];
@@ -87,7 +98,6 @@ export async function onRequest(context) {
                     await kv.put("student_counter", String(counter + 1));
                 }
 
-                // 2. Save payment proof receipt
                 let hasProof = false;
                 if (regData.paymentMethod === "EFT" && regData.proofFile) {
                     const proofRecord = {
@@ -96,7 +106,7 @@ export async function onRequest(context) {
                         fileType: regData.proofFile.type || "application/octet-stream",
                         fileSize: regData.proofFile.size || "Unknown",
                         data: regData.proofFile.data,
-                        uploadedAt: new Date().toISOString()
+                        uploadedAt: new Date().toLocaleDateString("en-GB", { day: "2-digit", month: "short", year: "numeric" })
                     };
                     await kv.put(`proof_${studentNumber}`, JSON.stringify(proofRecord));
                     hasProof = true;
@@ -119,7 +129,7 @@ export async function onRequest(context) {
                     email: regData.email.trim(),
                     address: (regData.address || "").trim(),
                     courses: regData.courses,
-                    feeType: regData.feeType || "monthly",
+                    feeType: regData.feeType || "fixed",
                     totalFee: regData.totalFee || "R 0",
                     paymentMethod: regData.paymentMethod || "EFT",
                     paymentStatus,
@@ -141,11 +151,12 @@ export async function onRequest(context) {
                     studentNumber,
                     studentName: `${newRecord.fname} ${newRecord.sname}`,
                     courses: newRecord.courses,
-                    totalFee: newRecord.totalFee
+                    totalFee: newRecord.totalFee,
+                    date: newRecord.date
                 }), { status: 200, headers });
             }
 
-            // B. ADMIN SAVING ALL SYSTEM CONTENT
+            // B. Admin Saving All System Content
             if (body.action === "adminSave") {
                 const suppliedPassword = request.headers.get("Authorization") || "";
                 if (!adminSecret || suppliedPassword.trim() !== adminSecret.trim()) {
@@ -161,25 +172,21 @@ export async function onRequest(context) {
                 return new Response(JSON.stringify({ success: true }), { status: 200, headers });
             }
 
-            // C. ADMIN DELETING/DEREGISTERING A STUDENT (RECYCLES ID & PURGES PROOF)
+            // C. Admin Deleting Student Record (Recycles ID & Purges Proof)
             if (body.action === "deleteRegistration") {
                 const suppliedPassword = request.headers.get("Authorization") || "";
                 if (!adminSecret || suppliedPassword.trim() !== adminSecret.trim()) {
-                    return new Response(JSON.stringify({ error: "Unauthorized: Invalid Admin Password." }), { status: 401, headers });
+                    return new Response(JSON.stringify({ error: "Unauthorized: Invalid Password." }), { status: 401, headers });
                 }
 
                 const { studentNumber } = body.data;
                 const existingRegsStr = await kv.get("registrations");
                 let registrations = existingRegsStr ? JSON.parse(existingRegsStr) : [];
 
-                // Remove student record
                 registrations = registrations.filter(r => r.studentNumber !== studentNumber);
                 await kv.put("registrations", JSON.stringify(registrations));
-
-                // 1. Purge proof image/PDF from storage
                 await kv.delete(`proof_${studentNumber}`);
 
-                // 2. Recycle the student number so it is reused for the next registration
                 const recycledStr = await kv.get("recycled_numbers");
                 let recycledList = recycledStr ? JSON.parse(recycledStr) : [];
                 if (!recycledList.includes(studentNumber)) {
@@ -187,7 +194,30 @@ export async function onRequest(context) {
                     await kv.put("recycled_numbers", JSON.stringify(recycledList));
                 }
 
-                return new Response(JSON.stringify({ success: true, message: `Deregistered ${studentNumber}. ID recycled.` }), { status: 200, headers });
+                return new Response(JSON.stringify({ success: true }), { status: 200, headers });
+            }
+
+            // D. Admin Deleting Proof File Only (Keeps Student Intact)
+            if (body.action === "deleteProofOnly") {
+                const suppliedPassword = request.headers.get("Authorization") || "";
+                if (!adminSecret || suppliedPassword.trim() !== adminSecret.trim()) {
+                    return new Response(JSON.stringify({ error: "Unauthorized: Invalid Password." }), { status: 401, headers });
+                }
+
+                const { studentNumber } = body.data;
+                await kv.delete(`proof_${studentNumber}`);
+
+                const existingRegsStr = await kv.get("registrations");
+                let registrations = existingRegsStr ? JSON.parse(existingRegsStr) : [];
+                const idx = registrations.findIndex(r => r.studentNumber === studentNumber);
+                if (idx !== -1) {
+                    registrations[idx].hasProof = false;
+                    registrations[idx].proofFile = null;
+                    registrations[idx].paymentStatus = "awaiting_payment";
+                    await kv.put("registrations", JSON.stringify(registrations));
+                }
+
+                return new Response(JSON.stringify({ success: true }), { status: 200, headers });
             }
 
             return new Response(JSON.stringify({ error: "Unknown action." }), { status: 400, headers });
